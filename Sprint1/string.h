@@ -7,6 +7,11 @@ using namespace std;
 
 class String {
 
+    private:
+        int length;
+        int capacity;
+        char* arr;
+
     public:
 
         String();
@@ -21,11 +26,12 @@ class String {
         bool operator> (const String&);
         char& operator[] (const int);
 
-        int length();
+        int size();
         String substring(int, int);
         char* c_str(); //get cstring equivalent
         char& find(); //find first instance of char
         bool empty();
+
 
         friend std::ostream& operator<< (std::ostream&, const String&);
 
