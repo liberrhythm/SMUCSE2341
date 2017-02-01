@@ -4,8 +4,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    string.cpp \
-    test.cpp
+    test.cpp \
+    DSString.cpp
 
 HEADERS += \
-    string.h
+    DSString.h \
+    catch.hpp
