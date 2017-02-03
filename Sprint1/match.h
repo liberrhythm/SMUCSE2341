@@ -3,7 +3,10 @@
 
 #include <iostream>
 #include <cstring>
+#include <vector>
 #include "DSString.h"
+#include <team.h>
+#include <player.h>
 using namespace std;
 
 class Match

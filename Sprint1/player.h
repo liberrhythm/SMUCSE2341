@@ -3,24 +3,26 @@
 
 #include <iostream>
 #include <cstring>
+#include <vector>
 #include "DSString.h"
+#include "tag.h"
 using namespace std;
 
 class Player {
 
     private:
         int id;
-        DSString name;
+        String name;
         vector<Tag> tags;
 
     public:
-        Player(int, DSString, Tag*);
+        Player(int, String);
         int getID();
         void setID(int);
-        DSString getName();
-        void setName(DSString);
-        vector<Tag> getAllTags();
-        void setAllTags(vector<Tag>);
+        String getName();
+        void setName(String);
+        vector<Tag> getPlayerTags();
+        void setPlayerTags(vector<Tag>);
         int calculateNumTags();
         int calculatePlayerScore();
 

@@ -1,3 +1,4 @@
+/*
 #include "tag.h"
 
 backScore = 5;
@@ -24,3 +25,4 @@ int Tag::calculateTag() {
             return gunScore;
     }
 }
+*/

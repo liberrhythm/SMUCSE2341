@@ -1,3 +1,4 @@
+/*
 #ifndef STRING
 #define STRING
 
@@ -39,3 +40,4 @@ class String {
 
 };
 #endif
+*/

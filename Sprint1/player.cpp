@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(int id, DSString name, Tag* tags) {
+Player::Player(int id, String name) {
     setID(id);
     setName(name);
     setTagArray(tags);
@@ -14,21 +14,21 @@ void Player::setID(int playerID) {
     id = playerID;
 }
 
-DSString Player::getName() {
+String Player::getName() {
     return name;
 }
 
-void Player::setName(DSString playerName) {
+void Player::setName(String playerName) {
     name = playerName;
 }
 
-vector<Tag> Player::getAllTags() {
+vector<Tag> Player::getPlayerTags() {
     return tags;
 }
 
-void Player::setAllTags(vector<Tag> allTags) {
-    for (Tag t: allTags) {
-        tags.push_back(tag);
+void Player::setPlayerTags(vector<Tag> playerTags) {
+    for (Tag t: playerTags) {
+        tags.push_back(t);
     }
 }
 
