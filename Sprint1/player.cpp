@@ -3,7 +3,7 @@
 Player::Player(int id, String name) {
     setID(id);
     setName(name);
-    setTagArray(tags);
+    setPlayerTags(tags);
 }
 
 int Player::getID() {
@@ -22,11 +22,11 @@ void Player::setName(String playerName) {
     name = playerName;
 }
 
-vector<Tag> Player::getPlayerTags() {
+std::vector<Tag> Player::getPlayerTags() {
     return tags;
 }
 
-void Player::setPlayerTags(vector<Tag> playerTags) {
+void Player::setPlayerTags(std::vector<Tag> playerTags) {
     for (Tag t: playerTags) {
         tags.push_back(t);
     }

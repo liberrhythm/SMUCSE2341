@@ -5,16 +5,16 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     test.cpp \
-    DSString.cpp \
     tag.cpp \
     team.cpp \
     player.cpp \
-    match.cpp
+    match.cpp \
+    dsstring.cpp
 
 HEADERS += \
-    DSString.h \
     catch.hpp \
     tag.h \
     team.h \
     player.h \
-    match.h
+    match.h \
+    dsstring.h

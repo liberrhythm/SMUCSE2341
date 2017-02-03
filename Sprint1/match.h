@@ -3,16 +3,22 @@
 
 #include <iostream>
 #include <cstring>
-#include <vector>
-#include "DSString.h"
-#include <team.h>
-#include <player.h>
-using namespace std;
+#include <fstream>
+#include <cstdlib>
+#include "dsstring.h"
+#include "team.h"
+#include "player.h"
+
+//using namespace std;
 
 class Match
 {
-public:
-    Match();
+    private:
+        //ifstream inTeam1File(//char* goes here);
+        //ifstream inTeam2File();
+        //ifstream inMatchFile();
+    public:
+        Match();
 };
 
 #endif // MATCH_H

@@ -1,11 +1,11 @@
-/*
 #ifndef TAG_H
 #define TAG_H
 
 #include <iostream>
 #include <cstring>
-#include "DSString.h"
-using namespace std;
+#include "dsstring.h"
+
+//using namespace std;
 
 extern int backScore;
 extern int chestScore;
@@ -19,11 +19,19 @@ class Tag {
         int taggedID;
         int tagType;
         int tagScore;
+
     public:
         Tag(int, int, int);
-        int calculateTag();
+        int getTaggerID();
+        void setTaggerID(int);
+        int getTaggedID();
+        void setTaggedID(int);
+        int getTagType();
+        void setTagType(int);
+        int getTagScore();
+        void setTagScore();
 
 };
 
 #endif // TAG_H
-*/
+

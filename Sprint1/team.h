@@ -4,16 +4,17 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
-#include "DSString.h"
+#include "dsstring.h"
 #include "player.h"
-using namespace std;
+
+//using namespace std;
 
 class Team {
 
     private:
         String teamName;
         int teamSize;
-        vector<Player> players;
+        std::vector<Player> players;
 
     public:
         Team(String, int);
@@ -21,8 +22,8 @@ class Team {
         void setTeamName(String);
         int getTeamSize();
         void setTeamSize(int);
-        vector<Player> getTeamPlayers();
-        void setTeamPlayers(vector<Player>);
+        std::vector<Player> getTeamPlayers();
+        void setTeamPlayers(std::vector<Player>);
         int calculateTeamScore();
 
 };

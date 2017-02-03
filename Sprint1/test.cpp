@@ -1,8 +1,7 @@
-/*
-#define CATCH_CONFIG_MAIN
+//#define CATCH_CONFIG_MAIN
+
 #include "catch.hpp"
 
-#include <cstring>
 #include "DSString.h"
 
 
@@ -84,4 +83,3 @@ TEST_CASE("String class", "[string]"){
     }
 
 }
-*/
