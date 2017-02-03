@@ -7,11 +7,6 @@
 
 //using namespace std;
 
-extern int backScore;
-extern int chestScore;
-extern int shoulderScore;
-extern int gunScore;
-
 class Tag {
 
     private:

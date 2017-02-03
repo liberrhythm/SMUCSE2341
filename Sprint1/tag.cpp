@@ -1,10 +1,4 @@
-/*
 #include "tag.h"
-
-backScore = 5;
-chestScore = 8;
-shoulderScore = 10;
-gunScore = 15;
 
 Tag::Tag(int taggerID, int taggedID, int tagType) {
     setTaggerID(taggerID);
@@ -44,13 +38,12 @@ int Tag::getTagScore() {
 void Tag::setTagScore() {
     switch (tagType) {
         case 1:
-            tagScore = backScore;
+            tagScore = 5;
         case 2:
-            tagScore = chestScore;
+            tagScore = 8;
         case 3:
-            tagScore = shoulderScore;
+            tagScore = 10;
         case 4:
-            tagScore = gunScore;
+            tagScore = 15;
     }
 }
-*/
