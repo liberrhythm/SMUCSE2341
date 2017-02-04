@@ -1,16 +1,20 @@
-/*
 #ifndef STRING
 #define STRING
 
 #include <iostream>
 #include <cstring>
-using namespace std;
+#include <stdexcept>
+#include <iomanip>
+
+//using namespace std;
 
 class String {
 
+    friend std::ostream& operator<< (std::ostream&, const String&);
+
     private:
+
         int length;
-        int capacity;
         char* arr;
 
     public:
@@ -30,14 +34,9 @@ class String {
         int size();
         String substring(int, int);
         char* c_str(); //get cstring equivalent
-        char& find(); //find first instance of char
         bool empty();
-
-
-        friend std::ostream& operator<< (std::ostream&, const String&);
 
         ~String();
 
 };
 #endif
-*/

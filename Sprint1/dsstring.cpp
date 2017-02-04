@@ -1,108 +1,153 @@
-#include "string.h"
+#include "dsstring.h"
+
+using namespace std;
 
 String::String() {
     length = 0;
-    capacity = 25;
-    arr = new char[capacity];
+    arr = new char[length];
 }
 
-String::String(const char*) {
-
+String::String(const char* c) {
+    length = static_cast<int>(strlen(c));
+    arr = new char[length];
+    for (int i = 0; i < length; i++) {
+        arr[i] = c[i];
+    }
 }
 
-String::String(const String&){
-
-}
-
-String& String::operator= (const char*) {
-
-}
-
-String& String::operator= (const String& s) {
+//this is like String string2 = string1
+String::String(const String& s){
     length = s.length;
-    capacity = s.capacity;
-    arr = new char[capacity];
+    arr = new char[length];
     for (int i = 0; i < length; i++) {
         arr[i] = s.arr[i];
     }
 }
 
+//used String constructor with char* parameter
+//this is like string2 = string1
+String& String::operator= (const char* c) {
+    length = static_cast<int>(strlen(c));
+    arr = new char[length];
+    for (int i = 0; i < length; i++) {
+        arr[i] = c[i];
+    }
+    return *this;
+}
+
+//used String constructor with String parameter
+String& String::operator= (const String& s) {
+    length = s.length;
+    arr = new char[length];
+    for (int i = 0; i < length; i++) {
+        arr[i] = s.arr[i];
+    }
+    return *this;
+}
+
+//used String constructor with char* parameter
 String String::operator+ (const String& s) {
-    if (this->capacity > this->length + s.size()) {
-
+    int newLength = length + s.length;
+    char* temp = new char[newLength];
+    for (int i = 0; i < length; i++) {
+        temp[i] = arr[i];
     }
-    else {
-
+    for (int i = 0; i < s.length; i++) {
+        temp[i+length] = s.arr[i];
     }
+    //char last = temp[newLength-1];
+    String newString(temp);
+    return newString;
 }
 
-bool String::operator== (const char*) {
-
-}
-
-bool String::operator== (const String& s){
-    bool b = True;
-    if (length == s.length) {
+bool String::operator== (const char* c) {
+    if (length == static_cast<int>(strlen(c))) {
         for (int i = 0; i < length; i++) {
-            if (this[i] != s[i]) {
-                b = False;
+            if (arr[i] != c[i]) {
+                return false;
             }
         }
     }
     else {
-        b = False;
+        return false;
     }
-    return b;
+    return true;
+}
+
+bool String::operator== (const String& s){
+    if (length == s.length) {
+        for (int i = 0; i < length; i++) {
+            if (arr[i] != s.arr[i]) {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
 }
 
 bool String::operator> (const String& s) {
     for(int i = 0; i < length; i++) {
-        if (this[i] < s[i]) {
-            return False;
+        int x = arr[i];
+        int y = s.arr[i];
+        if (x < y) {
+            return false;
         }
     }
-    return True;
+    return true;
 }
 
+//have to add edge case tests --> negative numbers
 char& String::operator[] (const int index) {
-    for(int i = 0; i < length; i++) {
-        if (i == index) {
-            return this[i];
-        }
+    if (index < 0 && index >= length) {
+        throw std::out_of_range("OUT OF RANGE");
+    }
+    else {
+        return arr[index];
     }
 }
 
 int String::size() {
-    return length;
+    return static_cast<int>(strlen(arr));
 }
 
 String String::substring(int start, int end) {
-
+    if (start < 0 || start >= length || end < 0 || end >= length) {
+        throw std::out_of_range("OUT OF RANGE");
+    }
+    else if (start >= end){
+        throw std::invalid_argument("INVALID RANGE");
+    }
+    else {
+        char* temp = new char[end-start];
+        for (int i = start; i < end; i++) {
+            temp[i] = arr[i];
+        }
+        String newString(temp);
+        return newString;
+    }
 }
 
 char* String::c_str() { //get cstring equivalent
-    char* arr = this;
     return arr;
-}
-
-char& String::find() {
-
 }
 
 bool String::empty() {
     if (length == 0) {
-        return True;
+        return true;
     }
-    return False;
+    return false;
 }
 
-friend ostream& operator<< (ostream& output, const String& s) {
-    for(int i = 0; i < length; i++) {
-        output << s[i];
+ostream& operator<< (ostream& output, const String& s) {
+    for(int i = 0; i < s.length; i++) {
+        output << s.arr[i];
     }
     return output;
 }
 
-~String() {
+String::~String() {
     delete[] arr;
 }
