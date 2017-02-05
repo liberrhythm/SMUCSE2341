@@ -24,6 +24,7 @@ class Team {
         void setTeamSize(int);
         std::vector<Player> getTeamPlayers();
         void setTeamPlayers(std::vector<Player>);
+        void addPlayer(Player);
         int calculateTeamScore();
 
 };

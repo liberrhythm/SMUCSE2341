@@ -32,6 +32,10 @@ void Player::setPlayerTags(std::vector<Tag> playerTags) {
     }
 }
 
+void Player::addTag(Tag tag) {
+    tags.push_back(tag);
+}
+
 int Player::calculateNumTags() {
     return tags.size();
 }

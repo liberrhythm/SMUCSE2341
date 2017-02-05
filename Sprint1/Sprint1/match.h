@@ -1,3 +1,4 @@
+/*
 #ifndef MATCH_H
 #define MATCH_H
 
@@ -11,14 +12,21 @@
 
 //using namespace std;
 
-class Match
-{
+class Match {
     private:
-        //ifstream inTeam1File(//char* goes here);
-        //ifstream inTeam2File();
-        //ifstream inMatchFile();
+        String teamOneFile;
+        String teamTwoFile;
+        String matchFile;
+        String verbosity;
+
     public:
-        Match();
+        Match(String, String, String, String);
+        void readTeamFile();
+        void readMatchFile();
+        void printLowVerbosity(String);
+        void printMedVerbosity(String);
+        void printHighVerbosity(String);
 };
 
 #endif // MATCH_H
+*/

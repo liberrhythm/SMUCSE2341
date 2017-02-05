@@ -26,6 +26,10 @@ std::vector<Player> Team::getTeamPlayers() {
     return players;
 }
 
+void Team::addPlayer(Player player) {
+    players.push_back(player);
+}
+
 void Team::setTeamPlayers(std::vector<Player> tPlayers) {
     for (Player p: tPlayers) {
         players.push_back(p);

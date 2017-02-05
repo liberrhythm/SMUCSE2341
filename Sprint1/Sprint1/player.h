@@ -24,6 +24,7 @@ class Player {
         void setName(String);
         std::vector<Tag> getPlayerTags();
         void setPlayerTags(std::vector<Tag>);
+        void addTag(Tag);
         int calculateNumTags();
         int calculatePlayerScore();
 

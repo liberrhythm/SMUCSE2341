@@ -61,7 +61,6 @@ String String::operator+ (const String& s) {
     for (int i = 0; i < s.length; i++) {
         temp[i+length] = s.arr[i];
     }
-    //char last = temp[newLength-1];
     String newString(temp);
     return newString;
 }
@@ -90,39 +89,64 @@ bool String::operator== (const String& s){
     return true;
 }
 
-//NOT FIXED YET
+//fixed errors with char by char comparison
 bool String::operator> (const String& s) {
+    /*
     for(int i = 0; i < length; i++) {
         int x = arr[i];
         int y = s.arr[i];
-        if (x < y) {
+        if (x > y) {
+            return true;
+        }
+        else if (x < y){
             return false;
         }
+        else {
+            continue;
+        }
     }
-    return true;
+    return false;
+    */
+    int value = strcmp(arr, s.arr);
+    if (value > 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 //have to add edge case tests --> negative numbers
 char& String::operator[] (const int index) {
-    if (index < 0 || index >= length) {
-        throw std::out_of_range("SUBSCRIPT OUT OF RANGE");
+    if (index >= length) {
+        throw std::out_of_range("OUT OF RANGE");
     }
-
-    return arr[index];
+    else if (index < 0) {
+        return arr[index+length];
+    }
+    else {
+        return arr[index];
+    }
 }
 
 int String::size() {
-    return static_cast<int>(strlen(arr));
+    return length;
 }
 
-//NOT FIXED
+//fixing negative indices
 String String::substring(int start, int end) {
-    if (start < 0 || start >= length || end < 0 || end >= length) {
-        throw std::out_of_range("OUT OF RANGE");
-    }
-    else if (start >= end){
+    if (start >= length || end >= length){
         throw std::invalid_argument("INVALID RANGE");
     }
+    else if (start < 0 && end < 0){
+        char* temp = new char[end-start];
+        for (int i = start+length; i < end+length; i++) {
+            temp[i] = arr[i];
+        }
+        String newString(temp);
+        return newString;
+    }
+    //else if (start )
     else {
         char* temp = new char[end-start];
         for (int i = start; i < end; i++) {
@@ -134,7 +158,9 @@ String String::substring(int start, int end) {
 }
 
 char* String::c_str() { //get cstring equivalent
-    return arr;
+    char* c = new char[length];
+    strcpy(c, arr);
+    return c;
 }
 
 bool String::empty() {
