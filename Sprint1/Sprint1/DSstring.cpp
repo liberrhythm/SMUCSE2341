@@ -4,24 +4,27 @@ using namespace std;
 
 String::String() {
     length = 0;
-    arr = new char[length];
+    arr = new char[length+1];
+    arr[0] = '\0';
 }
 
 String::String(const char* c) {
     length = static_cast<int>(strlen(c));
-    arr = new char[length];
+    arr = new char[length+1];
     for (int i = 0; i < length; i++) {
         arr[i] = c[i];
     }
+    arr[length] = '\0';
 }
 
 //this is like String string2 = string1
 String::String(const String& s){
     length = s.length;
-    arr = new char[length];
+    arr = new char[length+1];
     for (int i = 0; i < length; i++) {
         arr[i] = s.arr[i];
     }
+    arr[length] = '\0';
 }
 
 //used String constructor with char* parameter
@@ -30,7 +33,8 @@ String& String::operator= (const char* c) {
     if (length != static_cast<int>(strlen(c))) {
         delete[] arr;
         length = static_cast<int>(strlen(c));
-        arr = new char[length];
+        arr = new char[length+1];
+        arr[length] = '\0';
     }
     for (int i = 0; i < length; i++) {
         arr[i] = c[i];
@@ -43,7 +47,8 @@ String& String::operator= (const String& s) {
     if (length != s.length) {
         delete[] arr;
         length = s.length;
-        arr = new char[length];
+        arr = new char[length+1];
+        arr[length] = '\0';
     }
     for (int i = 0; i < length; i++) {
         arr[i] = s.arr[i];
@@ -51,10 +56,10 @@ String& String::operator= (const String& s) {
     return *this;
 }
 
-//NOT FIXED--used String constructor with char* parameter
 String String::operator+ (const String& s) {
     int newLength = length + s.length;
-    char* temp = new char[newLength];
+    char* temp = new char[newLength+1];
+    temp[newLength] = '\0';
     for (int i = 0; i < length; i++) {
         temp[i] = arr[i];
     }
@@ -91,22 +96,6 @@ bool String::operator== (const String& s){
 
 //fixed errors with char by char comparison
 bool String::operator> (const String& s) {
-    /*
-    for(int i = 0; i < length; i++) {
-        int x = arr[i];
-        int y = s.arr[i];
-        if (x > y) {
-            return true;
-        }
-        else if (x < y){
-            return false;
-        }
-        else {
-            continue;
-        }
-    }
-    return false;
-    */
     int value = strcmp(arr, s.arr);
     if (value > 0) {
         return true;
@@ -116,10 +105,14 @@ bool String::operator> (const String& s) {
     }
 }
 
-//have to add edge case tests --> negative numbers
 char& String::operator[] (const int index) {
     if (index >= length) {
-        throw std::out_of_range("OUT OF RANGE");
+        if (index == 0) {
+            return arr[index];
+        }
+        else {
+            throw std::out_of_range("OUT OF RANGE");
+        }
     }
     else if (index < 0) {
         return arr[index+length];
@@ -130,27 +123,43 @@ char& String::operator[] (const int index) {
 }
 
 int String::size() {
-    return length;
+    return static_cast<int>(strlen(arr));
 }
 
 //fixing negative indices
 String String::substring(int start, int end) {
     if (start >= length || end >= length){
-        throw std::invalid_argument("INVALID RANGE");
+        throw std::out_of_range("OUT OF RANGE");
     }
     else if (start < 0 && end < 0){
-        char* temp = new char[end-start];
-        for (int i = start+length; i < end+length; i++) {
+        int subLength = end-start;
+        char* temp = new char[subLength+1];
+        temp[subLength] = '\0';
+        for (int i = 0; i < subLength; i++) {
+            temp[i] = arr[length-abs(start)+i+1];
+        }
+        String newString(temp);
+        return newString;
+    }
+    else if (abs(start) > abs(end)) {
+        throw std::invalid_argument("INVALID RANGE");
+    }
+    else if (end < 0) {
+        int subLength = length-abs(end)+1;
+        char* temp = new char[subLength+1];
+        temp[subLength] = '\0';
+        for (int i = 0; i < subLength; i++) {
             temp[i] = arr[i];
         }
         String newString(temp);
         return newString;
     }
-    //else if (start )
     else {
-        char* temp = new char[end-start];
-        for (int i = start; i < end; i++) {
-            temp[i] = arr[i];
+        int subLength = end-start;
+        char* temp = new char[subLength+1];
+        temp[subLength] = '\0';
+        for (int i = 0; i < subLength; i++) {
+            temp[i] = arr[start+i];
         }
         String newString(temp);
         return newString;
@@ -158,9 +167,7 @@ String String::substring(int start, int end) {
 }
 
 char* String::c_str() { //get cstring equivalent
-    char* c = new char[length];
-    strcpy(c, arr);
-    return c;
+    return arr;
 }
 
 bool String::empty() {

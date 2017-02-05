@@ -1,3 +1,4 @@
+/*
 #include "match.h"
 using namespace std;
 
@@ -5,11 +6,11 @@ Match::Match() {
     
 }
 
-void Match::readTeamOneFile(String teamFileName) {
+void Match::readTeamFile(String teamFileName, Team t) {
     ifstream inFile;
     inFile.open(teamFileName, ios::in);
     if (!inFile) {
-        cerr << "File 1 could not be opened" << endl;
+        cerr << "Team file could not be opened" << endl;
         exit(EXIT_FAILURE);
     }
 
@@ -17,7 +18,7 @@ void Match::readTeamOneFile(String teamFileName) {
     int teamSize;
     inFile.getline(teamName, 100);
     inFile >> teamSize;
-    teamOne(teamName, teamSize);
+    t(teamName, teamSize);
 
     int playerID;
     String playerName;
@@ -25,35 +26,7 @@ void Match::readTeamOneFile(String teamFileName) {
     inFile.getline(playerName, 100);
     while(!inFile.eof()) {
         Player p(playerID, playerName);
-        teamOne.addPlayer(p);
-        inFile >> playerID;
-        inFile.getline(playerName, 100);
-    }
-
-    inFile.close();
-}
-
-void Match::readTeamTwoFile(String teamFileName) {
-    ifstream inFile;
-    inFile.open(teamFileName, ios::in);
-    if (!inFile) {
-        cerr << "File 2 could not be opened" << endl;
-        exit(EXIT_FAILURE);
-    }
-
-    String teamName;
-    int teamSize;
-    inFile.getline(teamName, 100);
-    inFile >> teamSize;
-    teamTwo(teamName, teamSize);
-
-    int playerID;
-    String playerName;
-    inFile >> playerID;
-    inFile.getline(playerName, 100);
-    while(!inFile.eof()) {
-        Player p(playerID, playerName);
-        teamTwo.addPlayer(p);
+        t.addPlayer(p);
         inFile >> playerID;
         inFile.getline(playerName, 100);
     }
@@ -81,12 +54,12 @@ void Match::readMatchFile(String matchFile) {
         Tag t(tagger, tagged, tagLocation);
         for (Player p: teamOne.getTeamPlayers()) {
 	    if (p.getID() == tagger) {
-		p.addTag(t);
+            p.addTag(t);
 	    }
 	}
         for (Player p: teamTwo.getTeamPlayers()) {
 	    if (p.getID() == tagger) {
-		p.addTag(t);
+            p.addTag(t);
 	    }
 	}
 	inFile >> tagger >> tagged >> tagTime >> tagLocation;
@@ -237,8 +210,9 @@ void Match::outputMedVerbosity() {
     outputLowVerbosity();
 }
 
-/*
+
 void Match::outputHighVerbosity() {
 
 }
+
 */
