@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
-#include "dsstring.h"
+#include "DSString.h"
 #include "tag.h"
 
 //using namespace std;

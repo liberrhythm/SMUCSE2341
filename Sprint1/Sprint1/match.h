@@ -6,7 +6,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <iomanip>
-#include "dsstring.h"
+#include "DSString.h"
 #include "team.h"
 #include "player.h"
 #include "tag.h"
@@ -19,10 +19,10 @@ class Match {
         Team teamTwo;
 
     public:
-        Match(String, String, String, String);
-        void readTeamOneFile();
-        void readTeamTwoFile();
-        void readMatchFile();
+        Match();
+        void readTeamOneFile(String);
+        void readTeamTwoFile(String);
+        void readMatchFile(String);
         void outputLowVerbosity();
         void outputMedVerbosity();
         void outputHighVerbosity();

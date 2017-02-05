@@ -6,7 +6,7 @@
 
 #include "catch.hpp"
 
-#include "dsstring.h"
+#include "DSString.h"
 #include "tag.h"
 #include "player.h"
 #include "team.h"

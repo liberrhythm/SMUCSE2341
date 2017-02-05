@@ -9,7 +9,7 @@ SOURCES += main.cpp \
     team.cpp \
     player.cpp \
     match.cpp \
-    dsstring.cpp
+    DSString.cpp
 
 HEADERS += \
     catch.hpp \
@@ -17,4 +17,4 @@ HEADERS += \
     team.h \
     player.h \
     match.h \
-    dsstring.h
+    DSString.h

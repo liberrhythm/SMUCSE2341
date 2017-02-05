@@ -1,4 +1,5 @@
 #include "match.h"
+using namespace std;
 
 Match::Match() {
     
@@ -208,11 +209,36 @@ void Match::outputMedVerbosity() {
     }
 
     output << "Best score from " << teamOne.getTeamName() << ": ";
+    int highestScore = 0;
+    for (Player p: teamOne.getTeamPlayers()) {
+        if (p.calculatePlayerScore() > highestScore) {
+            highestScore = p.calculatePlayerScore();
+        }
+    }
+    for (Player p: teamOne.getTeamPlayers()) {
+        if (p.calculatePlayerScore() == highestScore) {
+            output << p.getName() << " (" << p.calculatePlayerScore() << " points)" << endl;
+        }
+    }
 
     output << "Best score from " << teamTwo.getTeamName() << ": ";
+    int highestScore = 0;
+    for (Player p: teamTwo.getTeamPlayers()) {
+        if (p.calculatePlayerScore() > highestScore) {
+            highestScore = p.calculatePlayerScore();
+        }
+    }
+    for (Player p: teamTwo.getTeamPlayers()) {
+        if (p.calculatePlayerScore() == highestScore) {
+            output << p.getName() << " (" << p.calculatePlayerScore() << " points)" << endl;
+        }
+    }
+
+    outputLowVerbosity();
 }
 
+/*
 void Match::outputHighVerbosity() {
 
 }
-
+*/

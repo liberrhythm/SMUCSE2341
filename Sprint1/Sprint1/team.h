@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
-#include "dsstring.h"
+#include "DSString.h"
 #include "player.h"
 
 //using namespace std;

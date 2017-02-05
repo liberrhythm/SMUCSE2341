@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <cstring>
-#include "dsstring.h"
+#include "DSString.h"
 
 //using namespace std;
 
