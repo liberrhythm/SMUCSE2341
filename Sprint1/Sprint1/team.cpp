@@ -1,5 +1,10 @@
 #include "team.h"
 
+Team::Team() {
+    teamName = "";
+    teamSize = 0;
+}
+
 Team::Team(String teamName, int teamSize) {
     setTeamName(teamName);
     setTeamSize(teamSize);

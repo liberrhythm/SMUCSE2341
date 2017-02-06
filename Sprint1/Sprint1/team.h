@@ -17,6 +17,7 @@ class Team {
         std::vector<Player> players;
 
     public:
+        Team();
         Team(String, int);
         String getTeamName();
         void setTeamName(String);

@@ -1,4 +1,3 @@
-/*
 #ifndef MATCH_H
 #define MATCH_H
 
@@ -7,6 +6,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <iomanip>
+#include <vector>
 #include "DSString.h"
 #include "team.h"
 #include "player.h"
@@ -15,19 +15,18 @@
 //using namespace std;
 
 class Match {
+
     private:
         Team teamOne;
         Team teamTwo;
 
     public:
         Match();
-        void readTeamOneFile(String);
-        void readTeamTwoFile(String);
-        void readMatchFile(String);
+        void readTeamFile(char*, Team);
+        void readMatchFile(char*);
         void outputLowVerbosity();
         void outputMedVerbosity();
-        void outputHighVerbosity();
+        //void outputHighVerbosity();
 };
 
 #endif // MATCH_H
-*/

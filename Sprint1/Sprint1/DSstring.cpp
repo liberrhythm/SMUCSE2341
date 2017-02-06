@@ -126,7 +126,6 @@ int String::size() {
     return static_cast<int>(strlen(arr));
 }
 
-//fixing negative indices
 String String::substring(int start, int end) {
     if (start >= length || end >= length){
         throw std::out_of_range("OUT OF RANGE");
@@ -177,11 +176,20 @@ bool String::empty() {
     return false;
 }
 
-ostream& operator<< (ostream& output, const String& s) {
+ofstream& operator<< (ofstream& output, const String& s) {
     for(int i = 0; i < s.length; i++) {
         output << s.arr[i];
     }
     return output;
+}
+
+ifstream& operator>> (std::ifstream& input, String& s) {
+    const int sizeOfBuffer = 100;
+    char buffer[sizeOfBuffer];
+    input.getline(buffer, sizeOfBuffer, '\n');
+    s = String(buffer);
+    input.clear();
+    return input;
 }
 
 String::~String() {

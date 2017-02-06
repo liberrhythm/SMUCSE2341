@@ -1,12 +1,11 @@
-/*
 #include "match.h"
 using namespace std;
 
 Match::Match() {
-    
+
 }
 
-void Match::readTeamFile(String teamFileName, Team t) {
+void Match::readTeamFile(char* teamFileName, Team t) {
     ifstream inFile;
     inFile.open(teamFileName, ios::in);
     if (!inFile) {
@@ -16,25 +15,26 @@ void Match::readTeamFile(String teamFileName, Team t) {
 
     String teamName;
     int teamSize;
-    inFile.getline(teamName, 100);
+    inFile >> teamName;;
     inFile >> teamSize;
-    t(teamName, teamSize);
+    t.setTeamName(teamName);
+    t.setTeamSize(teamSize);
 
     int playerID;
     String playerName;
     inFile >> playerID;
-    inFile.getline(playerName, 100);
+    inFile >> playerName;
     while(!inFile.eof()) {
         Player p(playerID, playerName);
         t.addPlayer(p);
         inFile >> playerID;
-        inFile.getline(playerName, 100);
+        inFile >> playerName;
     }
 
     inFile.close();
 }
 
-void Match::readMatchFile(String matchFile) {
+void Match::readMatchFile(char* matchFile) {
     ifstream inFile;
     inFile.open(matchFile, ios::in);
     if (!inFile) {
@@ -51,18 +51,18 @@ void Match::readMatchFile(String matchFile) {
     int tagLocation;
     inFile >> tagger >> tagged >> tagTime >> tagLocation;
     while(!inFile.eof()) {
-        Tag t(tagger, tagged, tagLocation);
+        Tag tag(tagger, tagged, tagLocation);
         for (Player p: teamOne.getTeamPlayers()) {
-	    if (p.getID() == tagger) {
-            p.addTag(t);
-	    }
-	}
+            if (p.getID() == tagger) {
+                p.addTag(tag);
+            }
+        }
         for (Player p: teamTwo.getTeamPlayers()) {
-	    if (p.getID() == tagger) {
-            p.addTag(t);
-	    }
-	}
-	inFile >> tagger >> tagged >> tagTime >> tagLocation;
+            if (p.getID() == tagger) {
+                p.addTag(tag);
+            }
+        }
+        inFile >> tagger >> tagged >> tagTime >> tagLocation;
     }
 
     inFile.close();
@@ -112,11 +112,8 @@ void Match::outputMedVerbosity() {
         }
         for (int i = mostTags; i > -1; i++) {
             for (Player p: teamTwo.getTeamPlayers()) {
-                if (p.calculateNumTags() == mostTags) {
-                    for (Tag t: p.getPlayerTags()) {
-                        output << setw(10)<< p.getName() << " had a total of " << p.calculateNumTags() << "tags" << endl;
-                    }
-                    teamTwo.getTeamPlayers().pop_back(p);
+                if (p.calculateNumTags() == i) {
+                    outFile << setw(10)<< p.getName() << " had a total of " << p.calculateNumTags() << "tags" << endl;
                 }
             }
         }
@@ -131,11 +128,8 @@ void Match::outputMedVerbosity() {
         }
         for (int i = mostTags; i > -1; i++) {
             for (Player p: teamOne.getTeamPlayers()) {
-                if (p.calculateNumTags() == mostTags) {
-                    for (Tag t: p.getPlayerTags()) {
-                        output << setw(10)<< p.getName() << " had a total of " << p.calculateNumTags() << "tags" << endl;
-                    }
-                    teamOne.getTeamPlayers().pop_back(p);
+                if (p.calculateNumTags() == i) {
+                    outFile << setw(10)<< p.getName() << " had a total of " << p.calculateNumTags() << "tags" << endl;
                 }
             }
         }
@@ -151,11 +145,8 @@ void Match::outputMedVerbosity() {
         }
         for (int i = mostTags; i > -1; i++) {
             for (Player p: teamOne.getTeamPlayers()) {
-                if (p.calculateNumTags() == mostTags) {
-                    for (Tag t: p.getPlayerTags()) {
-                        output << setw(10)<< p.getName() << " had a total of " << p.calculateNumTags() << "tags" << endl;
-                    }
-                    teamOne.getTeamPlayers().pop_back(p);
+                if (p.calculateNumTags() == i) {
+                    outFile << setw(10)<< p.getName() << " had a total of " << p.calculateNumTags() << "tags" << endl;
                 }
             }
         }
@@ -170,49 +161,74 @@ void Match::outputMedVerbosity() {
         }
         for (int i = mostTags; i > -1; i++) {
             for (Player p: teamTwo.getTeamPlayers()) {
-                if (p.calculateNumTags() == mostTags) {
-                    for (Tag t: p.getPlayerTags()) {
-                        output << setw(10)<< p.getName() << " had a total of " << p.calculateNumTags() << "tags" << endl;
-                    }
-                    teamTwo.getTeamPlayers().pop_back(p);
+                if (p.calculateNumTags() == i) {
+                    outFile << setw(10)<< p.getName() << " had a total of " << p.calculateNumTags() << "tags" << endl;
                 }
             }
         }
         outFile << endl;
     }
 
-    output << "Best score from " << teamOne.getTeamName() << ": ";
-    int highestScore = 0;
-    for (Player p: teamOne.getTeamPlayers()) {
-        if (p.calculatePlayerScore() > highestScore) {
-            highestScore = p.calculatePlayerScore();
+    if (teamOne.getTeamName() > teamTwo.getTeamName()) {
+        outFile << "Best score from " << teamTwo.getTeamName() << ": ";
+        int highestScore = 0;
+        for (Player p: teamTwo.getTeamPlayers()) {
+            if (p.calculatePlayerScore() > highestScore) {
+                highestScore = p.calculatePlayerScore();
+            }
         }
-    }
-    for (Player p: teamOne.getTeamPlayers()) {
-        if (p.calculatePlayerScore() == highestScore) {
-            output << p.getName() << " (" << p.calculatePlayerScore() << " points)" << endl;
+        for (Player p: teamTwo.getTeamPlayers()) {
+            if (p.calculatePlayerScore() == highestScore) {
+                outFile << p.getName() << " (" << p.calculatePlayerScore() << " points)" << endl;
+            }
         }
-    }
 
-    output << "Best score from " << teamTwo.getTeamName() << ": ";
-    int highestScore = 0;
-    for (Player p: teamTwo.getTeamPlayers()) {
-        if (p.calculatePlayerScore() > highestScore) {
-            highestScore = p.calculatePlayerScore();
+        outFile << "Best score from " << teamOne.getTeamName() << ": ";
+        highestScore = 0;
+        for (Player p: teamOne.getTeamPlayers()) {
+            if (p.calculatePlayerScore() > highestScore) {
+                highestScore = p.calculatePlayerScore();
+            }
+        }
+        for (Player p: teamOne.getTeamPlayers()) {
+            if (p.calculatePlayerScore() == highestScore) {
+                outFile << p.getName() << " (" << p.calculatePlayerScore() << " points)" << endl;
+            }
         }
     }
-    for (Player p: teamTwo.getTeamPlayers()) {
-        if (p.calculatePlayerScore() == highestScore) {
-            output << p.getName() << " (" << p.calculatePlayerScore() << " points)" << endl;
+    else {
+        outFile << "Best score from " << teamOne.getTeamName() << ": ";
+        int highestScore = 0;
+        for (Player p: teamOne.getTeamPlayers()) {
+            if (p.calculatePlayerScore() > highestScore) {
+                highestScore = p.calculatePlayerScore();
+            }
+        }
+        for (Player p: teamOne.getTeamPlayers()) {
+            if (p.calculatePlayerScore() == highestScore) {
+                outFile << p.getName() << " (" << p.calculatePlayerScore() << " points)" << endl;
+            }
+        }
+
+        outFile << "Best score from " << teamTwo.getTeamName() << ": ";
+        highestScore = 0;
+        for (Player p: teamTwo.getTeamPlayers()) {
+            if (p.calculatePlayerScore() > highestScore) {
+                highestScore = p.calculatePlayerScore();
+            }
+        }
+        for (Player p: teamTwo.getTeamPlayers()) {
+            if (p.calculatePlayerScore() == highestScore) {
+                outFile << p.getName() << " (" << p.calculatePlayerScore() << " points)" << endl;
+            }
         }
     }
 
     outputLowVerbosity();
 }
 
-
+/*
 void Match::outputHighVerbosity() {
 
 }
-
 */
