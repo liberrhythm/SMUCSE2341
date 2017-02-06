@@ -1,3 +1,15 @@
+/*
+Course Number:  CSE 2341
+Programmer:     Sabrina Peng
+Date:           2/5/17
+Program Number: Sprint1
+Purpose:        Provides Team class definition in the form of function prototypes and data members
+Instructor: 	Mark Fontenot
+TA:             Chris Henk, Kevin Queenan
+
+Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
+*/
+
 #ifndef TEAM_H
 #define TEAM_H
 
@@ -19,7 +31,7 @@ class Team {
         std::vector<Player> players;
 
     public:
-        Team(char*);
+        Team(char*); //accepts parameter of team file name
         String getTeamName();
         void setTeamName(String);
         int getTeamSize();
@@ -28,8 +40,8 @@ class Team {
         void setTeamScore(int);
         std::vector<Player> getTeamPlayers();
         void setTeamPlayers(std::vector<Player>);
-        void addPlayer(Player);
-        void calculateTeamScore();
+        void addPlayer(Player); //adds Player objects to vector of Player objects
+        int calculateTeamScore();
 };
 
 #endif // TEAM_H

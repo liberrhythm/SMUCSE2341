@@ -1,3 +1,4 @@
+//test class for custom string implementation
 /*
 //#define CATCH_CONFIG_MAIN
 

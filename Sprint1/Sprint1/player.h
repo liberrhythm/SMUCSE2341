@@ -1,3 +1,15 @@
+/*
+Course Number:  CSE 2341
+Programmer:     Sabrina Peng
+Date:           2/5/17
+Program Number: Sprint1
+Purpose:        Provides Player class definition in the form of function prototypes and data members
+Instructor: 	Mark Fontenot
+TA:             Chris Henk, Kevin Queenan
+
+Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
+*/
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -29,13 +41,6 @@ class Player {
         int getScore();
         void setScore(int);
         void addToScore(int);
-        /*
-        std::vector<Tag> getPlayerTags();
-        void setPlayerTags(std::vector<Tag>);
-        void addTag(Tag);
-        int calculateNumTags();
-        int calculatePlayerScore();
-        */
 
 };
 
