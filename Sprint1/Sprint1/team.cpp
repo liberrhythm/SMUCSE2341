@@ -9,21 +9,28 @@ Team::Team(char* teamFileName) {
         exit(EXIT_FAILURE);
     }
 
-    String teamName;
+    char tName[100];
     int teamSize;
-    inFile >> teamName >> teamSize;
+
+    inFile.getline(tName, 100);
+    String teamName(tName);
+    inFile >> teamSize;
+
     setTeamName(teamName);
     setTeamSize(teamSize);
 
     int playerID;
-    String playerName;
+    char pName[100];
     inFile >> playerID;
-    inFile >> playerName;
+    inFile.getline(pName, 100);
+    String playerName(pName);
     while(!inFile.eof()) {
         Player p(playerID, playerName);
         addPlayer(p);
+
         inFile >> playerID;
-        inFile >> playerName;
+        inFile.getline(pName, 100);
+        playerName = pName;
     }
 
     inFile.close();

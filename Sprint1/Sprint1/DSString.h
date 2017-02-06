@@ -11,8 +11,8 @@
 
 class String {
 
-    friend std::ofstream& operator<< (std::ofstream&, const String&);
-    friend std::ifstream& operator>> (std::ifstream&, String&);
+    friend std::ostream& operator<< (std::ostream&, const String&);
+    //friend std::ifstream& operator>> (std::ifstream&, String&);
 
     private:
 

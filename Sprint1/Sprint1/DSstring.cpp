@@ -175,13 +175,15 @@ bool String::empty() {
     return false;
 }
 
-ofstream& operator<< (ofstream& output, const String& s) {
+
+ostream& operator<< (ostream& output, const String& s) {
     for(int i = 0; i < s.length; i++) {
         output << s.arr[i];
     }
     return output;
 }
 
+/*
 ifstream& operator>> (std::ifstream& input, String& s) {
     char buffer[100];
     input.getline(buffer, 100);
@@ -189,6 +191,7 @@ ifstream& operator>> (std::ifstream& input, String& s) {
     //input.clear();
     return input;
 }
+*/
 
 String::~String() {
     delete[] arr;

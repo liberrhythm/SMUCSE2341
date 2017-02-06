@@ -1,4 +1,4 @@
-#define CATCH_CONFIG_RUNNER
+//#define CATCH_CONFIG_RUNNER
 
 #include <iostream>
 #include <fstream>
@@ -32,12 +32,12 @@ int main(int argc, char* const argv[]) {
 */
 
 int main(int argc, char* argv[]) {
-    Match m(argv[1], argv[2], argv[3]);
-    if (argv[5] == "vlow") {
-        m.outputLowVerbosity(argv[4]);
+    Match m(argv[2], argv[3], argv[4]);
+    if (argv[6] == "vlow") {
+        m.outputLowVerbosity(argv[5]);
     }
     else {
-        m.outputMedVerbosity(argv[4]);
+        m.outputMedVerbosity(argv[5]);
     }
 
     return 0;

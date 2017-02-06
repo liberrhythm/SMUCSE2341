@@ -20,6 +20,6 @@ HEADERS += \
     DSString.h
 
 DISTFILES += \
-    cowboys.txt \
     sharks.txt \
-    match1.txt
+    ../build-Sprint1-Desktop_Qt_5_8_0_MinGW_32bit-Debug/cowboys.txt \
+    ../build-Sprint1-Desktop_Qt_5_8_0_MinGW_32bit-Debug/match1.txt
