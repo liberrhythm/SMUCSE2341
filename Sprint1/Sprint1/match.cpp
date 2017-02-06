@@ -29,12 +29,12 @@ Match::Match(char* teamOneFile, char* teamTwoFile, char* matchFile) : teamOne(te
     int tagged;
     int tagTime;
     int tagLocation;
-    inFile >> tagger >> tagged >> tagTime >> tagLocation; //primes while loop by reading in line of information
-
+    inFile >> tagger; //primes while loop by reading in line of information
     while(!inFile.eof()) {
+        inFile >> tagged >> tagTime >> tagLocation;
         Tag tag(tagger, tagged, tagLocation); //create a Tag object based on read-in information
         tags.push_back(tag); //add created tag into Match object vector of tags
-        inFile >> tagger >> tagged >> tagTime >> tagLocation; //continue reading
+        inFile >> tagger;; //continue reading
     }
     inFile.close();
 }
@@ -46,17 +46,17 @@ void Match::setTeamScores() {
             if (p.getID() == tag.getTaggerID()) { //if tagger ID in the Tag object is the same as a Player in Team 1
                 p.addTag(); //add 1 to number of tags player has made
                 p.addToScore(tag.getTagScore()); //adds tag's point value to player's score
+                teamOne.addTeamScore(tag.getTagScore()); //add tag to overall team score
             }
         }
         for (Player p: teamTwo.getTeamPlayers()) { //same for if tagger is in Team Two
             if (p.getID() == tag.getTaggerID()) {
                 p.addTag();
                 p.addToScore(tag.getTagScore());
+                teamTwo.addTeamScore(tag.getTagScore());
             }
         }
     }
-    teamOne.setTeamScore(teamOne.calculateTeamScore()); //update team scores based on players' combined scores
-    teamTwo.setTeamScore(teamTwo.calculateTeamScore());
 }
 
 //outputs points for each time and winner
@@ -79,7 +79,7 @@ void Match::outputLowVerbosity(char* outputFile) {
     if (teamOne.getTeamScore() > teamTwo.getTeamScore()){
         outFile << "Overall Winners: " << teamOne.getTeamName().c_str() << endl;
     }
-    else if (teamOne.getTeamScore() > teamTwo.getTeamScore()) {
+    else if (teamTwo.getTeamScore() > teamOne.getTeamScore()) {
         outFile << "Overall Winners: " << teamTwo.getTeamName().c_str() << endl;
     }
     else { //if team scores are the same
@@ -219,7 +219,7 @@ void Match::outputMedVerbosity(char* outputFile) {
         }
     }
 
-    outputLowVerbosity(outputFile); //outputs low verbosity summary
+    outputLowVerbosity(outputFile); //outputs low verbosity summary at end
 }
 
 /*

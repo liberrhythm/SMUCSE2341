@@ -15,7 +15,6 @@ using namespace std;
 
 //takes in command line argument for team file name to read in information
 Team::Team(char* teamFileName) {
-    teamScore = 0; //initializes team score to zero, updated in setTeamScores() function in Match class
     ifstream inFile(teamFileName, ios::in);
     if (!inFile) {
         cerr << "Team file could not be opened" << endl;
@@ -35,16 +34,17 @@ Team::Team(char* teamFileName) {
     int playerID;
     char pName[100];
     inFile >> playerID;
-    inFile.getline(pName, 100);
-    String playerName(pName);
+
     while(!inFile.eof()) {
+        inFile.getline(pName, 100);
+        String playerName(pName);
         Player p(playerID, playerName); //instantiates Player objects using read-in information
         addPlayer(p); //adds Player objects to Team vector of Players
 
         inFile >> playerID;
-        inFile.getline(pName, 100);
-        playerName = pName;
     }
+
+    teamScore = 0; //initializes team score to zero, updated in setTeamScores() function in Match class
 
     inFile.close();
 }
@@ -71,7 +71,6 @@ void Team::setTeamSize(int tSize) {
 
 //accessor for team score
 int Team::getTeamScore() {
-    cout << teamScore;
     return teamScore;
 }
 
@@ -97,21 +96,7 @@ void Team::addPlayer(Player player) {
     players.push_back(player);
 }
 
-/*
 //adds together total team score based on individual player scores
-void Team::calculateTeamScore() {
-    for (Player p: players) {
-        cout << teamScore;
-        cout << p.getScore();
-        teamScore += p.getScore();
-    }
-}
-*/
-
-int Team::calculateTeamScore() {
-    int total = 0;
-    for (Player p: players) {
-        total += p.getScore();
-    }
-    return total;
+void Team::addTeamScore(int tagValue) {
+    teamScore += tagValue;
 }

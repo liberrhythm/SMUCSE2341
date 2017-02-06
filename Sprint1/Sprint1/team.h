@@ -41,7 +41,7 @@ class Team {
         std::vector<Player> getTeamPlayers();
         void setTeamPlayers(std::vector<Player>);
         void addPlayer(Player); //adds Player objects to vector of Player objects
-        int calculateTeamScore();
+        void addTeamScore(int); //adds tag value to teamScore private data member
 };
 
 #endif // TEAM_H
