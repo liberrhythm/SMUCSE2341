@@ -1,4 +1,5 @@
 #include "team.h"
+using namespace std;
 
 Team::Team(char* teamFileName) {
     teamScore = 0;
@@ -19,7 +20,7 @@ Team::Team(char* teamFileName) {
     inFile >> playerID;
     inFile >> playerName;
     while(!inFile.eof()) {
-        Player p(playerID, playerName, *this);
+        Player p(playerID, playerName);
         addPlayer(p);
         inFile >> playerID;
         inFile >> playerName;
@@ -66,7 +67,7 @@ void Team::addPlayer(Player player) {
     players.push_back(player);
 }
 
-void Team::calculateTotalScore() {
+void Team::calculateTeamScore() {
     for (Player p: players) {
         teamScore += p.getScore();
     }

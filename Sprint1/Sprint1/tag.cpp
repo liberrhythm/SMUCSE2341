@@ -1,4 +1,5 @@
 #include "tag.h"
+using namespace std;
 
 Tag::Tag(int taggerID, int taggedID, int tagType) {
     setTaggerID(taggerID);

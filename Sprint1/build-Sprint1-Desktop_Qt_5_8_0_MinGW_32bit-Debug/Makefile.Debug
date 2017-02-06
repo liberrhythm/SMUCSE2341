@@ -58,7 +58,9 @@ OBJECTS       = debug/main.o \
 		debug/match.o \
 		debug/DSString.o
 
-DIST          =  catch.hpp \
+DIST          = cowboys.txt \
+		sharks.txt \
+		match1.txt catch.hpp \
 		tag.h \
 		team.h \
 		player.h \
@@ -117,16 +119,14 @@ compiler_clean:
 
 ####### Compile
 
-debug/main.o: ../Sprint1/main.cpp ../Sprint1/catch.hpp \
-		../Sprint1/DSString.h \
+debug/main.o: ../Sprint1/main.cpp ../Sprint1/DSString.h \
 		../Sprint1/tag.h \
 		../Sprint1/player.h \
 		../Sprint1/team.h \
 		../Sprint1/match.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\Sprint1\main.cpp
 
-debug/test.o: ../Sprint1/test.cpp ../Sprint1/catch.hpp \
-		../Sprint1/DSString.h
+debug/test.o: ../Sprint1/test.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\test.o ..\Sprint1\test.cpp
 
 debug/tag.o: ../Sprint1/tag.cpp ../Sprint1/tag.h \
@@ -144,7 +144,11 @@ debug/player.o: ../Sprint1/player.cpp ../Sprint1/player.h \
 		../Sprint1/tag.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\player.o ..\Sprint1\player.cpp
 
-debug/match.o: ../Sprint1/match.cpp 
+debug/match.o: ../Sprint1/match.cpp ../Sprint1/match.h \
+		../Sprint1/DSString.h \
+		../Sprint1/team.h \
+		../Sprint1/player.h \
+		../Sprint1/tag.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\match.o ..\Sprint1\match.cpp
 
 debug/DSString.o: ../Sprint1/DSString.cpp ../Sprint1/DSString.h

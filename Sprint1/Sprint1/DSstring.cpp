@@ -1,5 +1,4 @@
 #include "DSString.h"
-
 using namespace std;
 
 String::String() {
@@ -184,11 +183,10 @@ ofstream& operator<< (ofstream& output, const String& s) {
 }
 
 ifstream& operator>> (std::ifstream& input, String& s) {
-    const int sizeOfBuffer = 100;
-    char buffer[sizeOfBuffer];
-    input.getline(buffer, sizeOfBuffer, '\n');
+    char buffer[100];
+    input.getline(buffer, 100);
     s = String(buffer);
-    input.clear();
+    //input.clear();
     return input;
 }
 

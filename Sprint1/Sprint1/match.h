@@ -23,6 +23,7 @@ class Match {
 
     public:
         Match(char*, char*, char*);
+        void setTeamScores();
         void outputLowVerbosity(char*);
         void outputMedVerbosity(char*);
         //void outputHighVerbosity();

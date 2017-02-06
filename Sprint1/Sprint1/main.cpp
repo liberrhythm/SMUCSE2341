@@ -33,29 +33,12 @@ int main(int argc, char* const argv[]) {
 
 int main(int argc, char* argv[]) {
     Match m(argv[1], argv[2], argv[3]);
-
-}
-
-/*
-for (int i = 1; i < argc-1; i++) {
-    switch (i) {
-        case 1:
-            m.readTeamFile(argv[1], m.getTeamOne());
-            break;
-        case 2:
-            m.readTeamFile(argv[i], m.getTeamTwo());
-            break;
-        case 3:
-            m.readMatchFile(argv[i]);
-            break;
-        case 4:
-            if (argv[5] == "vlow") {
-                m.outputLowVerbosity(arg[i]);
-            }
-            else {
-                m.outputMedVerbosity(arg[i]);
-            }
-            break;
+    if (argv[5] == "vlow") {
+        m.outputLowVerbosity(argv[4]);
     }
+    else {
+        m.outputMedVerbosity(argv[4]);
+    }
+
+    return 0;
 }
-*/

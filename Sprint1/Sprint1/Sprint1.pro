@@ -18,3 +18,8 @@ HEADERS += \
     player.h \
     match.h \
     DSString.h
+
+DISTFILES += \
+    cowboys.txt \
+    sharks.txt \
+    match1.txt
