@@ -14,7 +14,9 @@ class Player {
     private:
         int id;
         String name;
-        std::vector<Tag> tags;
+        Team team;
+        int numTags;
+        int score;
 
     public:
         Player(int, String);
@@ -22,11 +24,21 @@ class Player {
         void setID(int);
         String getName();
         void setName(String);
+        Team getTeam();
+        void setTeam(Team);
+        int getNumTags();
+        void setNumTags(int);
+        void addTag();
+        int getScore();
+        void setScore(int);
+        void addToScore(int);
+        /*
         std::vector<Tag> getPlayerTags();
         void setPlayerTags(std::vector<Tag>);
         void addTag(Tag);
         int calculateNumTags();
         int calculatePlayerScore();
+        */
 
 };
 

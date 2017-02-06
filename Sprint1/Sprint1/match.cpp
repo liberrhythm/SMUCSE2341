@@ -5,6 +5,14 @@ Match::Match() {
 
 }
 
+Team Match::getTeamOne() {
+    return teamOne;
+}
+
+Team Match::getTeamTwo() {
+    return teamTwo;
+}
+
 void Match::readTeamFile(char* teamFileName, Team t) {
     ifstream inFile;
     inFile.open(teamFileName, ios::in);
@@ -68,10 +76,10 @@ void Match::readMatchFile(char* matchFile) {
     inFile.close();
 }
 
-void Match::outputLowVerbosity() {
-    ofstream outFile("vlow.txt", ios::out);
+void Match::outputLowVerbosity(char* outputFile) {
+    ofstream outFile(outputFile, ios::out);
     if (!outFile) {
-        cerr << "Vlow file could not be created" << endl;
+        cerr << "Output file could not be opened" << endl;
         exit(EXIT_FAILURE);
     }
 
@@ -95,8 +103,8 @@ void Match::outputLowVerbosity() {
     }
 }
 
-void Match::outputMedVerbosity() {
-    ofstream outFile("vmed.txt", ios::out);
+void Match::outputMedVerbosity(char* outputFile) {
+    ofstream outFile(outputFile, ios::out);
     if (!outFile) {
         cerr << "Vmed file could not be created" << endl;
         exit(EXIT_FAILURE);

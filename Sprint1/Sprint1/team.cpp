@@ -1,14 +1,33 @@
 #include "team.h"
 
-Team::Team() {
-    teamName = "";
-    teamSize = 0;
+Team::Team(char* teamFileName) {
+    readTeamFile(teamFileName);
 }
 
-Team::Team(String teamName, int teamSize) {
+void Team::readTeamFile(char* teamFileName) {
+    ifstream inFile;
+    inFile.open(teamFileName, ios::in);
+    if (!inFile) {
+        cerr << "Team file could not be opened" << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    inFile >> teamName >> teamSize;
     setTeamName(teamName);
     setTeamSize(teamSize);
-    setTeamPlayers(players);
+
+    int playerID;
+    String playerName;
+    inFile >> playerID;
+    inFile >> playerName;
+    while(!inFile.eof()) {
+        Player p(playerID, playerName);
+        t.addPlayer(p);
+        inFile >> playerID;
+        inFile >> playerName;
+    }
+
+    inFile.close();
 }
 
 String Team::getTeamName() {

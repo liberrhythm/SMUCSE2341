@@ -22,10 +22,12 @@ class Match {
 
     public:
         Match();
+        Team getTeamOne();
+        Team getTeamTwo();
         void readTeamFile(char*, Team);
         void readMatchFile(char*);
-        void outputLowVerbosity();
-        void outputMedVerbosity();
+        void outputLowVerbosity(char*);
+        void outputMedVerbosity(char*);
         //void outputHighVerbosity();
 };
 

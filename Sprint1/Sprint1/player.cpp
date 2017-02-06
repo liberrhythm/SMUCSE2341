@@ -1,9 +1,11 @@
 #include "player.h"
 
-Player::Player(int id, String name) {
+Player::Player(int id, String name, Team team) {
     setID(id);
     setName(name);
     setPlayerTags(tags);
+    numTags = 0;
+    score = 0;
 }
 
 int Player::getID() {
@@ -22,6 +24,39 @@ void Player::setName(String playerName) {
     name = playerName;
 }
 
+Team Player::getTeam() {
+    return team;
+}
+
+void Player::setTeam(Team t) {
+    team = t;
+}
+
+int Player::getNumTags() {
+    return numTags;
+}
+
+void Player::setNumTags(int num) {
+    numTags = num;
+}
+
+void Player::addTag() {
+    numTags++;
+}
+
+int Player::getScore() {
+    return score;
+}
+
+void Player::setScore(int playerScore) {
+    score = playerScore;
+}
+
+void Player::addToScore(int tagValue) {
+    score += tagValue;
+}
+
+/*
 std::vector<Tag> Player::getPlayerTags() {
     return tags;
 }
@@ -47,3 +82,4 @@ int Player::calculatePlayerScore() {
     }
     return playerTotal;
 }
+*/
