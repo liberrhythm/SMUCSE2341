@@ -19,13 +19,10 @@ class Match {
     private:
         Team teamOne;
         Team teamTwo;
+        std::vector<Tag> tags;
 
     public:
-        Match();
-        Team getTeamOne();
-        Team getTeamTwo();
-        void readTeamFile(char*, Team);
-        void readMatchFile(char*);
+        Match(char*, char*, char*);
         void outputLowVerbosity(char*);
         void outputMedVerbosity(char*);
         //void outputHighVerbosity();

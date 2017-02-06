@@ -1,17 +1,15 @@
 #include "team.h"
 
 Team::Team(char* teamFileName) {
-    readTeamFile(teamFileName);
-}
-
-void Team::readTeamFile(char* teamFileName) {
-    ifstream inFile;
-    inFile.open(teamFileName, ios::in);
+    teamScore = 0;
+    ifstream inFile(teamFileName, ios::in);
     if (!inFile) {
         cerr << "Team file could not be opened" << endl;
         exit(EXIT_FAILURE);
     }
 
+    String teamName;
+    int teamSize;
     inFile >> teamName >> teamSize;
     setTeamName(teamName);
     setTeamSize(teamSize);
@@ -21,8 +19,8 @@ void Team::readTeamFile(char* teamFileName) {
     inFile >> playerID;
     inFile >> playerName;
     while(!inFile.eof()) {
-        Player p(playerID, playerName);
-        t.addPlayer(p);
+        Player p(playerID, playerName, *this);
+        addPlayer(p);
         inFile >> playerID;
         inFile >> playerName;
     }
@@ -46,12 +44,16 @@ void Team::setTeamSize(int tSize) {
     teamSize = tSize;
 }
 
-std::vector<Player> Team::getTeamPlayers() {
-    return players;
+int Team::getTeamScore() {
+    return teamScore;
 }
 
-void Team::addPlayer(Player player) {
-    players.push_back(player);
+void Team::setTeamScore(int score) {
+    teamScore = score;
+}
+
+std::vector<Player> Team::getTeamPlayers() {
+    return players;
 }
 
 void Team::setTeamPlayers(std::vector<Player> tPlayers) {
@@ -60,10 +62,23 @@ void Team::setTeamPlayers(std::vector<Player> tPlayers) {
     }
 }
 
-int Team::calculateTeamScore() {
-    int teamScore = 0;
-    for (Player p: players) {
-        teamScore += p.calculatePlayerScore();
-    }
-    return teamScore;
+void Team::addPlayer(Player player) {
+    players.push_back(player);
 }
+
+void Team::calculateTotalScore() {
+    for (Player p: players) {
+        teamScore += p.getScore();
+    }
+}
+
+/*
+Team& Team::operator= (const Team& team) {
+    teamName = team.teamName;
+    teamSize = team.teamSize;
+    for (Player p: team.players) {
+        players.push_back(p);
+    }
+    return *this;
+}
+*/

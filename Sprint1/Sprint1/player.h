@@ -14,7 +14,6 @@ class Player {
     private:
         int id;
         String name;
-        Team team;
         int numTags;
         int score;
 
@@ -24,8 +23,6 @@ class Player {
         void setID(int);
         String getName();
         void setName(String);
-        Team getTeam();
-        void setTeam(Team);
         int getNumTags();
         void setNumTags(int);
         void addTag();

@@ -1,9 +1,8 @@
 #include "player.h"
 
-Player::Player(int id, String name, Team team) {
+Player::Player(int id, String name) {
     setID(id);
     setName(name);
-    setPlayerTags(tags);
     numTags = 0;
     score = 0;
 }
@@ -22,14 +21,6 @@ String Player::getName() {
 
 void Player::setName(String playerName) {
     name = playerName;
-}
-
-Team Player::getTeam() {
-    return team;
-}
-
-void Player::setTeam(Team t) {
-    team = t;
 }
 
 int Player::getNumTags() {
