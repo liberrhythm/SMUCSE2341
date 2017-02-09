@@ -45,7 +45,7 @@ int main(int argc, char* const argv[]) {
 
 int main(int argc, char* argv[]) {
     Match m(argv[2], argv[3], argv[4]); //instantiates Match object with team and match files
-    m.setTeamScores(); //uses vector of Tag variables to determine player and team scores
+    //m.setTeamScores(); //uses vector of Tag variables to determine player and team scores
     String verb(argv[6]);
     if (verb == "vlow") { //tests to determine verbosity
         m.outputLowVerbosity(argv[5]);

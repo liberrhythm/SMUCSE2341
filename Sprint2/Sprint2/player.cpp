@@ -18,11 +18,11 @@ Player::Player(int id, String name) {
     setID(id);
     setName(name);
     numTags = 0; //number of tags and score originally zero, updated in setTeamScores() in Match class
-    score = 0;
+    playerScore = 0;
 }
 
 //accessor for player ID
-int Player::getID() {
+int Player::getID() const {
     return id;
 }
 
@@ -32,7 +32,7 @@ void Player::setID(int playerID) {
 }
 
 //accessor for player name
-String Player::getName() {
+String Player::getName() const {
     return name;
 }
 
@@ -42,7 +42,7 @@ void Player::setName(String playerName) {
 }
 
 //accessor for number of tags made by player
-int Player::getNumTags() {
+int Player::getNumTags() const {
     return numTags;
 }
 
@@ -51,22 +51,54 @@ void Player::setNumTags(int num) {
     numTags = num;
 }
 
-//increments number of tags made by player
-void Player::addTag() {
-    numTags++;
-}
-
 //accessor for player score
-int Player::getScore() {
-    return score;
+int Player::getScore() const {
+    return playerScore;
 }
 
 //mutator for player score
-void Player::setScore(int playerScore) {
-    score = playerScore;
+void Player::setScore(int pScore) {
+    playerScore = pScore;
 }
 
-//adds value of tag by player to player's existing score
-void Player::addToScore(int tagValue) {
-    score += tagValue;
+//accessor for player's vector of tags
+std::vector<Tag> Player::getPlayerTags() const {
+    return playerTags;
+}
+
+//mutator for player's vector of tags
+void Player::setPlayerTags(std::vector<Tag> tags) {
+    for (Tag t: tags) {
+        playerTags.push_back(t);
+    }
+}
+
+//adds a Tag object to player (player is the tagger)
+//increments number of tags made by player and updates player score based on tag score
+void Player::addTag(Tag t) {
+    playerTags.push_back(t);
+    numTags++;
+    playerScore += t.getTagScore();
+}
+
+//overloaded assignment operator to avoid default memberwise copy when assigning player objects
+//to other player objects
+Player& Player::operator= (const Player& p) {
+    id = p.getID();
+    name = p.getName();
+    numTags = p.getNumTags();
+    playerScore = p.getScore();
+    for (Tag t: p.getPlayerTags()) {
+        playerTags.push_back(t);
+    }
+    return *this;
+}
+
+//overloaded greater than operator to determine precedence of player objects
+//returns true if this player has more successful tags than parameter player
+bool Player::operator> (const Player& p) {
+    if (numTags > p.getNumTags()) {
+        return true;
+    }
+    return false;
 }

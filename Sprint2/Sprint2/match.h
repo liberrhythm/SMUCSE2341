@@ -31,11 +31,13 @@ class Match {
     private:
         Team teamOne;
         Team teamTwo;
-        std::vector<Tag> tags; //contains all tags for the match
+
+        //std::vector<Tag> tags; //contains all tags for the match
 
     public:
         Match(char*, char*, char*); //takes in three parameters (team and match files)
-        void setTeamScores();
+        void orderTeams();
+        //void setTeamScores();
         void outputLowVerbosity(char*);
         void outputMedVerbosity(char*);
         //void outputHighVerbosity();

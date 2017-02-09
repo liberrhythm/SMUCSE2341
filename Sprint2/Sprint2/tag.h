@@ -36,7 +36,7 @@ class Tag {
         int getTagType();
         void setTagType(int);
         int getTagScore();
-        void setTagScore();
+        void setTagScore(int);
 
 };
 

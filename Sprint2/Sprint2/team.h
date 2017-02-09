@@ -32,16 +32,20 @@ class Team {
 
     public:
         Team(char*); //accepts parameter of team file name
-        String getTeamName();
+
+        String getTeamName() const;
         void setTeamName(String);
-        int getTeamSize();
+        int getTeamSize() const;
         void setTeamSize(int);
-        int getTeamScore();
+        int getTeamScore() const;
         void setTeamScore(int);
-        std::vector<Player> getTeamPlayers();
+        std::vector<Player> getTeamPlayers() const;
         void setTeamPlayers(std::vector<Player>);
+
         void addPlayer(Player); //adds Player objects to vector of Player objects
-        void addTeamScore(int); //adds tag value to teamScore private data member
+
+        Team& operator= (const Team&);
+        bool operator> (const Team&);
 };
 
 #endif // TEAM_H

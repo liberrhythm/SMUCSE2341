@@ -18,7 +18,7 @@ Tag::Tag(int taggerID, int taggedID, int tagType) {
     setTaggerID(taggerID);
     setTaggedID(taggedID);
     setTagType(tagType);
-    setTagScore();
+    setTagScore(tagType);
 }
 
 //accessor for tagger ID
@@ -57,8 +57,8 @@ int Tag::getTagScore() {
 }
 
 //mutator for tag value
-void Tag::setTagScore() {
-    switch (tagType) { //assigns tag value based on location hit
+void Tag::setTagScore(int tagLocation) {
+    switch (tagLocation) { //assigns tag value based on location hit
         case 1: //back shot
             tagScore = 5;
             break;

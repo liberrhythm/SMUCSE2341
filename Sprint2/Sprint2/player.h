@@ -27,21 +27,26 @@ class Player {
         int id;
         String name;
         int numTags;
-        int score;
+        int playerScore;
+        std::vector<Tag> playerTags;
 
     public:
         Player(int, String);
-        int getID();
+        int getID() const;
         void setID(int);
-        String getName();
+        String getName() const;
         void setName(String);
-        int getNumTags();
+        int getNumTags() const;
         void setNumTags(int);
-        void addTag();
-        int getScore();
+        int getScore() const;
         void setScore(int);
-        void addToScore(int);
+        std::vector<Tag> getPlayerTags() const;
+        void setPlayerTags(std::vector<Tag>);
 
+        void addTag(Tag);
+
+        Player& operator= (const Player&);
+        bool operator > (const Player&);
 };
 
 #endif // PLAYER_H

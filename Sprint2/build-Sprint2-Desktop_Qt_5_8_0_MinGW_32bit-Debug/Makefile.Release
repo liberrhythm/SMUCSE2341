@@ -58,7 +58,10 @@ OBJECTS       = release/main.o \
 		release/team.o \
 		release/test.o
 
-DIST          = .gitignore catch.hpp \
+DIST          = .gitignore \
+		../build-Sprint2-Desktop_Qt_5_8_0_MinGW_32bit-Debug/cowboys.txt \
+		../build-Sprint2-Desktop_Qt_5_8_0_MinGW_32bit-Debug/match1.txt \
+		../build-Sprint2-Desktop_Qt_5_8_0_MinGW_32bit-Debug/sharks.txt catch.hpp \
 		DSString.h \
 		match.h \
 		player.h \

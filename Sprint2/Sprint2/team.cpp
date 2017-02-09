@@ -21,6 +21,8 @@ Team::Team(char* teamFileName) {
         exit(EXIT_FAILURE);
     }
 
+    teamScore = 0; //initializes team score to zero, updated when addPlayer function is called
+
     char tName[100]; //creates temporary char array for construction of String
     int teamSize;
     inFile.getline(tName, 100); //reads in characters including whitespace until newline delimiter reached or more than 100 chars read
@@ -44,13 +46,11 @@ Team::Team(char* teamFileName) {
         inFile >> playerID;
     }
 
-    teamScore = 0; //initializes team score to zero, updated in setTeamScores() function in Match class
-
     inFile.close();
 }
 
 //accessor for team name
-String Team::getTeamName() {
+String Team::getTeamName() const {
     return teamName;
 }
 
@@ -60,7 +60,7 @@ void Team::setTeamName(String tName) {
 }
 
 //accessor for team size
-int Team::getTeamSize() {
+int Team::getTeamSize() const {
     return teamSize;
 }
 
@@ -70,7 +70,7 @@ void Team::setTeamSize(int tSize) {
 }
 
 //accessor for team score
-int Team::getTeamScore() {
+int Team::getTeamScore() const {
     return teamScore;
 }
 
@@ -80,7 +80,7 @@ void Team::setTeamScore(int score) {
 }
 
 //accessor for team vector of player objects
-std::vector<Player> Team::getTeamPlayers() {
+std::vector<Player> Team::getTeamPlayers() const {
     return players;
 }
 
@@ -92,11 +92,29 @@ void Team::setTeamPlayers(std::vector<Player> tPlayers) {
 }
 
 //adds players to team vector of player objects
-void Team::addPlayer(Player player) {
-    players.push_back(player);
+//increments team size and adds player's score to overall team score
+void Team::addPlayer(Player p) {
+    players.push_back(p);
+    teamSize++;
+    teamScore += p.getScore();
 }
 
-//adds together total team score based on individual player scores
-void Team::addTeamScore(int tagValue) {
-    teamScore += tagValue;
+//overloaded assignment operator to avoid default memberwise copy when assigning team objects to each other
+Team& Team::operator= (const Team& team) {
+    teamName = team.getTeamName();
+    teamSize = team.getTeamSize();
+    teamScore = team.getTeamScore();
+    for (Player p: team.getTeamPlayers()) {
+        players.push_back(p);
+    }
+    return *this;
+}
+
+//overloaded greater than operator to determine alphabetic order of team names
+//returns true if later in alphabet than parameter
+bool Team::operator> (const Team& team) {
+    if (teamName > team.getTeamName()) {
+        return true;
+    }
+    return false;
 }
