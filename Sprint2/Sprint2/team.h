@@ -37,15 +37,16 @@ class Team {
         void setTeamName(String);
         int getTeamSize() const;
         void setTeamSize(int);
-        int getTeamScore() const;
+        int getTeamScore();
         void setTeamScore(int);
-        std::vector<Player> getTeamPlayers() const;
+        std::vector<Player>& getTeamPlayers();
         void setTeamPlayers(std::vector<Player>);
 
         void addPlayer(Player); //adds Player objects to vector of Player objects
+        void addToScore(int);
 
-        Team& operator= (const Team&);
-        bool operator> (const Team&);
+        //Team& operator= (const Team&);
+        //bool operator> (const Team&);
 };
 
 #endif // TEAM_H

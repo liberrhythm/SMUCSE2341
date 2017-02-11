@@ -33,12 +33,12 @@ Match::Match(char* teamOneFile, char* teamTwoFile, char* matchFile) : teamOne(te
     while(!inFile.eof()) {
         inFile >> tagged >> tagTime >> tagLocation;
         Tag tag(tagger, tagged, tagLocation); //create a Tag object based on read-in information
-        for (Player p: teamOne.getTeamPlayers()) { //cycles through team one's team players
-            if (p.getID() == tag.getTaggerID()) { //tests to see if there is a player in team one whose id matches tagger's id
+        for (Player& p: teamOne.getTeamPlayers()) { //cycles through team one's team players
+            if (p.getID() == tag.getTaggerID()) { //tests to see if player's id matches tagger's id
                 p.addTag(tag); //if true, adds tag to player's vector of tags and updates player's information
             }
         }
-        for (Player p: teamTwo.getTeamPlayers()) { //does same thing for team two as for team one above
+        for (Player& p: teamTwo.getTeamPlayers()) { //does same thing for team two as for team one above
             if (p.getID() == tag.getTaggerID()) {
                 p.addTag(tag);
             }
@@ -48,8 +48,10 @@ Match::Match(char* teamOneFile, char* teamTwoFile, char* matchFile) : teamOne(te
     }
 
     inFile.close();
+    //orderTeams();
 }
 
+/*
 void Match::orderTeams() {
     if (teamOne > teamTwo) {
         Team temp = teamTwo;
@@ -57,14 +59,10 @@ void Match::orderTeams() {
         teamOne = temp;
     }
 }
+*/
 
 //outputs points for each time and winner
-void Match::outputLowVerbosity(char* outputFile) {
-    ofstream outFile(outputFile, ios::out);
-    if (!outFile) {
-        cerr << "Output file could not be opened" << endl;
-        exit(EXIT_FAILURE);
-    }
+void Match::outputLowVerbosity(ofstream& outFile) {
 
     outFile << teamOne.getTeamName().c_str() << ": " << teamOne.getTeamScore() << " points" << endl;
     outFile << teamTwo.getTeamName().c_str() << ": " << teamTwo.getTeamScore() << " points" << endl;
@@ -81,12 +79,7 @@ void Match::outputLowVerbosity(char* outputFile) {
 }
 
 //outputs low verbosity information along with detailed information about total tags for each player
-void Match::outputMedVerbosity(char* outputFile) {
-    ofstream outFile(outputFile, ios::out);
-    if (!outFile) {
-        cerr << "Output file could not be opened" << endl;
-        exit(EXIT_FAILURE);
-    }
+void Match::outputMedVerbosity(ofstream& outFile) {
 
     outFile << teamOne.getTeamName().c_str() << endl; //repeat above code but in reverse order (Team One first, then Team Two)
     int mostTags = 0;
@@ -98,7 +91,7 @@ void Match::outputMedVerbosity(char* outputFile) {
     for (int i = mostTags; i > -1; i--) {
         for (Player p: teamOne.getTeamPlayers()) {
             if (p.getNumTags() == i) {
-                outFile << '\t' << p.getName().c_str() << " had a total of " << p.getNumTags() << "tags" << endl;
+                outFile << '\t' << p.getName().c_str() << " had a total of " << p.getNumTags() << " tags" << endl;
             }
         }
     }
@@ -114,7 +107,7 @@ void Match::outputMedVerbosity(char* outputFile) {
     for (int i = mostTags; i > -1; i--) {
         for (Player p: teamTwo.getTeamPlayers()) {
             if (p.getNumTags() == i) {
-                outFile << '\t' << p.getName().c_str() << " had a total of " << p.getNumTags() << "tags" << endl;
+                outFile << '\t' << p.getName().c_str() << " had a total of " << p.getNumTags() << " tags" << endl;
             }
         }
     }
@@ -146,8 +139,7 @@ void Match::outputMedVerbosity(char* outputFile) {
             outFile << p.getName().c_str() << " (" << p.getScore() << " points)" << endl;
         }
     }
-
-    outputLowVerbosity(outputFile); //outputs low verbosity summary at end
+    outputLowVerbosity(outFile); //outputs low verbosity summary at end
 }
 
 /*

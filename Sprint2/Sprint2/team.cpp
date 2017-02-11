@@ -70,8 +70,12 @@ void Team::setTeamSize(int tSize) {
 }
 
 //accessor for team score
-int Team::getTeamScore() const {
-    return teamScore;
+int Team::getTeamScore() {
+    int total = 0;
+    for (Player& p: players) {
+        total+= p.getScore();
+    }
+    return total;
 }
 
 //mutator for team score
@@ -80,7 +84,7 @@ void Team::setTeamScore(int score) {
 }
 
 //accessor for team vector of player objects
-std::vector<Player> Team::getTeamPlayers() const {
+std::vector<Player>& Team::getTeamPlayers() {
     return players;
 }
 
@@ -95,10 +99,13 @@ void Team::setTeamPlayers(std::vector<Player> tPlayers) {
 //increments team size and adds player's score to overall team score
 void Team::addPlayer(Player p) {
     players.push_back(p);
-    teamSize++;
-    teamScore += p.getScore();
 }
 
+void Team::addToScore(int tagScore) {
+    teamScore += tagScore;
+}
+
+/*
 //overloaded assignment operator to avoid default memberwise copy when assigning team objects to each other
 Team& Team::operator= (const Team& team) {
     teamName = team.getTeamName();
@@ -118,3 +125,4 @@ bool Team::operator> (const Team& team) {
     }
     return false;
 }
+*/

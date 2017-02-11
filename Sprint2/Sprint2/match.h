@@ -38,8 +38,8 @@ class Match {
         Match(char*, char*, char*); //takes in three parameters (team and match files)
         void orderTeams();
         //void setTeamScores();
-        void outputLowVerbosity(char*);
-        void outputMedVerbosity(char*);
+        void outputLowVerbosity(std::ofstream&);
+        void outputMedVerbosity(std::ofstream&);
         //void outputHighVerbosity();
 };
 
