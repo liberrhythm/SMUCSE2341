@@ -113,7 +113,6 @@ void Match::outputMedVerbosity(ofstream& outFile) {
     }
     outFile << endl;
 
-
     outFile << "Best score from " << teamOne.getTeamName().c_str() << ": ";
     int highestScore = 0;
     for (Player p: teamOne.getTeamPlayers()) {
@@ -142,8 +141,69 @@ void Match::outputMedVerbosity(ofstream& outFile) {
     outputLowVerbosity(outFile); //outputs low verbosity summary at end
 }
 
-/*
-void Match::outputHighVerbosity() {
+void Match::outputHighVerbosity(ofstream& outFile) {
+    outFile << teamOne.getTeamName().c_str() << endl;
+    int mostTags = 0;
+    for (Player p: teamOne.getTeamPlayers()) {
+        if (p.getNumTags() > mostTags) {
+            mostTags = p.getNumTags();
+        }
+    }
+    for (int i = mostTags; i > -1; i--) {
+        for (Player pTagger: teamOne.getTeamPlayers()) {
+            if (pTagger.getNumTags() == i) {
+                for (Player pTagged: teamTwo.getTeamPlayers()) {
+                    outFile << '\t' << pTagger.getName().c_str() << " tagged " << pTagged.getName().c_str();
+                    int totalTags = 0;
+                    for (Tag tag: pTagger.getPlayerTags()) {
+                        if (tag.getTaggedID() == pTagged.getID()) {
+                            totalTags++;
+                        }
+                    }
+                    outFile << " " << totalTags << " times" << endl;
+                }
+                outFile << '\t' << pTagger.getName().c_str() << " had a total of " << pTagger.getNumTags() << " tags" << endl;
+            }
+        }
+    }
+    outFile << '\t' << teamOne.getTeamName().c_str() << ": " << teamOne.getTeamScore() << " points" << endl << endl;
 
+
+    outFile << teamTwo.getTeamName().c_str() << endl;
+    mostTags = 0;
+    for (Player p: teamTwo.getTeamPlayers()) {
+        if (p.getNumTags() > mostTags) {
+            mostTags = p.getNumTags();
+        }
+    }
+    for (int i = mostTags; i > -1; i--) {
+        for (Player pTagger: teamTwo.getTeamPlayers()) {
+            if (pTagger.getNumTags() == i) {
+                for (Player pTagged: teamOne.getTeamPlayers()) {
+                    outFile << '\t' << pTagger.getName().c_str() << " tagged " << pTagged.getName().c_str();
+                    int totalTags = 0;
+                    for (Tag tag: pTagger.getPlayerTags()) {
+                        if (tag.getTaggedID() == pTagged.getID()) {
+                            totalTags++;
+                        }
+                    }
+                    outFile << " " << totalTags << " times" << endl;
+                }
+                outFile << '\t' << pTagger.getName().c_str() << " had a total of " << pTagger.getNumTags() << " tags" << endl;
+            }
+        }
+    }
+    outFile << '\t' << teamTwo.getTeamName().c_str() << ": " << teamTwo.getTeamScore() << " points" << endl << endl;
+
+
+    if (teamOne.getTeamScore() > teamTwo.getTeamScore()){
+        outFile << "Winners: " << teamOne.getTeamName().c_str() << endl;
+    }
+    else if (teamTwo.getTeamScore() > teamOne.getTeamScore()) {
+        outFile << "Winners: " << teamTwo.getTeamName().c_str() << endl;
+    }
+    else { //if team scores are the same
+        outFile << "Winners: Teams Tied" << endl;
+    }
 }
-*/
+

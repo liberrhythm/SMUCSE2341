@@ -45,21 +45,24 @@ int main(int argc, char* const argv[]) {
 
 int main(int argc, char* argv[]) {
     Match m(argv[2], argv[3], argv[4]); //instantiates Match object with team and match files
-    //m.setTeamScores(); //uses vector of Tag variables to determine player and team scores
+
     String verb(argv[6]);
     ofstream outFile(argv[5]);
     if (!outFile) {
         cerr << "Output file could not be opened" << endl;
         exit(EXIT_FAILURE);
     }
+
     if (verb == "vlow") { //tests to determine verbosity
         m.outputLowVerbosity(outFile);
     }
-    else {
+    else if (verb == "vmed"){
         m.outputMedVerbosity(outFile);
+    }
+    else {
+        m.outputHighVerbosity(outFile);
     }
 
     outFile.close();
-
     return 0;
 }

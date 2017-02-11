@@ -32,15 +32,12 @@ class Match {
         Team teamOne;
         Team teamTwo;
 
-        //std::vector<Tag> tags; //contains all tags for the match
-
     public:
         Match(char*, char*, char*); //takes in three parameters (team and match files)
         void orderTeams();
-        //void setTeamScores();
         void outputLowVerbosity(std::ofstream&);
         void outputMedVerbosity(std::ofstream&);
-        //void outputHighVerbosity();
+        void outputHighVerbosity(std::ofstream&);
 };
 
 #endif // MATCH_H
