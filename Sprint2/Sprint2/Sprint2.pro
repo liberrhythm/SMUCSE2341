@@ -23,4 +23,5 @@ HEADERS += \
     match.h \
     player.h \
     tag.h \
-    team.h
+    team.h \
+    DSVector.h
