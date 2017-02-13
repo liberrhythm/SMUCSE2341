@@ -1,3 +1,9 @@
+C:\Users\Sabrina\CSE2341-17S-liberrhythm\Sprint2\build-Sprint2-Desktop_Qt_5_8_0_MinGW_32bit-Debug\debug\Sprint2.exe
+cowboys.txt
+sharks.txt
+match1.txt
+OutputFile.txt
+vhigh
 The Cowboys
 	 Sally tagged  Jack 1 times
 	 Sally tagged  Jill 1 times

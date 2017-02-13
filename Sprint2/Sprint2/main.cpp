@@ -55,6 +55,10 @@ int main(int argc, char* argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    for (int i = 0; i < 6; i++) {
+        outFile << argv[i] << endl;
+    }
+
     if (verb == "vlow") { //tests to determine verbosity
         m.outputLowVerbosity(outFile);
     }
