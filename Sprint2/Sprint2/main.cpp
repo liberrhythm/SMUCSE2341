@@ -46,10 +46,10 @@ int main(int argc, char* const argv[]) {
 */
 
 int main(int argc, char* argv[]) {
-    Match m(argv[2], argv[3], argv[4]); //instantiates Match object with team and match files
+    Match m(argv[1], argv[2], argv[3]); //instantiates Match object with team and match files
 
-    String verb(argv[6]);
-    ofstream outFile(argv[5]);
+    String verb(argv[5]);
+    ofstream outFile(argv[4]);
     if (!outFile) {
         cerr << "Output file could not be opened" << endl;
         exit(EXIT_FAILURE);
