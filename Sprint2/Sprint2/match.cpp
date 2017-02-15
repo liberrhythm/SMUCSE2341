@@ -44,7 +44,7 @@ Match::Match(char* teamOneFile, char* teamTwoFile, char* matchFile) : teamOne(te
             }
         }
         //tags.push_back(tag); //add created tag into Match object vector of tags
-        inFile >> tagger;; //continue reading
+        inFile >> tagger; //continue reading
     }
 
     inFile.close();

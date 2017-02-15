@@ -29,7 +29,7 @@ class Vector {
         T& operator[] (const int); //finds element at specified index
 
         int size();
-        int capacity();
+        int getCapacity();
         void resize();
         void push_back(const T&); //adds element to end of vector
         void pop_back(); //removes element from end of vector
@@ -93,7 +93,7 @@ int Vector<T>::size() {
 }
 
 template<typename T>
-int Vector<T>::capacity() {
+int Vector<T>::getCapacity() {
     return capacity;
 }
 
