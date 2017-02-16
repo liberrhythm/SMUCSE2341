@@ -32,6 +32,7 @@ class Player {
         std::vector<Tag> playerTags;
 
     public:
+        Player();
         Player(int, String);
         int getID() const;
         void setID(int);

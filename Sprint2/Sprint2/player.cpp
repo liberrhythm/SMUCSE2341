@@ -13,6 +13,12 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #include "player.h"
 using namespace std;
 
+//Non-parameterized Player default constructor
+Player::Player() {
+    id = 0;
+    name = "";
+}
+
 //Player constructor with parameters of read-in information
 Player::Player(int id, String name) {
     setID(id);

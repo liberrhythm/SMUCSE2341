@@ -1,6 +1,6 @@
 //test class for custom string/vector implementation
 
-#define CATCH_CONFIG_MAIN
+//#define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
 #include "DSVector.h"
@@ -13,10 +13,8 @@ TEST_CASE("Vector class", "[vector]"){
     for (int i = 0; i < 15; i++) {
         integers2.push_back(i);
     }
-    Vector<int> integers3;
-    for (int i = 0; i < 20; i++) {
-        integers2.push_back(i+1);
-        integers3.push_back(i);
+    Vector<int> integers3 = integers2;
+    for (int i = 0; i < 10; i++) {
         integers3.pop_back();
     }
 
@@ -37,14 +35,22 @@ TEST_CASE("Vector class", "[vector]"){
         strings2.push_back(s[i]);
     }
 
-
     SECTION("Size function"){
         REQUIRE(integers1.size() == 0);
         REQUIRE(integers2.size() == 15);
-        REQUIRE(integers3.size() == 20);
+        REQUIRE(integers3.size() == 5);
         REQUIRE(strings1.size() == 0);
         REQUIRE(strings2.size() == 10);
     }
+
+    SECTION("Capacity function"){
+        REQUIRE(integers1.getCapacity() == 10);
+        REQUIRE(integers2.getCapacity() == 20);
+        REQUIRE(integers3.getCapacity() == 20);
+        REQUIRE(strings1.getCapacity() == 10);
+        REQUIRE(strings2.getCapacity() == 10);
+    }
+
 }
 
 

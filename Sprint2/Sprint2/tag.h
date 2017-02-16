@@ -28,6 +28,7 @@ class Tag {
         int tagScore;
 
     public:
+        Tag();
         Tag(int, int, int); //takes in taggerID, taggedID, and tagType parameters
         int getTaggerID();
         void setTaggerID(int);

@@ -13,6 +13,14 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #include "tag.h"
 using namespace std;
 
+//Non-parameterized Tag default constructor
+Tag::Tag() {
+    taggerID = 0;
+    taggedID = 0;
+    tagType = 0;
+    tagScore = 0;
+}
+
 //constructor for Tag object using read-in information, tagScore set based on tagType in separate function
 Tag::Tag(int taggerID, int taggedID, int tagType) {
     setTaggerID(taggerID);
