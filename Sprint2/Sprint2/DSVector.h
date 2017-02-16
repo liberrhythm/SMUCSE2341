@@ -16,7 +16,7 @@ class Vector {
 
     public:
         Vector();
-        //Vector(const T*);
+        Vector(const int);
         Vector(const Vector<T>&); //copy constructor
 
         //Vector& operator= (const T*);
@@ -49,6 +49,14 @@ Vector<T>::Vector() {
 }
 
 template<typename T>
+Vector<T>::Vector(int cap) {
+    length = 0;
+    capacity = cap;
+    arr = new T[capacity];
+}
+
+//Parameterized constructor taking a Vector object to instantiate this Vector
+template<typename T>
 Vector<T>::Vector(const Vector<T>& v) {
     length = v.length;
     capacity = v.capacity;
@@ -58,9 +66,11 @@ Vector<T>::Vector(const Vector<T>& v) {
     }
 }
 
+//Overloaded assignment operator to assign vectors to other, already-instantiated vectors
 template<typename T>
 Vector<T>& Vector<T>::operator= (const Vector<T>& v) {
     if (length != v.length || capacity != v.capacity) {
+        delete[] arr;
         length = v.length;
         capacity = v.capacity;
         arr = new T[capacity];
@@ -71,27 +81,24 @@ Vector<T>& Vector<T>::operator= (const Vector<T>& v) {
     return *this;
 }
 
-//index could be out of range, negative indices???
+//Overloaded subscript operator that returns element by reference at specified index parameter
 template<typename T>
 T& Vector<T>::operator[] (const int index) {
-    if (index >= length) { //if index is out of normal range or equal to each other
-        if (index == 0) { //if index == length == 0
-            return arr[index];
-        }
-        else {
-            throw std::out_of_range("OUT OF RANGE");
-        }
+    if (index >= length) { //if index is out of normal range or equal to length
+        throw std::out_of_range("OUT OF RANGE");
     }
     else {
         return arr[index]; //normal searching based on typical 0 to length-1 cases
     }
 }
 
+//Returns number of elements in vector
 template<typename T>
 int Vector<T>::size() {
     return length;
 }
 
+//Returns amount of memory blocks dynamically allocated in vector
 template<typename T>
 int Vector<T>::getCapacity() {
     return capacity;
@@ -110,7 +117,7 @@ void Vector<T>::resize() {
     for (int i = 0; i < length; i++) {
         arr[i] = temp[i];
     }
-    //delete[] temp; //delete elements of and release memory in temporary array, needed???
+    delete[] temp; //delete elements of and release memory in temporary array, needed???
 }
 
 //edge cases: if capacity is not big enough, resize!
@@ -138,6 +145,7 @@ void Vector<T>::pop_back() {
     for (int i = 0; i < length; i++) {
         arr[i] = temp[i];
     }
+    delete[] temp;
 }
 
 template<typename T>

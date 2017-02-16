@@ -1,12 +1,56 @@
-//test class for custom string implementation
-/*
-//#define CATCH_CONFIG_MAIN
+//test class for custom string/vector implementation
+
+#define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
-
+#include "DSVector.h"
 #include "DSString.h"
 
+TEST_CASE("Vector class", "[vector]"){
 
+    Vector<int> integers1;
+    Vector<int> integers2;
+    for (int i = 0; i < 15; i++) {
+        integers2.push_back(i);
+    }
+    Vector<int> integers3;
+    for (int i = 0; i < 20; i++) {
+        integers2.push_back(i+1);
+        integers3.push_back(i);
+        integers3.pop_back();
+    }
+
+    Vector<String> strings1;
+    Vector<String> strings2;
+    String s[10];
+    s[0] = String("testString");
+    s[1] = String("a test string");
+    s[2] = String("");
+    s[3] = String("THIS IS AN UPPERCASE STRING");
+    s[4] = String("this is an uppercase string");
+    s[5] = String("\n");
+    s[6] = String("");
+    s[7] = String("  split  split  split  ");
+    s[8] = String("                          ");
+    s[9] = String("testString");
+    for (int i = 0; i < 10; i++) {
+        strings2.push_back(s[i]);
+    }
+
+
+    SECTION("Size function"){
+        REQUIRE(integers1.size() == 0);
+        REQUIRE(integers2.size() == 15);
+        REQUIRE(integers3.size() == 20);
+        REQUIRE(strings1.size() == 0);
+        REQUIRE(strings2.size() == 10);
+    }
+}
+
+
+
+
+/*
 TEST_CASE("String class", "[string]"){
 
     String s[10];

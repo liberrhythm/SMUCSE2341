@@ -11,24 +11,27 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 */
 
 
-//#define CATCH_CONFIG_RUNNER
+#define CATCH_CONFIG_RUNNER
 
+/*
 #include <iostream>
 #include <fstream>
 #include <cstring>
+*/
 
-//#include "catch.hpp"
+#include "catch.hpp"
+#include "DSVector.h"
 
+/*
 #include "DSString.h"
 #include "tag.h"
 #include "player.h"
 #include "team.h"
 #include "match.h"
+*/
 
 using namespace std;
 
-
-/*
 #define TEST true
 
 int runCatchTests(int argc, char* const argv[]) {
@@ -43,7 +46,11 @@ int main(int argc, char* const argv[]) {
 
     return 0;
 }
-*/
+
+
+
+
+/*
 
 int main(int argc, char* argv[]) {
     Match m(argv[1], argv[2], argv[3]); //instantiates Match object with team and match files
@@ -54,12 +61,6 @@ int main(int argc, char* argv[]) {
         cerr << "Output file could not be opened" << endl;
         exit(EXIT_FAILURE);
     }
-
-    /*
-    for (int i = 0; i < 6; i++) {
-        outFile << argv[i] << endl;
-    }
-    */
 
     if (verb == "vlow") { //tests to determine verbosity
         m.outputLowVerbosity(outFile);
@@ -74,3 +75,5 @@ int main(int argc, char* argv[]) {
     outFile.close();
     return 0;
 }
+
+*/
