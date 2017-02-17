@@ -36,6 +36,7 @@ Team::Team(char* teamFileName) {
     int playerID;
     char pName[100];
     inFile >> playerID;
+    inFile >> ws;
 
     while(!inFile.eof()) {
         inFile.getline(pName, 100);
@@ -44,6 +45,7 @@ Team::Team(char* teamFileName) {
         addPlayer(p); //adds Player objects to Team vector of Players
 
         inFile >> playerID;
+        inFile >> ws;
     }
 
     inFile.close();
