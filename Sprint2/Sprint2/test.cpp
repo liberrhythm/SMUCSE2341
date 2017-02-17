@@ -13,9 +13,9 @@ TEST_CASE("Vector class", "[vector]"){
     for (int i = 0; i < 15; i++) {
         integers2.push_back(i);
     }
-    Vector<int> integers3 = integers2;
+    Vector<int> integers3;
     for (int i = 0; i < 10; i++) {
-        integers3.pop_back();
+        integers3.push_back(i*2);
     }
 
     Vector<String> strings1;
@@ -34,21 +34,43 @@ TEST_CASE("Vector class", "[vector]"){
     for (int i = 0; i < 10; i++) {
         strings2.push_back(s[i]);
     }
+    Vector<String> strings3(5);
 
     SECTION("Size function"){
         REQUIRE(integers1.size() == 0);
         REQUIRE(integers2.size() == 15);
-        REQUIRE(integers3.size() == 5);
         REQUIRE(strings1.size() == 0);
         REQUIRE(strings2.size() == 10);
+        REQUIRE(strings3.size() == 0);
     }
 
     SECTION("Capacity function"){
         REQUIRE(integers1.getCapacity() == 10);
         REQUIRE(integers2.getCapacity() == 20);
-        REQUIRE(integers3.getCapacity() == 20);
         REQUIRE(strings1.getCapacity() == 10);
         REQUIRE(strings2.getCapacity() == 10);
+        REQUIRE(strings3.getCapacity() == 5);
+    }
+
+    SECTION("[] Operator"){
+        REQUIRE(integers2[2] == 2);
+        REQUIRE(integers3[2] == integers2[4]);
+        String str1 = "this is an uppercase string";
+        REQUIRE(strings2[4] == str1);
+        REQUIRE(strings2[9] == "testString");
+        String str2 = strings2[1];
+        REQUIRE(strings2[0] + str2 == "testStringa test string");
+    }
+
+    SECTION("Assignment operator"){
+        Vector<int> vtr1;
+        vtr1 = integers2;
+        REQUIRE(vtr1[4] == 4);
+        Vector<String> vtr2;
+        vtr2 = strings2;
+        REQUIRE(vtr2[3] == s[3]);
+        vtr2 = Vector<String>(3);
+        REQUIRE(vtr2.getCapacity() == 3);
     }
 
 }
