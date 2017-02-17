@@ -1,4 +1,4 @@
-The Cowboys
+The Desperadoes
 	Sally tagged Jack 1 times
 	Sally tagged Jill 1 times
 	Sally tagged Kenny 0 times
@@ -7,25 +7,81 @@ The Cowboys
 	Sam tagged Jill 2 times
 	Sam tagged Kenny 0 times
 	Sam had a total of 2 tags
+	B tagged Jack 0 times
+	B tagged Jill 1 times
+	B tagged Kenny 1 times
+	B had a total of 2 tags
+	H tagged Jack 1 times
+	H tagged Jill 0 times
+	H tagged Kenny 0 times
+	H had a total of 1 tags
 	Bob tagged Jack 0 times
 	Bob tagged Jill 0 times
 	Bob tagged Kenny 0 times
 	Bob had a total of 0 tags
-	The Cowboys: 33 points
+	A tagged Jack 0 times
+	A tagged Jill 0 times
+	A tagged Kenny 0 times
+	A had a total of 0 tags
+	C tagged Jack 0 times
+	C tagged Jill 0 times
+	C tagged Kenny 0 times
+	C had a total of 0 tags
+	D tagged Jack 0 times
+	D tagged Jill 0 times
+	D tagged Kenny 0 times
+	D had a total of 0 tags
+	E tagged Jack 0 times
+	E tagged Jill 0 times
+	E tagged Kenny 0 times
+	E had a total of 0 tags
+	F tagged Jack 0 times
+	F tagged Jill 0 times
+	F tagged Kenny 0 times
+	F had a total of 0 tags
+	G tagged Jack 0 times
+	G tagged Jill 0 times
+	G tagged Kenny 0 times
+	G had a total of 0 tags
+	The Desperadoes: 71 points
 
-The Sharks
-	Jack tagged Bob 0 times
+The Skinners
+	Jack tagged Bob 1 times
 	Jack tagged Sally 1 times
 	Jack tagged Sam 0 times
-	Jack had a total of 1 tags
+	Jack tagged A 0 times
+	Jack tagged B 0 times
+	Jack tagged C 0 times
+	Jack tagged D 0 times
+	Jack tagged E 0 times
+	Jack tagged F 0 times
+	Jack tagged G 0 times
+	Jack tagged H 0 times
+	Jack had a total of 2 tags
 	Kenny tagged Bob 1 times
 	Kenny tagged Sally 0 times
 	Kenny tagged Sam 0 times
-	Kenny had a total of 1 tags
+	Kenny tagged A 0 times
+	Kenny tagged B 0 times
+	Kenny tagged C 1 times
+	Kenny tagged D 0 times
+	Kenny tagged E 0 times
+	Kenny tagged F 0 times
+	Kenny tagged G 0 times
+	Kenny tagged H 0 times
+	Kenny had a total of 2 tags
 	Jill tagged Bob 0 times
 	Jill tagged Sally 0 times
 	Jill tagged Sam 0 times
+	Jill tagged A 0 times
+	Jill tagged B 0 times
+	Jill tagged C 0 times
+	Jill tagged D 0 times
+	Jill tagged E 0 times
+	Jill tagged F 0 times
+	Jill tagged G 0 times
+	Jill tagged H 0 times
 	Jill had a total of 0 tags
-	The Sharks: 18 points
+	The Skinners: 33 points
 
-Winners: The Cowboys
+Winners: The Desperadoes
