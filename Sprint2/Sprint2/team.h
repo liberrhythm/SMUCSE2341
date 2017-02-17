@@ -15,7 +15,7 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 
 #include <iostream>
 #include <cstring>
-#include <vector>
+//#include <vector>
 #include <fstream>
 #include "DSString.h"
 #include "player.h"
@@ -28,7 +28,7 @@ class Team {
         String teamName;
         int teamSize;
         int teamScore;
-        std::vector<Player> players;
+        Vector<Player> players;
 
     public:
         Team(char*); //accepts parameter of team file name
@@ -39,8 +39,8 @@ class Team {
         void setTeamSize(int);
         int getTeamScore();
         void setTeamScore(int);
-        std::vector<Player>& getTeamPlayers();
-        void setTeamPlayers(std::vector<Player>);
+        Vector<Player>& getTeamPlayers();
+        void setTeamPlayers(Vector<Player>);
 
         void addPlayer(Player); //adds Player objects to vector of Player objects
         void addToScore(int);

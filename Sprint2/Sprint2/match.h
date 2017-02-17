@@ -18,8 +18,9 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #include <fstream>
 #include <cstdlib>
 #include <iomanip>
-#include <vector>
+//#include <vector>
 #include "DSString.h"
+#include "DSVector.h"
 #include "team.h"
 #include "player.h"
 #include "tag.h"

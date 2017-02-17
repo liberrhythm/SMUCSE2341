@@ -72,8 +72,8 @@ void Team::setTeamSize(int tSize) {
 //accessor for team score
 int Team::getTeamScore() {
     int total = 0;
-    for (Player& p: players) {
-        total+= p.getScore();
+    for (int i = 0; i < players.size(); i++) {
+        total += players[i].getScore();
     }
     return total;
 }
@@ -84,14 +84,14 @@ void Team::setTeamScore(int score) {
 }
 
 //accessor for team vector of player objects
-std::vector<Player>& Team::getTeamPlayers() {
+Vector<Player>& Team::getTeamPlayers() {
     return players;
 }
 
 //mutator for team vector of player objects based on parameter vector
-void Team::setTeamPlayers(std::vector<Player> tPlayers) {
-    for (Player p: tPlayers) {
-        players.push_back(p);
+void Team::setTeamPlayers(Vector<Player> tPlayers) {
+    for (int i = 0; i < tPlayers.size(); i++) {
+        players.push_back(tPlayers[i]);
     }
 }
 

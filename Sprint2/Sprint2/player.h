@@ -15,10 +15,10 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 
 #include <iostream>
 #include <cstring>
-#include <vector>
+//#include <vector>
 #include "DSString.h"
 #include "tag.h"
-//#include "DSVector.h"
+#include "DSVector.h"
 
 //using namespace std;
 
@@ -29,7 +29,7 @@ class Player {
         String name;
         int numTags;
         int playerScore;
-        std::vector<Tag> playerTags;
+        Vector<Tag> playerTags;
 
     public:
         Player();
@@ -42,8 +42,8 @@ class Player {
         void setNumTags(int);
         int getScore() const;
         void setScore(int);
-        std::vector<Tag> getPlayerTags() const;
-        void setPlayerTags(std::vector<Tag>);
+        Vector<Tag> getPlayerTags() const;
+        void setPlayerTags(Vector<Tag>);
 
         void addTag(Tag);
 

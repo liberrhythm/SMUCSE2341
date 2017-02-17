@@ -68,14 +68,14 @@ void Player::setScore(int pScore) {
 }
 
 //accessor for player's vector of tags
-std::vector<Tag> Player::getPlayerTags() const {
+Vector<Tag> Player::getPlayerTags() const {
     return playerTags;
 }
 
 //mutator for player's vector of tags
-void Player::setPlayerTags(std::vector<Tag> tags) {
-    for (Tag t: tags) {
-        playerTags.push_back(t);
+void Player::setPlayerTags(Vector<Tag> tags) {
+    for (int i = 0; i < tags.size(); i++) {
+        playerTags.push_back(tags[i]);
     }
 }
 
@@ -94,8 +94,8 @@ Player& Player::operator= (const Player& p) {
     name = p.getName();
     numTags = p.getNumTags();
     playerScore = p.getScore();
-    for (Tag t: p.getPlayerTags()) {
-        playerTags.push_back(t);
+    for (int i = 0; i < p.getPlayerTags().size(); i++) {
+        playerTags.push_back(p.getPlayerTags()[i]);
     }
     return *this;
 }

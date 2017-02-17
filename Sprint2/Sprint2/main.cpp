@@ -13,26 +13,23 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 
 #define CATCH_CONFIG_RUNNER
 
-/*
 #include <iostream>
 #include <fstream>
 #include <cstring>
-*/
 
 #include "catch.hpp"
-#include "DSVector.h"
 
-/*
 #include "DSString.h"
+#include "DSVector.h"
 #include "tag.h"
 #include "player.h"
 #include "team.h"
 #include "match.h"
-*/
 
 using namespace std;
 
-#define TEST true
+/*
+#define TEST false
 
 int runCatchTests(int argc, char* const argv[]) {
     return Catch::Session().run(argc, argv);
@@ -46,11 +43,9 @@ int main(int argc, char* const argv[]) {
 
     return 0;
 }
+*/
 
 
-
-
-/*
 
 int main(int argc, char* argv[]) {
     Match m(argv[1], argv[2], argv[3]); //instantiates Match object with team and match files
@@ -76,4 +71,3 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-*/
