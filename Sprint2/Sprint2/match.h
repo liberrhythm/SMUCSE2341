@@ -35,10 +35,13 @@ class Match {
 
     public:
         Match(char*, char*, char*); //takes in three parameters (team and match files)
-        void orderTeams();
         void outputLowVerbosity(std::ofstream&);
         void outputMedVerbosity(std::ofstream&);
         void outputHighVerbosity(std::ofstream&);
+        void outputMatchWinner(std::ofstream&);
+        void outputBestScores(std::ofstream&);
+        void outputShortTagSummary(std::ofstream&);
+        void outputLongTagSummary(std::ofstream&);
 };
 
 #endif // MATCH_H

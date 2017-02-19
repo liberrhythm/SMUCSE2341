@@ -33,55 +33,90 @@ Match::Match(char* teamOneFile, char* teamTwoFile, char* matchFile) : teamOne(te
     while(!inFile.eof()) {
         inFile >> tagged >> tagTime >> tagLocation;
         Tag tag(tagger, tagged, tagLocation); //create a Tag object based on read-in information
-        for (int i = 0; i < teamOne.getTeamPlayers().size(); i++) { //Player& p: teamOne.getTeamPlayers()) { //cycles through team one's team players
+        for (int i = 0; i < teamOne.getTeamPlayers().size(); i++) { //cycles through team one's players
             if (teamOne.getTeamPlayers()[i].getID() == tag.getTaggerID()) { //tests to see if player's id matches tagger's id
-                teamOne.getTeamPlayers()[i].addTag(tag); //if true, adds tag to player's vector of tags and updates player's information
+                teamOne.getTeamPlayers()[i].addTag(tag); //if true, adds tag to player's vector of tags
             }
         }
-        for (int i = 0; i < teamTwo.getTeamPlayers().size(); i++) { //Player& p: teamTwo.getTeamPlayers()) { //does same thing for team two as for team one above
+        for (int i = 0; i < teamTwo.getTeamPlayers().size(); i++) { //cycles through team two's players
             if (teamTwo.getTeamPlayers()[i].getID() == tag.getTaggerID()) {
                 teamTwo.getTeamPlayers()[i].addTag(tag);
             }
         }
-        //tags.push_back(tag); //add created tag into Match object vector of tags
         inFile >> tagger; //continue reading
     }
 
-    inFile.close();
-    //orderTeams();
+    inFile.close(); //closes input file
 }
 
-/*
-void Match::orderTeams() {
-    if (teamOne > teamTwo) {
-        Team temp = teamTwo;
-        teamTwo = teamOne;
-        teamOne = temp;
-    }
-}
-*/
-
-//outputs points for each time and winner
+//Outputs points for each time and winner
 void Match::outputLowVerbosity(ofstream& outFile) {
 
     outFile << teamOne.getTeamName().c_str() << ": " << teamOne.getTeamScore() << " points" << endl;
     outFile << teamTwo.getTeamName().c_str() << ": " << teamTwo.getTeamScore() << " points" << endl;
 
-    if (teamOne.getTeamScore() > teamTwo.getTeamScore()){
-        outFile << "Overall Winners: " << teamOne.getTeamName().c_str() << endl;
-    }
-    else if (teamTwo.getTeamScore() > teamOne.getTeamScore()) {
-        outFile << "Overall Winners: " << teamTwo.getTeamName().c_str() << endl;
-    }
-    else { //if team scores are the same
-        outFile << "Overall Winners: Teams Tied" << endl;
-    }
+    outputMatchWinner(outFile);
 }
 
 //outputs low verbosity information along with detailed information about total tags for each player
 void Match::outputMedVerbosity(ofstream& outFile) {
 
-    outFile << teamOne.getTeamName().c_str() << endl; //repeat above code but in reverse order (Team One first, then Team Two)
+    outFile << teamOne.getTeamName().c_str() << endl;
+    outputShortTagSummary(outFile);
+    outputBestScores(outFile);
+    outputLowVerbosity(outFile); //outputs low verbosity summary at end
+}
+
+void Match::outputHighVerbosity(ofstream& outFile) {
+    outFile << teamOne.getTeamName().c_str() << endl;
+    outputLongTagSummary(outFile);
+    outputMatchWinner(outFile);
+}
+
+//Write to output file overall winners based on team score comparison
+void Match::outputMatchWinner(std::ofstream& outFile) {
+    if (teamOne.getTeamScore() > teamTwo.getTeamScore()){
+        outFile << "Winners: " << teamOne.getTeamName().c_str() << endl;
+    }
+    else if (teamTwo.getTeamScore() > teamOne.getTeamScore()) {
+        outFile << "Winners: " << teamTwo.getTeamName().c_str() << endl;
+    }
+    else { //if team scores are the same
+        outFile << "Winners: Teams Tied" << endl;
+    }
+}
+
+//Write to output file best scoring players and their scores for each team
+void Match::outputBestScores(std::ofstream& outFile) {
+    outFile << "Best score from " << teamOne.getTeamName().c_str() << ": ";
+    int highestScore = 0;
+    for (int i = 0; i < teamOne.getTeamPlayers().size(); i++) {
+        if (teamOne.getTeamPlayers()[i].getScore() > highestScore) {
+            highestScore = teamOne.getTeamPlayers()[i].getScore();
+        }
+    }
+    for (int i = 0; i < teamOne.getTeamPlayers().size(); i++) {
+        if (teamOne.getTeamPlayers()[i].getScore() == highestScore) {
+            outFile << teamOne.getTeamPlayers()[i].getName().c_str() << " (" << teamOne.getTeamPlayers()[i].getScore() << " points)" << endl;
+        }
+    }
+
+    outFile << "Best score from " << teamTwo.getTeamName().c_str() << ": ";
+    highestScore = 0;
+    for (int i = 0; i < teamTwo.getTeamPlayers().size(); i++) {
+        if (teamTwo.getTeamPlayers()[i].getScore() > highestScore) {
+            highestScore = teamTwo.getTeamPlayers()[i].getScore();
+        }
+    }
+    for (int i = 0; i < teamTwo.getTeamPlayers().size(); i++) {
+        if (teamTwo.getTeamPlayers()[i].getScore() == highestScore) {
+            outFile << teamTwo.getTeamPlayers()[i].getName().c_str() << " (" << teamTwo.getTeamPlayers()[i].getScore() << " points)" << endl;
+        }
+    }
+}
+
+//Write to output file players' total of tags for each team by decreasing number of tags
+void Match::outputShortTagSummary(std::ofstream& outFile) {
     int mostTags = 0;
     for (int i = 0; i < teamOne.getTeamPlayers().size(); i++) {
         if (teamOne.getTeamPlayers()[i].getNumTags() > mostTags) {
@@ -112,37 +147,10 @@ void Match::outputMedVerbosity(ofstream& outFile) {
         }
     }
     outFile << endl;
-
-    outFile << "Best score from " << teamOne.getTeamName().c_str() << ": ";
-    int highestScore = 0;
-    for (int i = 0; i < teamOne.getTeamPlayers().size(); i++) {
-        if (teamOne.getTeamPlayers()[i].getScore() > highestScore) {
-            highestScore = teamOne.getTeamPlayers()[i].getScore();
-        }
-    }
-    for (int i = 0; i < teamOne.getTeamPlayers().size(); i++) {
-        if (teamOne.getTeamPlayers()[i].getScore() == highestScore) {
-            outFile << teamOne.getTeamPlayers()[i].getName().c_str() << " (" << teamOne.getTeamPlayers()[i].getScore() << " points)" << endl;
-        }
-    }
-
-    outFile << "Best score from " << teamTwo.getTeamName().c_str() << ": ";
-    highestScore = 0;
-    for (int i = 0; i < teamTwo.getTeamPlayers().size(); i++) {
-        if (teamTwo.getTeamPlayers()[i].getScore() > highestScore) {
-            highestScore = teamTwo.getTeamPlayers()[i].getScore();
-        }
-    }
-    for (int i = 0; i < teamTwo.getTeamPlayers().size(); i++) {
-        if (teamTwo.getTeamPlayers()[i].getScore() == highestScore) {
-            outFile << teamTwo.getTeamPlayers()[i].getName().c_str() << " (" << teamTwo.getTeamPlayers()[i].getScore() << " points)" << endl;
-        }
-    }
-    outputLowVerbosity(outFile); //outputs low verbosity summary at end
 }
 
-void Match::outputHighVerbosity(ofstream& outFile) {
-    outFile << teamOne.getTeamName().c_str() << endl;
+//Write to output file description of each tag for each player on each team as well as player totals
+void Match::outputLongTagSummary(std::ofstream& outFile) {
     int mostTags = 0;
     for (int i = 0; i < teamOne.getTeamPlayers().size(); i++) {
         if (teamOne.getTeamPlayers()[i].getNumTags() > mostTags) {
@@ -153,7 +161,8 @@ void Match::outputHighVerbosity(ofstream& outFile) {
         for (int i = 0; i < teamOne.getTeamPlayers().size(); i++) {
             if (teamOne.getTeamPlayers()[i].getNumTags() == n) {
                 for (int j = 0; j < teamTwo.getTeamPlayers().size(); j++) {
-                    outFile << '\t' << teamOne.getTeamPlayers()[i].getName().c_str() << " tagged " << teamTwo.getTeamPlayers()[j].getName().c_str();
+                    outFile << '\t' << teamOne.getTeamPlayers()[i].getName().c_str();
+                    outFile << " tagged " << teamTwo.getTeamPlayers()[j].getName().c_str();
                     int totalTags = 0;
                     for (int t = 0; t < teamOne.getTeamPlayers()[i].getPlayerTags().size(); t++) {
                         if (teamOne.getTeamPlayers()[i].getPlayerTags()[t].getTaggedID() == teamTwo.getTeamPlayers()[j].getID()) {
@@ -162,7 +171,8 @@ void Match::outputHighVerbosity(ofstream& outFile) {
                     }
                     outFile << " " << totalTags << " times" << endl;
                 }
-                outFile << '\t' << teamOne.getTeamPlayers()[i].getName().c_str() << " had a total of " << teamOne.getTeamPlayers()[i].getNumTags() << " tags" << endl;
+                outFile << '\t' << teamOne.getTeamPlayers()[i].getName().c_str();
+                outFile << " had a total of " << teamOne.getTeamPlayers()[i].getNumTags() << " tags" << endl;
             }
         }
     }
@@ -194,15 +204,4 @@ void Match::outputHighVerbosity(ofstream& outFile) {
         }
     }
     outFile << '\t' << teamTwo.getTeamName().c_str() << ": " << teamTwo.getTeamScore() << " points" << endl << endl;
-
-
-    if (teamOne.getTeamScore() > teamTwo.getTeamScore()){
-        outFile << "Winners: " << teamOne.getTeamName().c_str() << endl;
-    }
-    else if (teamTwo.getTeamScore() > teamOne.getTeamScore()) {
-        outFile << "Winners: " << teamTwo.getTeamName().c_str() << endl;
-    }
-    else { //if team scores are the same
-        outFile << "Winners: Teams Tied" << endl;
-    }
 }

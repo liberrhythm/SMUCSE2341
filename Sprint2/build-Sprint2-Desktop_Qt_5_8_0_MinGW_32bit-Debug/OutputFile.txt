@@ -1,3 +1,42 @@
+The Skinners
+	Jack tagged Bob 1 times
+	Jack tagged Sally 1 times
+	Jack tagged Sam 0 times
+	Jack tagged A 0 times
+	Jack tagged B 0 times
+	Jack tagged C 0 times
+	Jack tagged D 0 times
+	Jack tagged E 0 times
+	Jack tagged F 0 times
+	Jack tagged G 0 times
+	Jack tagged H 0 times
+	Jack had a total of 2 tags
+	Kenny tagged Bob 1 times
+	Kenny tagged Sally 0 times
+	Kenny tagged Sam 0 times
+	Kenny tagged A 0 times
+	Kenny tagged B 0 times
+	Kenny tagged C 1 times
+	Kenny tagged D 0 times
+	Kenny tagged E 0 times
+	Kenny tagged F 0 times
+	Kenny tagged G 0 times
+	Kenny tagged H 0 times
+	Kenny had a total of 2 tags
+	Jill tagged Bob 0 times
+	Jill tagged Sally 0 times
+	Jill tagged Sam 0 times
+	Jill tagged A 0 times
+	Jill tagged B 0 times
+	Jill tagged C 0 times
+	Jill tagged D 0 times
+	Jill tagged E 0 times
+	Jill tagged F 0 times
+	Jill tagged G 0 times
+	Jill tagged H 0 times
+	Jill had a total of 0 tags
+	The Skinners: 33 points
+
 The Desperadoes
 	Sally tagged Jack 1 times
 	Sally tagged Jill 1 times
@@ -44,44 +83,5 @@ The Desperadoes
 	G tagged Kenny 0 times
 	G had a total of 0 tags
 	The Desperadoes: 71 points
-
-The Skinners
-	Jack tagged Bob 1 times
-	Jack tagged Sally 1 times
-	Jack tagged Sam 0 times
-	Jack tagged A 0 times
-	Jack tagged B 0 times
-	Jack tagged C 0 times
-	Jack tagged D 0 times
-	Jack tagged E 0 times
-	Jack tagged F 0 times
-	Jack tagged G 0 times
-	Jack tagged H 0 times
-	Jack had a total of 2 tags
-	Kenny tagged Bob 1 times
-	Kenny tagged Sally 0 times
-	Kenny tagged Sam 0 times
-	Kenny tagged A 0 times
-	Kenny tagged B 0 times
-	Kenny tagged C 1 times
-	Kenny tagged D 0 times
-	Kenny tagged E 0 times
-	Kenny tagged F 0 times
-	Kenny tagged G 0 times
-	Kenny tagged H 0 times
-	Kenny had a total of 2 tags
-	Jill tagged Bob 0 times
-	Jill tagged Sally 0 times
-	Jill tagged Sam 0 times
-	Jill tagged A 0 times
-	Jill tagged B 0 times
-	Jill tagged C 0 times
-	Jill tagged D 0 times
-	Jill tagged E 0 times
-	Jill tagged F 0 times
-	Jill tagged G 0 times
-	Jill tagged H 0 times
-	Jill had a total of 0 tags
-	The Skinners: 33 points
 
 Winners: The Desperadoes

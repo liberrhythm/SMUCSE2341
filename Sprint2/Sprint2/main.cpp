@@ -28,7 +28,7 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 
 using namespace std;
 
-
+/*
 #define TEST true
 
 int runCatchTests(int argc, char* const argv[]) {
@@ -43,10 +43,8 @@ int main(int argc, char* const argv[]) {
 
     return 0;
 }
+*/
 
-
-
-/*
 int main(int argc, char* argv[]) {
     Match m(argv[1], argv[2], argv[3]); //instantiates Match object with team and match files
 
@@ -70,4 +68,4 @@ int main(int argc, char* argv[]) {
     outFile.close();
     return 0;
 }
-*/
+

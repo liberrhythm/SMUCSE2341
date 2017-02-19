@@ -47,8 +47,8 @@ class Player {
 
         void addTag(Tag);
 
-        Player& operator= (const Player&);
-        bool operator > (const Player&);
+        //Player& operator= (const Player&);
+        //bool operator > (const Player&);
 };
 
 #endif // PLAYER_H

@@ -85,7 +85,7 @@ void Team::setTeamScore(int score) {
     teamScore = score;
 }
 
-//accessor for team vector of player objects
+//accessor for team vector of player objects, returns by reference
 Vector<Player>& Team::getTeamPlayers() {
     return players;
 }

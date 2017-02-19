@@ -67,7 +67,7 @@ void Player::setScore(int pScore) {
     playerScore = pScore;
 }
 
-//accessor for player's vector of tags
+//accessor for player's vector of tags, returns by reference
 Vector<Tag> Player::getPlayerTags() const {
     return playerTags;
 }
@@ -87,6 +87,7 @@ void Player::addTag(Tag t) {
     playerScore += t.getTagScore();
 }
 
+/*
 //overloaded assignment operator to avoid default memberwise copy when assigning player objects
 //to other player objects
 Player& Player::operator= (const Player& p) {
@@ -94,8 +95,8 @@ Player& Player::operator= (const Player& p) {
     name = p.getName();
     numTags = p.getNumTags();
     playerScore = p.getScore();
-    for (int i = 0; i < p.getPlayerTags().size(); i++) {
-        playerTags.push_back(p.getPlayerTags()[i]);
+    for (int i = 0; i < p.getPlayerTags().size(); i++) { //iterates through parameter's vector of Tag objects
+        playerTags.push_back(p.getPlayerTags()[i]); //copies tag objects to this player's tag vector
     }
     return *this;
 }
@@ -108,3 +109,4 @@ bool Player::operator> (const Player& p) {
     }
     return false;
 }
+*/
