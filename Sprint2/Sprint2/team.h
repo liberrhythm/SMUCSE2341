@@ -14,11 +14,11 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #define TEAM_H
 
 #include <iostream>
-#include <cstring>
-//#include <vector>
 #include <fstream>
 #include "DSString.h"
+#include "DSVector.h"
 #include "player.h"
+#include "tag.h"
 
 //using namespace std;
 
@@ -46,7 +46,7 @@ class Team {
         void addToScore(int);
 
         //Team& operator= (const Team&);
-        //bool operator> (const Team&);
+        bool operator> (const Team&);
 };
 
 #endif // TEAM_H

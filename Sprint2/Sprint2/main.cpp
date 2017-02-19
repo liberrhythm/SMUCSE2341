@@ -12,12 +12,11 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 
 
 #define CATCH_CONFIG_RUNNER
+#include "catch.hpp"
 
 #include <iostream>
 #include <fstream>
 #include <cstring>
-
-#include "catch.hpp"
 
 #include "DSString.h"
 #include "DSVector.h"
@@ -54,6 +53,8 @@ int main(int argc, char* argv[]) {
         cerr << "Output file could not be opened" << endl;
         exit(EXIT_FAILURE);
     }
+
+    //if (m.getTeamOne() > )
 
     if (verb == "vlow") { //tests to determine verbosity
         m.outputLowVerbosity(outFile);

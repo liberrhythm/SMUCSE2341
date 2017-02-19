@@ -3,7 +3,7 @@ Course Number:  CSE 2341
 Programmer:     Sabrina Peng
 Date:           2/17/17
 Program Number: Sprint2
-Purpose:        Provides custom implemented vector class definition using dynamically allocated memory and overloaded operators
+Purpose:        Provides custom templated vector class definition using dynamically allocated memory and overloaded operators
 Instructor: 	Mark Fontenot
 TA:             Chris Henk, Kevin Queenan
 

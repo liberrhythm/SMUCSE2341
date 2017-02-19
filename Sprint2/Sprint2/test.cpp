@@ -1,4 +1,14 @@
-//test class for custom string and vector implementation
+/*
+Course Number:  CSE 2341
+Programmer:     Sabrina Peng
+Date:           2/17/17
+Program Number: Sprint2
+Purpose:        Uses CATCH framework to test custom string and vector classes
+Instructor: 	Mark Fontenot
+TA:             Chris Henk, Kevin Queenan
+
+Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
+*/
 
 //#define CATCH_CONFIG_MAIN
 

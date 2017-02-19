@@ -1,13 +1,8 @@
-The Desperadoes
-11
+The Cowboys
+6
 1 Bob
 2 Sally
 3 Sam
-4 A
-5 B
-6 C
-7 D
-8 E
-9 F
-10 G
-11 H
+7 A
+8 B
+9 C

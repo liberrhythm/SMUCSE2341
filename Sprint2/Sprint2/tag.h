@@ -14,7 +14,6 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #define TAG_H
 
 #include <iostream>
-#include <cstring>
 #include "DSString.h"
 
 //using namespace std;

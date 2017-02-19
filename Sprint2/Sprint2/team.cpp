@@ -118,6 +118,7 @@ Team& Team::operator= (const Team& team) {
     }
     return *this;
 }
+*/
 
 //overloaded greater than operator to determine alphabetic order of team names
 //returns true if later in alphabet than parameter
@@ -127,4 +128,4 @@ bool Team::operator> (const Team& team) {
     }
     return false;
 }
-*/
+

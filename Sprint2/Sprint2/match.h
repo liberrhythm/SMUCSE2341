@@ -14,11 +14,9 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #define MATCH_H
 
 #include <iostream>
-#include <cstring>
 #include <fstream>
 #include <cstdlib>
 #include <iomanip>
-//#include <vector>
 #include "DSString.h"
 #include "DSVector.h"
 #include "team.h"
@@ -38,10 +36,11 @@ class Match {
         void outputLowVerbosity(std::ofstream&);
         void outputMedVerbosity(std::ofstream&);
         void outputHighVerbosity(std::ofstream&);
+        void outputTeamScore(Team, std::ofstream&); //outputs formatted team score
         void outputMatchWinner(std::ofstream&);
-        void outputBestScores(std::ofstream&);
-        void outputShortTagSummary(std::ofstream&);
-        void outputLongTagSummary(std::ofstream&);
+        void outputBestScores(Team, std::ofstream&); //outputs information about player with best score on team
+        void outputShortTagSummary(Team, std::ofstream&); //outputs information about player total tags
+        void outputLongTagSummary(Team, Team, std::ofstream&); //outputs detailed information and totals of player tags
 };
 
 #endif // MATCH_H

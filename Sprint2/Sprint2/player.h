@@ -14,11 +14,9 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #define PLAYER_H
 
 #include <iostream>
-#include <cstring>
-//#include <vector>
 #include "DSString.h"
-#include "tag.h"
 #include "DSVector.h"
+#include "tag.h"
 
 //using namespace std;
 
