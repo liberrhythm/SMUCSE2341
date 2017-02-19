@@ -195,32 +195,6 @@ void Match::outputHighVerbosity(ofstream& outFile) {
     }
     outFile << '\t' << teamTwo.getTeamName().c_str() << ": " << teamTwo.getTeamScore() << " points" << endl << endl;
 
-    /*
-    mostTags = 0;
-    for (Player p: teamTwo.getTeamPlayers()) {
-        if (p.getNumTags() > mostTags) {
-            mostTags = p.getNumTags();
-        }
-    }
-    for (int i = mostTags; i > -1; i--) {
-        for (Player pTagger: teamTwo.getTeamPlayers()) {
-            if (pTagger.getNumTags() == i) {
-                for (Player pTagged: teamOne.getTeamPlayers()) {
-                    outFile << '\t' << pTagger.getName().c_str() << " tagged " << pTagged.getName().c_str();
-                    int totalTags = 0;
-                    for (Tag tag: pTagger.getPlayerTags()) {
-                        if (tag.getTaggedID() == pTagged.getID()) {
-                            totalTags++;
-                        }
-                    }
-                    outFile << " " << totalTags << " times" << endl;
-                }
-                outFile << '\t' << pTagger.getName().c_str() << " had a total of " << pTagger.getNumTags() << " tags" << endl;
-            }
-        }
-    }
-    outFile << '\t' << teamTwo.getTeamName().c_str() << ": " << teamTwo.getTeamScore() << " points" << endl << endl;
-    */
 
     if (teamOne.getTeamScore() > teamTwo.getTeamScore()){
         outFile << "Winners: " << teamOne.getTeamName().c_str() << endl;
@@ -232,4 +206,3 @@ void Match::outputHighVerbosity(ofstream& outFile) {
         outFile << "Winners: Teams Tied" << endl;
     }
 }
-

@@ -1,4 +1,4 @@
-//test class for custom string/vector implementation
+//test class for custom string and vector implementation
 
 //#define CATCH_CONFIG_MAIN
 
@@ -20,7 +20,7 @@ TEST_CASE("Vector class", "[vector]"){
 
     Vector<String> strings1;
     Vector<String> strings2;
-    String s[10];
+    String s[11];
     s[0] = String("testString");
     s[1] = String("a test string");
     s[2] = String("");
@@ -31,28 +31,29 @@ TEST_CASE("Vector class", "[vector]"){
     s[7] = String("  split  split  split  ");
     s[8] = String("                          ");
     s[9] = String("testString");
-    for (int i = 0; i < 10; i++) {
+    s[10] = String("yo gabba gabba");
+    for (int i = 0; i < 11; i++) {
         strings2.push_back(s[i]);
     }
     Vector<String> strings3(5);
 
-    SECTION("Size function"){
+    SECTION("Size function") {
         REQUIRE(integers1.size() == 0);
         REQUIRE(integers2.size() == 15);
         REQUIRE(strings1.size() == 0);
-        REQUIRE(strings2.size() == 10);
+        REQUIRE(strings2.size() == 11);
         REQUIRE(strings3.size() == 0);
     }
 
-    SECTION("Capacity function"){
+    SECTION("Capacity function") {
         REQUIRE(integers1.getCapacity() == 10);
         REQUIRE(integers2.getCapacity() == 20);
         REQUIRE(strings1.getCapacity() == 10);
-        REQUIRE(strings2.getCapacity() == 10);
+        REQUIRE(strings2.getCapacity() == 20);
         REQUIRE(strings3.getCapacity() == 5);
     }
 
-    SECTION("[] Operator"){
+    SECTION("[] Operator") {
         REQUIRE(integers2[2] == 2);
         REQUIRE(integers3[2] == integers2[4]);
         String str1 = "this is an uppercase string";
@@ -62,7 +63,7 @@ TEST_CASE("Vector class", "[vector]"){
         REQUIRE(strings2[0] + str2 == "testStringa test string");
     }
 
-    SECTION("Assignment operator"){
+    SECTION("Assignment operator") {
         Vector<int> vtr1;
         vtr1 = integers2;
         REQUIRE(vtr1[4] == 4);
@@ -71,14 +72,66 @@ TEST_CASE("Vector class", "[vector]"){
         REQUIRE(vtr2[3] == s[3]);
         vtr2 = Vector<String>(3);
         REQUIRE(vtr2.getCapacity() == 3);
+        Vector<String> vtr3 = vtr2;
+        REQUIRE(vtr3.size() == 0);
+        REQUIRE(vtr3.getCapacity() == 3);
     }
 
+    SECTION("Resize function") {
+        integers1.resize();
+        REQUIRE(integers1.size() == 0);
+        REQUIRE(integers1.getCapacity() == 20);
+        integers2.resize();
+        for (int i = 0; i < 15; i++) {
+            REQUIRE(integers2[i] == i);
+        }
+        strings2.resize();
+        REQUIRE(strings2.size() == 11);
+        REQUIRE(strings2.getCapacity() == 30);
+        REQUIRE(strings2[strings2.size()-1] == "yo gabba gabba");
+    }
+
+    SECTION("push_back function") {
+        integers1.push_back(23);
+        REQUIRE(integers1.size() == 1);
+        REQUIRE(integers1[integers1.size()-1] == 23);
+        String str = "THIS IS AN UPPERCASE STRING";
+        strings2.push_back(str);
+        REQUIRE(strings2.size() == 12);
+        REQUIRE(strings2[strings2.size()-1] == strings2[3]);
+        strings3.push_back(str);
+        strings3.push_back(str);
+        REQUIRE(strings3[0] == "THIS IS AN UPPERCASE STRING");
+        REQUIRE(strings3[0] == strings3[1]);
+    }
+
+    SECTION("pop_back function") {
+        integers1.push_back(23);
+        integers1.pop_back();
+        REQUIRE(integers1.size() == 0);
+        strings2.pop_back();
+        strings2.pop_back();
+        strings2.pop_back();
+        REQUIRE(strings2[strings2.size()-1] == "  split  split  split  ");
+        String str = "THIS IS AN UPPERCASE STRING";
+        strings3.push_back(str);
+        strings3.push_back(str);
+        strings3.pop_back();
+        REQUIRE(strings3.size() == 1);
+        REQUIRE(strings3[0] == "THIS IS AN UPPERCASE STRING");
+    }
+
+    SECTION("Empty function") {
+        REQUIRE(integers1.empty() == true);
+        REQUIRE(integers2.empty() == false);
+        REQUIRE(integers3.empty() == false);
+        REQUIRE(strings1.empty() == true);
+        REQUIRE(strings2.empty() == false);
+        REQUIRE(strings3.empty() == true);
+    }
 }
 
 
-
-
-/*
 TEST_CASE("String class", "[string]"){
 
     String s[10];
@@ -157,4 +210,3 @@ TEST_CASE("String class", "[string]"){
     }
 
 }
-*/

@@ -2,7 +2,7 @@
 Course Number:  CSE 2341
 Programmer:     Sabrina Peng
 Date:           2/5/17
-Program Number: Sprint1
+Program Number: Sprint2
 Purpose:        Reads in command line arguments to read files and write output to files for laser tag game implementation
 Instructor: 	Mark Fontenot
 TA:             Chris Henk, Kevin Queenan
@@ -28,8 +28,8 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 
 using namespace std;
 
-/*
-#define TEST false
+
+#define TEST true
 
 int runCatchTests(int argc, char* const argv[]) {
     return Catch::Session().run(argc, argv);
@@ -43,10 +43,10 @@ int main(int argc, char* const argv[]) {
 
     return 0;
 }
-*/
 
 
 
+/*
 int main(int argc, char* argv[]) {
     Match m(argv[1], argv[2], argv[3]); //instantiates Match object with team and match files
 
@@ -70,4 +70,4 @@ int main(int argc, char* argv[]) {
     outFile.close();
     return 0;
 }
-
+*/
