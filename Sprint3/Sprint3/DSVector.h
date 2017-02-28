@@ -41,6 +41,9 @@ class Vector {
         void pop_back(); //removes element from end of vector
         bool empty(); //checks if vector has no items of typename T
 
+        void insert(const T&, const int); //insert item of typename T at specific index
+        void delete(const int); //delete element at a specific index
+
         ~Vector();
 };
 
