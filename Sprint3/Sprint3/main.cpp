@@ -4,6 +4,7 @@
 
 #include "DSString.h"
 #include "DSVector.h"
+
 using namespace std;
 
 void primaryInsertionSort(Vector<String>&);
@@ -12,7 +13,7 @@ void secondaryInsertionSort(Vector<String>&, int, int);
 void primaryQuickSort(Vector<String>&, int, int);
 void secondaryQuickSort(Vector<String>&, int, int);
 int choosePivot(Vector<String>&, int, int);
-void partition(Vector<String>&, int, int, int);
+int partition(Vector<String>&, int, int, int);
 
 int main(int argc, char* argv[])
 {
@@ -39,6 +40,7 @@ int main(int argc, char* argv[])
     inFile.close();
 
     //primaryInsertionSort(words);
+
     primaryQuickSort(words, 0, words.size()-1);
 
     ofstream outFile(argv[2], ios::out);
@@ -50,10 +52,12 @@ int main(int argc, char* argv[])
 }
 
 void primaryQuickSort(Vector<String>& v, int beg, int end) {
-    int pivot = choosePivot(v, beg, end);
-    partition(v, beg, end, pivot);
-    primaryQuickSort(v, beg, pivot-1);
-    primaryQuickSort(v, pivot+1, end);
+    if (beg < end) {
+        int pivot = choosePivot(v, beg, end);
+        int newPivotLoc = partition(v, beg, end, pivot);
+        primaryQuickSort(v, beg, newPivotLoc-1);
+        primaryQuickSort(v, newPivotLoc+1, end);
+    }
 }
 
 /*
@@ -81,29 +85,30 @@ int choosePivot(Vector<String>& v, int beg, int end) {
     }
 }
 
-void partition(Vector<String>& v, int beg, int end, int pivotLoc) {
+int partition(Vector<String>& v, int beg, int end, int pivotLoc) {
     v.swap(pivotLoc, end);
     String pivot = v[end];
     int j = beg;
     int k = end-1;
 
-    while (pivot > v[j] || v[j] == pivot) {
+    while (j < end && (pivot.size() > v[j].size() || v[j].size() == pivot.size())) {
         j++;
     }
-    while (v[k] > pivot || v[k] == pivot) {
-        k++;
+    while (k > beg && (v[k].size() > pivot.size() || v[k].size() == pivot.size())) {
+        k--;
     }
 
     while (k > j) {
         v.swap(j, k);
-        while (pivot > v[j] || v[j] == pivot) {
+        while (pivot.size() > v[j].size() || v[j].size() == pivot.size()) {
             j++;
         }
-        while (v[k] > pivot || v[k] == pivot) {
-            k++;
+        while (v[k].size() > pivot.size() || v[k].size() == pivot.size()) {
+            k--;
         }
     }
     v.swap(j, end);
+    return j;
 }
 
 void primaryInsertionSort(Vector<String>& v) {
