@@ -11,7 +11,7 @@ void secondaryInsertionSort(Vector<String>&, int, int);
 
 int main(int argc, char* argv[])
 {
-    ifstream inFile("input.txt", ios::in);
+    ifstream inFile(argv[1], ios::in);
     if (!inFile) {
         cerr << "Input file could not be opened" << endl;
         exit(EXIT_FAILURE);
