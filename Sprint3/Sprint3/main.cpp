@@ -7,13 +7,19 @@
 
 using namespace std;
 
-void primaryInsertionSort(Vector<String>&);
+void primaryInsertionSort(Vector<String>&, int, int);
 void secondaryInsertionSort(Vector<String>&, int, int);
+
+void combineInsertionSorts(Vector<String>&);
 
 void primaryQuickSort(Vector<String>&, int, int);
 void secondaryQuickSort(Vector<String>&, int, int);
-int choosePivot(Vector<String>&, int, int);
-int partition(Vector<String>&, int, int, int);
+int primaryChoosePivot(Vector<String>&, int, int);
+int primaryPartition(Vector<String>&, int, int, int);
+int secondaryChoosePivot(Vector<String>&, int, int);
+int secondaryPartition(Vector<String>&, int, int, int);
+
+void combineQuickSorts(Vector<String>&);
 
 int main(int argc, char* argv[])
 {
@@ -39,9 +45,13 @@ int main(int argc, char* argv[])
 
     inFile.close();
 
-    //primaryInsertionSort(words);
+    //primaryQuickSort(words, 0, words.size()-1);
 
-    primaryQuickSort(words, 0, words.size()-1);
+    //secondaryQuickSort(words, 0, words.size()-1);
+
+    //combineQuickSorts(words);
+
+    combineInsertionSorts(words);
 
     ofstream outFile(argv[2], ios::out);
     for (int i = 0; i < numWords; i++) {
@@ -53,20 +63,39 @@ int main(int argc, char* argv[])
 
 void primaryQuickSort(Vector<String>& v, int beg, int end) {
     if (beg < end) {
-        int pivot = choosePivot(v, beg, end);
-        int newPivotLoc = partition(v, beg, end, pivot);
+        int pivot = primaryChoosePivot(v, beg, end);
+        int newPivotLoc = primaryPartition(v, beg, end, pivot);
         primaryQuickSort(v, beg, newPivotLoc-1);
         primaryQuickSort(v, newPivotLoc+1, end);
     }
 }
 
-/*
 void secondaryQuickSort(Vector<String>& v, int beg, int end) {
-
+    if (beg < end) {
+        int pivot = secondaryChoosePivot(v, beg, end);
+        int newPivotLoc = secondaryPartition(v, beg, end, pivot);
+        secondaryQuickSort(v, beg, newPivotLoc-1);
+        secondaryQuickSort(v, newPivotLoc+1, end);
+    }
 }
-*/
 
-int choosePivot(Vector<String>& v, int beg, int end) {
+void combineQuickSorts(Vector<String>& v) {
+    primaryQuickSort(v, 0, v.size()-1);
+    int beg = 0;
+    int end = 0;
+    for (int i = 1; i < v.size(); i++) {
+        if (i == v.size()-1) {
+            secondaryQuickSort(v, beg, v.size()-1);
+        }
+        else if (v[i].size() != v[beg].size()) {
+            end = i-1;
+            secondaryQuickSort(v, beg, end);
+            beg = i;
+        }
+    }
+}
+
+int primaryChoosePivot(Vector<String>& v, int beg, int end) {
     int mid = (beg+end)/2;
     if (v[mid].size() <= v[beg].size() && v[beg].size() <= v[end].size()) {
         return beg;
@@ -85,7 +114,7 @@ int choosePivot(Vector<String>& v, int beg, int end) {
     }
 }
 
-int partition(Vector<String>& v, int beg, int end, int pivotLoc) {
+int primaryPartition(Vector<String>& v, int beg, int end, int pivotLoc) {
     v.swap(pivotLoc, end);
     String pivot = v[end];
     int j = beg;
@@ -111,8 +140,53 @@ int partition(Vector<String>& v, int beg, int end, int pivotLoc) {
     return j;
 }
 
-void primaryInsertionSort(Vector<String>& v) {
-    for (int i = 1; i < v.size(); i++) {
+int secondaryChoosePivot(Vector<String>& v, int beg, int end) {
+    int mid = (beg+end)/2;
+    if ((v[beg] > v[mid] || v[beg] == v[mid]) && (v[end] > v[beg] || v[beg] == v[end])) {
+        return beg;
+    }
+    else if ((v[beg] > v[end] || v[beg] == v[end]) && (v[mid] > v[beg] || v[beg] == v[mid])) {
+        return beg;
+    }
+    else if ((v[mid] > v[beg] || v[mid] == v[beg]) && (v[end] > v[mid] || v[mid] == v[end])) {
+        return mid;
+    }
+    else if ((v[mid] > v[end] || v[mid] == v[end]) && (v[beg] > v[mid] || v[mid] == v[beg])) {
+        return mid;
+    }
+    else {
+        return end;
+    }
+}
+
+int secondaryPartition(Vector<String>& v, int beg, int end, int pivotLoc) {
+    v.swap(pivotLoc, end);
+    String pivot = v[end];
+    int j = beg;
+    int k = end-1;
+
+    while (j < end && (pivot > v[j]|| v[j] == pivot)) {
+        j++;
+    }
+    while (k > beg && (v[k] > pivot || v[k] == pivot)) {
+        k--;
+    }
+
+    while (k > j) {
+        v.swap(j, k);
+        while (pivot > v[j] || v[j] == pivot) {
+            j++;
+        }
+        while (v[k] > pivot || v[k] == pivot) {
+            k--;
+        }
+    }
+    v.swap(j, end);
+    return j;
+}
+
+void primaryInsertionSort(Vector<String>& v, int beg, int end) {
+    for (int i = beg; i < end; i++) {
         String s = v[i];
         int j = i - 1;
         while (j >= 0 && v[j].size() > s.size()) {
@@ -121,24 +195,7 @@ void primaryInsertionSort(Vector<String>& v) {
         }
         v[j+1] = s;
     }
-
-    int beg = 0;
-    int end = 0;
-
-    for (int i = 1; i < v.size(); i++) {
-        if (i == v.size()-1) {
-            secondaryInsertionSort(v, beg, v.size());
-        }
-        else {
-            if (v[i].size() != v[beg].size()) {
-                end = i;
-                secondaryInsertionSort(v, beg, end);
-                beg = i;
-            }
-        }
-    }
 }
-
 
 void secondaryInsertionSort(Vector<String>& v, int beg, int end) {
     for (int i = beg+1; i < end; i++) {
@@ -152,15 +209,20 @@ void secondaryInsertionSort(Vector<String>& v, int beg, int end) {
     }
 }
 
-
-/*
- for i = 1 to length(A)
-    x = A[i]
-    j = i - 1
-    while j >= 0 and A[j] > x
-        A[j+1] ← A[j]
-        j ← j - 1
-    end while
-    A[j+1] = x[3]
- end for
-*/
+void combineInsertionSorts(Vector<String>& v) {
+    primaryInsertionSort(v, 0, v.size());
+    int beg = 0;
+    int end = 0;
+    for (int i = 1; i < v.size(); i++) {
+        if (i == v.size()-1) {
+            secondaryInsertionSort(v, beg, v.size());
+        }
+        else {
+            if (v[i].size() != v[beg].size()) {
+                end = i;
+                secondaryInsertionSort(v, beg, end);
+                beg = i;
+            }
+        }
+    }
+}
