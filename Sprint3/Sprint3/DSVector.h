@@ -41,8 +41,9 @@ class Vector {
         void pop_back(); //removes element from end of vector
         bool empty(); //checks if vector has no items of typename T
 
-        void insert(const T&, const int); //insert item of typename T at specific index
-        void delete(const int); //delete element at a specific index
+        void insertAt(const T&, const int); //insert item of typename T at specific index
+        //void deleteAt(const int); //delete element at a specific index
+        void swap(const int, const int); //switch two elements at different indices
 
         ~Vector();
 };
@@ -170,6 +171,72 @@ bool Vector<T>::empty() {
         return true;
     }
     return false;
+}
+
+//Inserts an item of typename T at a specified index
+template<typename T>
+void Vector<T>::insertAt(const T& item, const int index) {
+    if (index > length) {
+        throw std::out_of_range("OUT OF RANGE");
+    }
+    else if (index = length) {
+        push_back(item);
+    }
+    else {
+        if (length == capacity) { //allocates more capacity if no space for new item
+            resize();
+        }
+
+        if (index == 0) {
+            length++;
+            T* temp = new T[capacity];
+            temp[0] = item;
+            for (int i = 1; i < length; i++) {
+                temp[i] = arr[i-1];
+            }
+            delete[] arr;
+
+            arr = new T[capacity];
+            for (int i = 0; i < length; i++) {
+                arr[i] = temp[i];
+            }
+            delete[] temp;
+        }
+        else {
+            T* temp = new T[capacity];
+            for (int i = 0; i < index; i++) {
+                temp[i] = arr[i];
+            }
+            for (int i = index; i < length; i++) {
+                temp[i+1] = arr[i];
+            }
+            temp[index] = item;
+            length++;
+            delete[] arr;
+
+            arr = new T[capacity];
+            for (int i = 0; i < length; i++) {
+                arr[i] = temp[i];
+            }
+            delete[] temp;
+        }
+    }
+}
+
+/*
+//Deletes an element at a specified index and reallocates memory accordingly
+template<typename T>
+void deleteAt(const int index) {
+
+}
+*/
+
+//Swaps elements at two specified indices without altering anything else
+template<typename T>
+void Vector<T>::swap(const int index1, const int index2) {
+    T tempValue = arr[index2];
+    arr[index2] = arr[index1];
+    arr[index1] = tempValue;
 }
 
 //Destructor for private data member arr and releases dynamically allocated memory
