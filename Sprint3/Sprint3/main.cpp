@@ -21,6 +21,8 @@ int secondaryPartition(Vector<String>&, int, int, int);
 
 void combineQuickSorts(Vector<String>&);
 
+//void combineSorts(Vector<String>&);
+
 int main(int argc, char* argv[])
 {
     ifstream inFile(argv[1], ios::in);
@@ -49,9 +51,9 @@ int main(int argc, char* argv[])
 
     //secondaryQuickSort(words, 0, words.size()-1);
 
-    //combineQuickSorts(words);
+    combineQuickSorts(words);
 
-    combineInsertionSorts(words);
+    //combineInsertionSorts(words);
 
     ofstream outFile(argv[2], ios::out);
     for (int i = 0; i < numWords; i++) {
@@ -65,8 +67,14 @@ void primaryQuickSort(Vector<String>& v, int beg, int end) {
     if (beg < end) {
         int pivot = primaryChoosePivot(v, beg, end);
         int newPivotLoc = primaryPartition(v, beg, end, pivot);
-        primaryQuickSort(v, beg, newPivotLoc-1);
-        primaryQuickSort(v, newPivotLoc+1, end);
+        if (end-beg > 21) {
+            primaryQuickSort(v, beg, newPivotLoc-1);
+            primaryQuickSort(v, newPivotLoc+1, end);
+        }
+        else {
+            primaryInsertionSort(v, beg, newPivotLoc);
+            primaryInsertionSort(v, newPivotLoc+1, end+1);
+        }
     }
 }
 
@@ -74,12 +82,21 @@ void secondaryQuickSort(Vector<String>& v, int beg, int end) {
     if (beg < end) {
         int pivot = secondaryChoosePivot(v, beg, end);
         int newPivotLoc = secondaryPartition(v, beg, end, pivot);
-        secondaryQuickSort(v, beg, newPivotLoc-1);
-        secondaryQuickSort(v, newPivotLoc+1, end);
+        if (end-beg > 21) {
+            secondaryQuickSort(v, beg, newPivotLoc-1);
+            secondaryQuickSort(v, newPivotLoc+1, end);
+        }
+        else {
+            secondaryInsertionSort(v, beg, newPivotLoc);
+            secondaryInsertionSort(v, newPivotLoc+1, end+1);
+        }
     }
 }
 
 void combineQuickSorts(Vector<String>& v) {
+    if (v.size() < 21) {
+        combineInsertionSorts(v);
+    }
     primaryQuickSort(v, 0, v.size()-1);
     int beg = 0;
     int end = 0;
@@ -198,7 +215,7 @@ void primaryInsertionSort(Vector<String>& v, int beg, int end) {
 }
 
 void secondaryInsertionSort(Vector<String>& v, int beg, int end) {
-    for (int i = beg+1; i < end; i++) {
+    for (int i = beg; i < end; i++) {
         String s = v[i];
         int j = i - 1;
         while (j >= beg && v[j] > s) {
@@ -226,3 +243,9 @@ void combineInsertionSorts(Vector<String>& v) {
         }
     }
 }
+
+/*
+void combineSorts(Vector<String>& v) {
+
+}
+*/
