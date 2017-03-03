@@ -67,7 +67,7 @@ void primaryQuickSort(Vector<String>& v, int beg, int end) {
     if (beg < end) {
         int pivot = primaryChoosePivot(v, beg, end);
         int newPivotLoc = primaryPartition(v, beg, end, pivot);
-        if (end-beg > 21) {
+        if (end-beg > 17) {
             primaryQuickSort(v, beg, newPivotLoc-1);
             primaryQuickSort(v, newPivotLoc+1, end);
         }
@@ -82,7 +82,7 @@ void secondaryQuickSort(Vector<String>& v, int beg, int end) {
     if (beg < end) {
         int pivot = secondaryChoosePivot(v, beg, end);
         int newPivotLoc = secondaryPartition(v, beg, end, pivot);
-        if (end-beg > 21) {
+        if (end-beg > 17) {
             secondaryQuickSort(v, beg, newPivotLoc-1);
             secondaryQuickSort(v, newPivotLoc+1, end);
         }
@@ -94,7 +94,7 @@ void secondaryQuickSort(Vector<String>& v, int beg, int end) {
 }
 
 void combineQuickSorts(Vector<String>& v) {
-    if (v.size() < 21) {
+    if (v.size() < 17) {
         combineInsertionSorts(v);
     }
     primaryQuickSort(v, 0, v.size()-1);
