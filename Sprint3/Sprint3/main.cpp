@@ -118,14 +118,14 @@ void combineQuickSorts(Vector<String>& v) {
     int end = 0;
     for (int i = 1; i < v.size(); i++) { //loops through vector elements to find bounds for different lengths
         if (i == v.size()-1) { //if for loop has reached last element of vector
-            secondaryQuickSort(v, beg, v.size()-1);
-            //threeWayPartition(v, beg, v.size()-1, 0); //partition+sort from last beginning index to end of vector
+            //secondaryQuickSort(v, beg, v.size()-1);
+            threeWayPartition(v, beg, v.size()-1, 0); //partition+sort from last beginning index to end of vector
         }
         else {
             if (v[i].size() != v[beg].size()) { //checks to find index where length changes
                 end = i-1; //sets end as index of last element with a particular length
-                secondaryQuickSort(v, beg, end);
-                //threeWayPartition(v, beg, end, 0); //partition for current subarray of vector
+                //secondaryQuickSort(v, beg, end);
+                threeWayPartition(v, beg, end, 0); //partition for current subarray of vector
                 beg = i; //resets beginning index for next length
             }
         }
