@@ -18,9 +18,10 @@ int primaryChoosePivot(Vector<String>&, int, int);
 int primaryPartition(Vector<String>&, int, int, int);
 int secondaryChoosePivot(Vector<String>&, int, int);
 int secondaryPartition(Vector<String>&, int, int, int);
-void threeWayPartition(Vector<String>&, int, int, int);
 
 void combineQuickSorts(Vector<String>&);
+
+//void combineSorts(Vector<String>&);
 
 int main(int argc, char* argv[])
 {
@@ -46,7 +47,13 @@ int main(int argc, char* argv[])
 
     inFile.close();
 
+    //primaryQuickSort(words, 0, words.size()-1);
+
+    //secondaryQuickSort(words, 0, words.size()-1);
+
     combineQuickSorts(words);
+
+    //combineInsertionSorts(words);
 
     ofstream outFile(argv[2], ios::out);
     for (int i = 0; i < numWords; i++) {
@@ -60,7 +67,7 @@ void primaryQuickSort(Vector<String>& v, int beg, int end) {
     if (beg < end) {
         int pivot = primaryChoosePivot(v, beg, end);
         int newPivotLoc = primaryPartition(v, beg, end, pivot);
-        if (end-beg > 21) {
+        if (end-beg > 17) {
             primaryQuickSort(v, beg, newPivotLoc-1);
             primaryQuickSort(v, newPivotLoc+1, end);
         }
@@ -75,7 +82,7 @@ void secondaryQuickSort(Vector<String>& v, int beg, int end) {
     if (beg < end) {
         int pivot = secondaryChoosePivot(v, beg, end);
         int newPivotLoc = secondaryPartition(v, beg, end, pivot);
-        if (end-beg > 21) {
+        if (end-beg > 17) {
             secondaryQuickSort(v, beg, newPivotLoc-1);
             secondaryQuickSort(v, newPivotLoc+1, end);
         }
@@ -87,45 +94,23 @@ void secondaryQuickSort(Vector<String>& v, int beg, int end) {
 }
 
 void combineQuickSorts(Vector<String>& v) {
-    if (v.size() < 21) {
+    if (v.size() < 17) {
         combineInsertionSorts(v);
     }
     primaryQuickSort(v, 0, v.size()-1);
-
-    //threeWayPartition(v, 0, v.size()-1, 0);
-
     int beg = 0;
     int end = 0;
     for (int i = 1; i < v.size(); i++) {
-        if (v[i].size() != v[beg].size()) {
+        if (i == v.size()-1) {
+            secondaryQuickSort(v, beg, v.size()-1);
+        }
+        else if (v[i].size() != v[beg].size()) {
             end = i-1;
-            //secondaryQuickSort(v, beg, end);
-            threeWayPartition(v, beg, end, 0);
+            secondaryQuickSort(v, beg, end);
             beg = i;
         }
-        else {
-            if (i == v.size()-1) {
-                //secondaryQuickSort(v, beg, v.size()-1);
-                threeWayPartition(v, beg, v.size()-1, 0);
-            }
-        }
     }
 }
-
-/*
-if (i == v.size()-1) {
-    //secondaryQuickSort(v, beg, v.size()-1);
-    threeWayPartition(v, beg, v.size()-1, 0);
-}
-else {
-    if (v[i].size() != v[beg].size()) {
-        end = i-1;
-        //secondaryQuickSort(v, beg, end);
-        threeWayPartition(v, beg, end, 0);
-        beg = i;
-    }
-}
-*/
 
 int primaryChoosePivot(Vector<String>& v, int beg, int end) {
     int mid = (beg+end)/2;
@@ -217,58 +202,6 @@ int secondaryPartition(Vector<String>& v, int beg, int end, int pivotLoc) {
     return j;
 }
 
-void threeWayPartition(Vector<String>& v, int beg, int end, int strIndex) {
-    if (beg >= end) {
-        return;
-    }
-    if (end-beg <= 21) {
-        secondaryInsertionSort(v, beg, end+1);
-        return;
-    }
-    int j = beg;
-    int k = end;
-    char c = v[beg][strIndex];
-    int i = beg+1;
-    while (i <= k) {
-       char t = v[i][strIndex];
-       if (t < c) {
-           v.swap(j, i);
-           j++, i++;
-       }
-       else if (t > c) {
-           v.swap(k, i);
-           k--;
-       }
-       else {
-           i++;
-       }
-    }
-    threeWayPartition(v, beg, i-1, strIndex);
-    threeWayPartition(v, i, k, strIndex+1);
-    threeWayPartition(v, k+1, end, strIndex);
-}
-
-/*
-  private static void sort(String[] a, int lo, int hi, int d)
-  {
-     if (hi <= lo) return;
-     int lt = lo, gt = hi;
-     int v = charAt(a[lo], d);
-     int i = lo + 1;
-     while (i <= gt)
-     {
-        int t = charAt(a[i], d);
-        if      (t < v) exch(a, lt++, i++);
-        else if (t > v) exch(a, i, gt--);
-        else            i++;
-     }
-     // a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi]
-     sort(a, lo, lt-1, d);
-     if (v >= 0) sort(a, lt, gt, d+1);
-     sort(a, gt+1, hi, d);
-  }
-*/
-
 void primaryInsertionSort(Vector<String>& v, int beg, int end) {
     for (int i = beg; i < end; i++) {
         String s = v[i];
@@ -298,15 +231,21 @@ void combineInsertionSorts(Vector<String>& v) {
     int beg = 0;
     int end = 0;
     for (int i = 1; i < v.size(); i++) {
-        if (v[i].size() != v[beg].size()) {
-            end = i;
-            secondaryInsertionSort(v, beg, end);
-            beg = i;
+        if (i == v.size()-1) {
+            secondaryInsertionSort(v, beg, v.size());
         }
         else {
-            if (i == v.size()-1) {
-                secondaryInsertionSort(v, beg, v.size());
+            if (v[i].size() != v[beg].size()) {
+                end = i;
+                secondaryInsertionSort(v, beg, end);
+                beg = i;
             }
         }
     }
 }
+
+/*
+void combineSorts(Vector<String>& v) {
+
+}
+*/
