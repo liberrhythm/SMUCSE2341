@@ -228,74 +228,78 @@ int secondaryPartition(Vector<String>& v, int beg, int end, int pivotLoc) {
     return j; //return pivot index
 }
 
+//implements alphabetical sorting by three way partition: values less than, equal to, and greater than pivot
 void threeWayPartition(Vector<String>& v, int beg, int end, int strIndex) {
-    if (beg >= end || strIndex >= v[beg].size()) {
+    if (beg >= end || strIndex >= v[beg].size()) { //exits function if index range is invalid or if char index within string has gone past string length
         return;
     }
-    if (end-beg <= 21) {
+    if (end-beg <= 21) { //swithces to insertion sort and exits function if subarray gets small enough
         secondaryInsertionSort(v, beg, end+1);
         return;
     }
-    int j = beg;
-    int k = end;
-    char c = v[beg][strIndex];
-    int i = beg+1;
+    int j = beg; //variable iterating up
+    int k = end; //variable iterating down
+    char c = v[beg][strIndex]; //sets pivot as char at specified index of first element in subarray
+    int i = beg+1; //variable to be swapped depending on value
     while (i <= k) {
-       char t = v[i][strIndex];
-       if (t < c) {
-           v.swap(j, i);
-           j++, i++;
+       char t = v[i][strIndex]; //char at specified index at current element
+       if (t < c) { //if t is less than pivot char
+           v.swap(j, i); //move ith element towards front of array
+           j++, i++; //continue moving up array
        }
-       else if (t > c) {
-           v.swap(k, i);
-           k--;
+       else if (t > c) { //if t is greater than pivot char
+           v.swap(k, i); //move ith element towards back of array
+           k--; //continue moving down array
        }
-       else {
+       else { //if t is equal to pivot char
            i++;
        }
     }
-    threeWayPartition(v, beg, j-1, strIndex);
-    threeWayPartition(v, j, k, strIndex+1);
-    threeWayPartition(v, k+1, end, strIndex);
+    threeWayPartition(v, beg, j-1, strIndex); //partition elements less than pivot
+    threeWayPartition(v, j, k, strIndex+1); //partition elements equal to pivot with next char up
+    threeWayPartition(v, k+1, end, strIndex); //partition elements greater than pivot
 }
 
+//implements insertion sort based on primary condition of length
 void primaryInsertionSort(Vector<String>& v, int beg, int end) {
-    for (int i = beg; i < end; i++) {
-        String s = v[i];
+    for (int i = beg; i < end; i++) { //iterates through array
+        String s = v[i]; //saves element being compared
         int j = i - 1;
-        while (j >= 0 && v[j].size() > s.size()) {
-            v[j+1] = v[j];
-            j--;
+        while (j >= 0 && v[j].size() > s.size()) { //compares length of ith element to length of previous element
+            v[j+1] = v[j]; //"moves" elements up if not in right place
+            j--; //decrements j to continue down array
         }
-        v[j+1] = s;
+        v[j+1] = s; //puts element in correct place
     }
 }
 
+//implements insertion sort based on secondary alphabetical condition
 void secondaryInsertionSort(Vector<String>& v, int beg, int end) {
-    for (int i = beg; i < end; i++) {
-        String s = v[i];
+    for (int i = beg; i < end; i++) { //iterates through array
+        String s = v[i]; //saves element being compared
         int j = i - 1;
-        while (j >= beg && v[j] > s) {
-            v[j+1] = v[j];
-            j--;
+        while (j >= beg && v[j] > s) { //compares ith element to previous element
+            v[j+1] = v[j]; //"moves" elements up if not in right place
+            j--; //decrements j to continue down array
         }
-        v[j+1] = s;
+        v[j+1] = s; //puts element in correct place
     }
 }
 
+//combines primary and secondary insertion sorts to sort by length first then alphabetically
 void combineInsertionSorts(Vector<String>& v) {
-    primaryInsertionSort(v, 0, v.size());
+    primaryInsertionSort(v, 0, v.size()); //sort by primary condition first
     int beg = 0;
     int end = 0;
-    for (int i = 1; i < v.size(); i++) {
-        if (i == v.size()-1) {
-            secondaryInsertionSort(v, beg, v.size());
+    for (int i = 1; i < v.size(); i++) { //loops through vector
+        if (i == v.size()-1) { //if end of vector has been reached
+            secondaryInsertionSort(v, beg, v.size()); //sort subarray by secondary condition from last beginning index to end of vector
         }
         else {
-            if (v[i].size() != v[beg].size()) {
-                end = i;
-                secondaryInsertionSort(v, beg, end);
-                beg = i;
+            if (v[i].size() != v[beg].size()) { //if next length has been reached
+                end = i; //set end of subarray
+                secondaryInsertionSort(v, beg, end); //sort subarray of same length strings by secondary condition
+                beg = i; //resets beginning of next subarray to end of last one
             }
         }
     }
