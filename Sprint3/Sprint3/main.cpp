@@ -1,3 +1,15 @@
+/*
+Course Number:  CSE 2341
+Programmer:     Sabrina Peng
+Date:           3/3/17
+Program Number: Sprint3
+Purpose:        Sorts
+Instructor: 	Mark Fontenot
+TA:             Chris Henk, Kevin Queenan
+Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
+                   www.informit.com/articles/article.aspex?p=2180073&seqNum=4
+                   www.cs.princeton.edu/~rs/AlgsDS07/18RadixSort.pdf
+*/
 
 #include <iostream>
 #include <fstream>
@@ -26,7 +38,7 @@ void combineQuickSorts(Vector<String>&);
 int main(int argc, char* argv[])
 {
     ifstream inFile(argv[1], ios::in);
-    if (!inFile) {
+    if (!inFile) { //checks to see if input file can be opened
         cerr << "Input file could not be opened" << endl;
         exit(EXIT_FAILURE);
     }
@@ -40,18 +52,22 @@ int main(int argc, char* argv[])
     char word[81];
     inFile >> word;
     while(!inFile.eof()) {
-        String s(word);
+        String s(word); //creates custom String object with char array/buffer
         words.push_back(s);
         inFile >> word;
     }
 
     inFile.close();
 
-    combineQuickSorts(words);
+    combineQuickSorts(words); //calls sorting function
 
     ofstream outFile(argv[2], ios::out);
+    if (!outFile) { //checks to see if output file can be opened
+        cerr << "Output file could not be opened" << endl;
+        exit(EXIT_FAILURE);
+    }
     for (int i = 0; i < numWords; i++) {
-        outFile << words[i] << endl;
+        outFile << words[i] << endl; //prints out first ___ specified number of words from sorted data
     }
 
     outFile.close();
