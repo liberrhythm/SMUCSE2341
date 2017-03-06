@@ -218,11 +218,11 @@ int secondaryPartition(Vector<String>& v, int beg, int end, int pivotLoc) {
 }
 
 void threeWayPartition(Vector<String>& v, int beg, int end, int strIndex) {
-    if (end-beg <= 21) {
-        secondaryInsertionSort(v, beg, end+1);
+    if (beg >= end) {
         return;
     }
-    if (beg >= end) {
+    if (end-beg <= 21) {
+        secondaryInsertionSort(v, beg, end+1);
         return;
     }
     int j = beg;
@@ -298,14 +298,14 @@ void combineInsertionSorts(Vector<String>& v) {
     int beg = 0;
     int end = 0;
     for (int i = 1; i < v.size(); i++) {
-        if (i == v.size()-1) {
-            secondaryInsertionSort(v, beg, v.size());
+        if (v[i].size() != v[beg].size()) {
+            end = i;
+            secondaryInsertionSort(v, beg, end);
+            beg = i;
         }
         else {
-            if (v[i].size() != v[beg].size()) {
-                end = i;
-                secondaryInsertionSort(v, beg, end);
-                beg = i;
+            if (i == v.size()-1) {
+                secondaryInsertionSort(v, beg, v.size());
             }
         }
     }
