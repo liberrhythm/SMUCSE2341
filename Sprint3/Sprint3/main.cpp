@@ -93,23 +93,39 @@ void combineQuickSorts(Vector<String>& v) {
     }
     primaryQuickSort(v, 0, v.size()-1);
 
-    //threeWayPartition(v, 0, v.size()-1, 0);
-
     int beg = 0;
     int end = 0;
     for (int i = 1; i < v.size(); i++) {
         if (i == v.size()-1) {
-            secondaryQuickSort(v, beg, v.size()-1);
+            //secondaryQuickSort(v, beg, v.size()-1);
+            threeWayPartition(v, beg, v.size()-1, 0);
         }
         else {
             if (v[i].size() != v[beg].size()) {
                 end = i-1;
-                secondaryQuickSort(v, beg, end);
+                //secondaryQuickSort(v, beg, end);
+                threeWayPartition(v, beg, end, 0);
                 beg = i;
             }
         }
     }
 }
+
+/*
+        if (i == v.size()-1) {
+            //secondaryQuickSort(v, beg, v.size()-1);
+            threeWayPartition(v, 0, v.size()-1, 0);
+        }
+        else {
+            if (v[i].size() != v[beg].size()) {
+                end = i-1;
+                //secondaryQuickSort(v, beg, end);
+                threeWayPartition(v, beg, end, 0);
+                beg = i;
+            }
+        }
+
+*/
 
 int primaryChoosePivot(Vector<String>& v, int beg, int end) {
     int mid = (beg+end)/2;
@@ -228,7 +244,16 @@ void threeWayPartition(Vector<String>& v, int beg, int end, int strIndex) {
        }
     }
     threeWayPartition(v, beg, i-1, strIndex);
-    threeWayPartition(v, i, k, strIndex+1);
+    /*
+    int equalChars = 0;
+    while (v[i][strIndex+1] == v[k][strIndex+1]) {
+        equalChars++;
+    }
+    */
+    if (c >= 0) {
+        threeWayPartition(v, i, k, strIndex+1);
+    }
+    //threeWayPartition(v, i, k, strIndex+1);
     threeWayPartition(v, k+1, end, strIndex);
 }
 
