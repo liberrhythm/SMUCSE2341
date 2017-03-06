@@ -73,93 +73,102 @@ int main(int argc, char* argv[])
     outFile.close();
 }
 
+//implements quicksort for primary condition (sorting by length) and switches to insertion sort as needed
 void primaryQuickSort(Vector<String>& v, int beg, int end) {
-    if (beg < end) {
-        int pivot = primaryChoosePivot(v, beg, end);
-        int newPivotLoc = primaryPartition(v, beg, end, pivot);
-        if (end-beg > 21) {
+    if (beg < end) { //checks to see if index range is valid
+        int pivot = primaryChoosePivot(v, beg, end); //chooses a pivot (based on length)
+        int newPivotLoc = primaryPartition(v, beg, end, pivot); //sorts vector based on pivot value
+        if (end-beg > 21) { //if size of subarray in vector is above insertion threshold
             primaryQuickSort(v, beg, newPivotLoc-1);
             primaryQuickSort(v, newPivotLoc+1, end);
         }
-        else {
+        else { //if size of subarray is small enough to switch insertion sort
             primaryInsertionSort(v, beg, newPivotLoc);
             primaryInsertionSort(v, newPivotLoc+1, end+1);
         }
     }
 }
 
+//implements quicksort for secondary condition (sorting alphabetically) and switches to insertion sort as needed
 void secondaryQuickSort(Vector<String>& v, int beg, int end) {
-    if (beg < end) {
-        int pivot = secondaryChoosePivot(v, beg, end);
+    if (beg < end) { //checks to see if index range is valid
+        int pivot = secondaryChoosePivot(v, beg, end); //chooses pivot (based on char in alphabet)
         int newPivotLoc = secondaryPartition(v, beg, end, pivot);
-        if (end-beg > 21) {
+        if (end-beg > 21) { //if size of subarray in vector is above insertion threshold
             secondaryQuickSort(v, beg, newPivotLoc-1);
             secondaryQuickSort(v, newPivotLoc+1, end);
         }
-        else {
+        else { //if size of subarray is small enough to switch insertion sort
             secondaryInsertionSort(v, beg, newPivotLoc);
             secondaryInsertionSort(v, newPivotLoc+1, end+1);
         }
     }
 }
 
+//uses primary quicksort algorithm for length and three way partition quicksort for alphabetical sorting
 void combineQuickSorts(Vector<String>& v) {
-    if (v.size() < 21) {
+    if (v.size() < 21) { //if entire array size is less than 21, use insertion sort entirely
         combineInsertionSorts(v);
+        return;
     }
-    primaryQuickSort(v, 0, v.size()-1);
+
+    primaryQuickSort(v, 0, v.size()-1); //calls primary quicksort algorithm for length
 
     int beg = 0;
     int end = 0;
-    for (int i = 1; i < v.size(); i++) {
-        if (i == v.size()-1) {
+    for (int i = 1; i < v.size(); i++) { //loops through vector elements to find bounds for different lengths
+        if (i == v.size()-1) { //if for loop has reached last element of vector
             //secondaryQuickSort(v, beg, v.size()-1);
-            threeWayPartition(v, beg, v.size()-1, 0);
+            threeWayPartition(v, beg, v.size()-1, 0); //partition+sort from last beginning index to end of vector
         }
         else {
-            if (v[i].size() != v[beg].size()) {
-                end = i-1;
+            if (v[i].size() != v[beg].size()) { //checks to find index where length changes
+                end = i-1; //sets end as index of last element with a particular length
                 //secondaryQuickSort(v, beg, end);
-                threeWayPartition(v, beg, end, 0);
-                beg = i;
+                threeWayPartition(v, beg, end, 0); //partition for current subarray of vector
+                beg = i; //resets beginning index for next length
             }
         }
     }
 }
 
+//chooses a pivot for primary condition of length using median of three
 int primaryChoosePivot(Vector<String>& v, int beg, int end) {
-    int mid = (beg+end)/2;
-    if (v[mid].size() <= v[beg].size() && v[beg].size() <= v[end].size()) {
+    int mid = (beg+end)/2; //finds index of middle element
+    if (v[mid].size() <= v[beg].size() && v[beg].size() <= v[end].size()) { //if mid length <= beg length <= end length
         return beg;
     }
-    else if (v[end].size() <= v[beg].size() && v[beg].size() <= v[mid].size()) {
+    else if (v[end].size() <= v[beg].size() && v[beg].size() <= v[mid].size()) { //if end length <= beg length <= mid length
         return beg;
     }
-    else if (v[beg].size() <= v[mid].size() && v[mid].size() <= v[end].size()) {
+    else if (v[beg].size() <= v[mid].size() && v[mid].size() <= v[end].size()) { //if beg length <= mid length <= end length
         return mid;
     }
-    else if (v[end].size() <= v[mid].size() && v[mid].size() <= v[beg].size()) {
+    else if (v[end].size() <= v[mid].size() && v[mid].size() <= v[beg].size()) { //if end length <= mid length <= beg length
         return mid;
     }
-    else {
+    else { //if end length is between beg length and mid length
         return end;
     }
 }
 
+//partitions data based on length and selected median of three pivot
 int primaryPartition(Vector<String>& v, int beg, int end, int pivotLoc) {
-    v.swap(pivotLoc, end);
+    v.swap(pivotLoc, end); //move pivot to end of subarray
     String pivot = v[end];
-    int j = beg;
-    int k = end-1;
+    int j = beg; //sets variable that will move up array
+    int k = end-1; //sets variable that will move down array
 
+    //while jth element in vector with length > pivot length has not been found
     while (j < end && (pivot.size() > v[j].size() || v[j].size() == pivot.size())) {
         j++;
     }
+    //while kth element in vector with length < pivot length has not been found
     while (k > beg && (v[k].size() > pivot.size() || v[k].size() == pivot.size())) {
         k--;
     }
 
-    while (k > j) {
+    while (k > j) { //while j and k have not crossed, indicating end of partition
         v.swap(j, k);
         while (pivot.size() > v[j].size() || v[j].size() == pivot.size()) {
             j++;
@@ -168,43 +177,45 @@ int primaryPartition(Vector<String>& v, int beg, int end, int pivotLoc) {
             k--;
         }
     }
-    v.swap(j, end);
-    return j;
+    v.swap(j, end); //return pivot to rightful place
+    return j; //return pivot index
 }
 
+//chooses a pivot for secondary alphabetical condition using median of three
 int secondaryChoosePivot(Vector<String>& v, int beg, int end) {
-    int mid = (beg+end)/2;
-    if ((v[beg] > v[mid] || v[beg] == v[mid]) && (v[end] > v[beg] || v[beg] == v[end])) {
+    int mid = (beg+end)/2; //find middle value
+    if ((v[beg] > v[mid] || v[beg] == v[mid]) && (v[end] > v[beg] || v[beg] == v[end])) { //if element at beg is median (between mid and end)
         return beg;
     }
-    else if ((v[beg] > v[end] || v[beg] == v[end]) && (v[mid] > v[beg] || v[beg] == v[mid])) {
+    else if ((v[beg] > v[end] || v[beg] == v[end]) && (v[mid] > v[beg] || v[beg] == v[mid])) { //if element at beg is median (between end and mid)
         return beg;
     }
-    else if ((v[mid] > v[beg] || v[mid] == v[beg]) && (v[end] > v[mid] || v[mid] == v[end])) {
+    else if ((v[mid] > v[beg] || v[mid] == v[beg]) && (v[end] > v[mid] || v[mid] == v[end])) { //if element at mid is median (between beg and end)
         return mid;
     }
-    else if ((v[mid] > v[end] || v[mid] == v[end]) && (v[beg] > v[mid] || v[mid] == v[beg])) {
+    else if ((v[mid] > v[end] || v[mid] == v[end]) && (v[beg] > v[mid] || v[mid] == v[beg])) { //if element at mid is median (between end and beg)
         return mid;
     }
-    else {
+    else { //if element at end is median (between beg and mid or mid and beg)
         return end;
     }
 }
 
+//partitions data by alphabetical order based on pivot selected by median of three
 int secondaryPartition(Vector<String>& v, int beg, int end, int pivotLoc) {
-    v.swap(pivotLoc, end);
+    v.swap(pivotLoc, end); //isolates pivot at end of subarray
     String pivot = v[end];
-    int j = beg;
-    int k = end-1;
+    int j = beg; //variable to iterate up
+    int k = end-1; //variable to iterate down
 
-    while (j < end && (pivot > v[j]|| v[j] == pivot)) {
+    while (j < end && (pivot > v[j]|| v[j] == pivot)) { //while jth element that is > pivot has not been found
         j++;
     }
-    while (k > beg && (v[k] > pivot || v[k] == pivot)) {
+    while (k > beg && (v[k] > pivot || v[k] == pivot)) { //while kth element that is < pivot has not been found
         k--;
     }
 
-    while (k > j) {
+    while (k > j) { //while j and k have not crossed, indicating end of partition
         v.swap(j, k);
         while (pivot > v[j] || v[j] == pivot) {
             j++;
@@ -213,8 +224,8 @@ int secondaryPartition(Vector<String>& v, int beg, int end, int pivotLoc) {
             k--;
         }
     }
-    v.swap(j, end);
-    return j;
+    v.swap(j, end); //return pivot to rightful place
+    return j; //return pivot index
 }
 
 void threeWayPartition(Vector<String>& v, int beg, int end, int strIndex) {
