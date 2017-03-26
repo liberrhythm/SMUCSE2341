@@ -10,4 +10,5 @@ HEADERS += \
     catch.hpp \
     Queue.h \
     Stack.h \
-    LinkedList.h
+    LinkedList.h \
+    DSString.h

@@ -57,14 +57,14 @@ class LinkedList
 };
 
 template<class T>
-LinkedList::LinkedList() {
+LinkedList<T>::LinkedList() {
     head->next = nullptr;
     numElements = 0;
 }
 
 template<class T>
-LinkedList::LinkedList(T val) {
-    ListNode* element = new ListNode(val);
+LinkedList<T>::LinkedList(T val) {
+    ListNode<T>* element = new ListNode<T>(val);
     head->next = element;
     element->prev = nullptr; //already initalized to nullptr in listnode class?
     numElements++;
@@ -72,9 +72,9 @@ LinkedList::LinkedList(T val) {
 
 //copy constructor
 template<class T>
-LinkedList::LinkedList(const LinkedList<T>& lst) {
+LinkedList<T>::LinkedList(const LinkedList<T>& lst) {
     //iterate through lst and make copies of ListNodes
-    ListNode* current = lst.head;
+    ListNode<T>* current = lst.head;
     while (current != nullptr && current->next != nullptr) {
         add(current->data);
     }
@@ -82,16 +82,16 @@ LinkedList::LinkedList(const LinkedList<T>& lst) {
 }
 
 template<class T>
-void LinkedList::add(T val) {
+void LinkedList<T>::add(T val) {
     if (head == nullptr) {
-        head = new ListNode(val);
+        head = new ListNode<T>(val);
     }
     else {
-        ListNode* current = head;
+        ListNode<T>* current = head;
         while (current->next != nullptr) {
            current = current->next; //advancing to next listnode
         }
-        ListNode* temp = newListNode(val);
+        ListNode<T>* temp = new ListNode<T>(val);
         current->next = temp;
         temp->prev = current;
     }
@@ -99,8 +99,8 @@ void LinkedList::add(T val) {
 }
 
 template<class T>
-void LinkedList::addToFront(T val) {
-    ListNode* temp = new ListNode(val);
+void LinkedList<T>::addToFront(T val) {
+    ListNode<T>* temp = new ListNode<T>(val);
     temp->next = head;
     temp->prev = nullptr; //not needed?
     head = temp;
@@ -108,11 +108,11 @@ void LinkedList::addToFront(T val) {
 }
 
 template<class T>
-T LinkedList::get(int index) {
+T LinkedList<T>::get(int index) {
     if (index >= numElements || index < 0) {
-        throw std::out_of_range("Index is out of bounds");
+        throw std::out_of_range("OUT OF RANGE");
     }
-    ListNode* current = head;
+    ListNode<T>* current = head;
     for (int i = 0; i < index; i++) {
         current = current->next;
     }
@@ -120,16 +120,16 @@ T LinkedList::get(int index) {
 }
 
 template<class T>
-int LinkedList::size() {
+int LinkedList<T>::size() {
     return numElements;
 }
 
 template<class T>
-T LinkedList::remove(int index) {
+T LinkedList<T>::remove(int index) {
     if (index >= numElements || index < 0) {
         throw std::out_of_range("Index is out of bounds");
     }
-    ListNode* current = head;
+    ListNode<T>* current = head;
     for (int i = 0; i < index; i++) {
         current = current->next;
     }
@@ -145,8 +145,8 @@ T LinkedList::remove(int index) {
 }
 
 template<class T>
-LinkedList::~LinkedList() {
-    ListNode* current = head;
+LinkedList<T>::~LinkedList() {
+    ListNode<T>* current = head;
     for (int i = 0; i < numElements; i++) { //does this actually do anything...
         delete current;
         current = current->next;
@@ -155,11 +155,11 @@ LinkedList::~LinkedList() {
 }
 
 template<class T>
-T& LinkedList::operator[](int index) {
+T& LinkedList<T>::operator[](int index) {
     if (index >= numElements || index < 0) {
         throw std::out_of_range("Index is out of bounds");
     }
-    ListNode* current = head;
+    ListNode<T>* current = head;
     for (int i = 0; i < index; i++) {
         current = current->next;
     }
@@ -168,9 +168,9 @@ T& LinkedList::operator[](int index) {
 
 //assignment operator
 template<class T>
-LinkedList<T>& LinkedList::operator=(LinkedList<T>& lst) {
-    ListNode* curr = head;
-    ListNode* current = lst.head;
+LinkedList<T>& LinkedList<T>::operator=(LinkedList<T>& lst) {
+    ListNode<T>* curr = head;
+    ListNode<T>* current = lst.head;
     while (current != nullptr && current->next != nullptr) {
         curr->data = current->data;
         curr = curr->next;
@@ -190,14 +190,14 @@ LinkedList<T>& LinkedList::operator=(LinkedList<T>& lst) {
 }
 
 template<class T>
-void LinkedList::print() {
+void LinkedList<T>::print() {
     if (head != nullptr) {
-        ListNode* current = head;
+        ListNode<T>* current = head;
         while (current->next != nullptr) {
-            cout << current->data;
+            std::cout << current->data;
             current = current->next;
         }
-        cout << current->data;
+        std::cout << current->data;
     }
 }
 

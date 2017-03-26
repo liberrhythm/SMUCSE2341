@@ -13,7 +13,7 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 
-#include <linkedlist.h>
+#include <LinkedList.h>
 
 using namespace std;
 

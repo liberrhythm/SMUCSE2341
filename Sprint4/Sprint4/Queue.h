@@ -1,7 +1,7 @@
 #ifndef QUEUE
 #define QUEUE
 
-#include "LInkedLIst.h"
+#include "LinkedList.h"
 
 template<class T>
 class Queue

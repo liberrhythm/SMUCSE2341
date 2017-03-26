@@ -1,7 +1,7 @@
 #ifndef STACK
 #define STACK
 
-#include "LInkedLIst.h"
+#include "LinkedList.h"
 
 template<class T>
 class Stack
