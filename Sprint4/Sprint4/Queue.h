@@ -1,19 +1,20 @@
-#ifndef STACK
-#define STACK
+#ifndef QUEUE
+#define QUEUE
 
-#include "linkedlist.h"
+#include "LInkedLIst.h"
 
 template<class T>
-class Stack
+class Queue
 {
     public:
-        T pop();
+        T dequeue();
         T peek();
-        void push(T);
+        void enqueue(T);
         bool isEmpty();
 
     private:
         LinkedList<T> data;
+
 };
 
 #endif

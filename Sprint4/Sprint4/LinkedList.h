@@ -1,3 +1,14 @@
+/*
+Course Number:  CSE 2341
+Programmer:     Sabrina Peng
+Date:           3/25/17
+Program Number: Sprint4
+Purpose:        Implements functionality for a custom doubly linked list class, with the list composed of linked nodes of elements
+Instructor: 	Mark Fontenot
+TA:             Chris Henk, Kevin Queenan
+Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
+*/
+
 #ifndef LINKED_LIST
 #define LINKED_LIST
 
@@ -38,6 +49,8 @@ class LinkedList
         T& operator[](int);
         LinkedList<T>& operator=(LinkedList<T>&);
 
+        void print();
+
     private:
         ListNode<T>* head;
         int numElements;
@@ -60,17 +73,9 @@ LinkedList::LinkedList(T val) {
 //copy constructor
 template<class T>
 LinkedList::LinkedList(const LinkedList<T>& lst) {
-    head->next = lst.head->next;
-    head->prev = lst.head->prev;
     //iterate through lst and make copies of ListNodes
-    ListNode* current = lst.head->next;
-    while(current != nullptr && current->next != nullptr) { //do we need this: && current != nullptr
-        /*
-        ListNode temp;
-        temp.data = current->data;
-        temp.next = current->next;
-        temp.prev = current->prev;
-        */
+    ListNode* current = lst.head;
+    while (current != nullptr && current->next != nullptr) {
         add(current->data);
     }
     numElements = lst.numElements;
@@ -164,7 +169,36 @@ T& LinkedList::operator[](int index) {
 //assignment operator
 template<class T>
 LinkedList<T>& LinkedList::operator=(LinkedList<T>& lst) {
+    ListNode* curr = head;
+    ListNode* current = lst.head;
+    while (current != nullptr && current->next != nullptr) {
+        curr->data = current->data;
+        curr = curr->next;
+        current = current->next;
+    }
+    if (numElements > lst.numElements) {
+        for (int i = lst.numElements; i < numElements; i++) {
+            remove(i);
+        }
+    }
+    else if (numElements < lst.numElements) {
+        for (int i = numElements; i < lst.numElements; i++) {
+            add(lst[i]->data);
+        }
+    }
+    numElements = lst.numElements;
+}
 
+template<class T>
+void LinkedList::print() {
+    if (head != nullptr) {
+        ListNode* current = head;
+        while (current->next != nullptr) {
+            cout << current->data;
+            current = current->next;
+        }
+        cout << current->data;
+    }
 }
 
 #endif
