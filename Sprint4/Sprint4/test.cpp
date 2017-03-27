@@ -1,9 +1,9 @@
 /*
 Course Number:  CSE 2341
 Programmer:     Sabrina Peng
-Date:           2/17/17
+Date:           3/25/17
 Program Number: Sprint2
-Purpose:        Uses CATCH framework to test custom string and vector classes
+Purpose:        Uses CATCH framework to test custom linked list class
 Instructor: 	Mark Fontenot
 TA:             Chris Henk, Kevin Queenan
 Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
@@ -87,76 +87,71 @@ TEST_CASE("LinkedList class", "[linkedlist]"){
     }
 
     SECTION("Assignment operator") {
-        REQUIRE(list7.size() == 11);
-        REQUIRE(list7[4] == "this is an uppercase string");
         LinkedList<String> strings1;
         strings1 = list4;
         REQUIRE(strings1.size() == 0);
         strings1 = list6;
         REQUIRE(strings1.size() == 1);
         REQUIRE(strings1[0] == s[10]);
-        //list2 = LinkedList<int>(4);
+        LinkedList<int> integers1(4);
+        list2 = integers1;
         REQUIRE(list2.size() == 1);
         REQUIRE(list2[0] == 4);
     }
 
-    /*
-    SECTION("Resize function") {
-        integers1.resize();
-        REQUIRE(integers1.size() == 0);
-        REQUIRE(integers1.getCapacity() == 20);
-        integers2.resize();
-        for (int i = 0; i < 15; i++) {
-            REQUIRE(integers2[i] == i);
-        }
-        strings2.resize();
-        REQUIRE(strings2.size() == 11);
-        REQUIRE(strings2.getCapacity() == 30);
-        REQUIRE(strings2[strings2.size()-1] == "yo gabba gabba");
-    }
-
     SECTION("Add function") {
-        integers1.push_back(23);
-        REQUIRE(integers1.size() == 1);
-        REQUIRE(integers1[integers1.size()-1] == 23);
+        list1.add(3);
+        REQUIRE(list1.size() == 1);
+        REQUIRE(list1[0] == 3);
         String str = "THIS IS AN UPPERCASE STRING";
-        strings2.push_back(str);
-        REQUIRE(strings2.size() == 12);
-        REQUIRE(strings2[strings2.size()-1] == strings2[3]);
-        strings3.push_back(str);
-        strings3.push_back(str);
-        REQUIRE(strings3[0] == "THIS IS AN UPPERCASE STRING");
-        REQUIRE(strings3[0] == strings3[1]);
+        list5.add(str);
+        REQUIRE(list5.size() == 12);
+        REQUIRE(list5[11] == list5[3]);
+        list6.add("");
+        list6.add("");
+        REQUIRE(list6[1] == list6[2]);
     }
 
     SECTION("Add to front function") {
-        integers1.push_back(23);
-        REQUIRE(integers1.size() == 1);
-        REQUIRE(integers1[integers1.size()-1] == 23);
+        list1.addToFront(3);
+        REQUIRE(list1.size() == 1);
+        REQUIRE(list1[0] == 3);
         String str = "THIS IS AN UPPERCASE STRING";
-        strings2.push_back(str);
-        REQUIRE(strings2.size() == 12);
-        REQUIRE(strings2[strings2.size()-1] == strings2[3]);
-        strings3.push_back(str);
-        strings3.push_back(str);
-        REQUIRE(strings3[0] == "THIS IS AN UPPERCASE STRING");
-        REQUIRE(strings3[0] == strings3[1]);
+        list5.addToFront(str);
+        REQUIRE(list5.size() == 12);
+        REQUIRE(list5[0] == list5[4]);
+        REQUIRE(list5[11] == "yo gabba gabba");
+        String str1 = list6[0];
+        list6.addToFront("");
+        list6.addToFront("");
+        REQUIRE(list6[0] == list6[1]);
+        REQUIRE(list6[2] == str1);
     }
 
     SECTION("Remove function") {
-        integers1.push_back(23);
-        integers1.pop_back();
-        REQUIRE(integers1.size() == 0);
-        strings2.pop_back();
-        strings2.pop_back();
-        strings2.pop_back();
-        REQUIRE(strings2[strings2.size()-1] == "  split  split  split  ");
+        list3.remove(0);
+        REQUIRE(list3.size() == 0);
+        list5.remove(10);
+        list5.remove(9);
+        list5.remove(8);
+        REQUIRE(list5.size() == 8);
+        REQUIRE(list5[list5.size()-1] == "  split  split  split  ");
         String str = "THIS IS AN UPPERCASE STRING";
-        strings3.push_back(str);
-        strings3.push_back(str);
-        strings3.pop_back();
-        REQUIRE(strings3.size() == 1);
-        REQUIRE(strings3[0] == "THIS IS AN UPPERCASE STRING");
+        list6.add(str);
+        list6.add(str);
+        list6.remove(list6.size()-1);
+        REQUIRE(list6.size() == 2);
+        REQUIRE(list6[1] == str);
+        list7.remove(1);
+        list7.remove(1);
+        REQUIRE(list7.size() == 9);
+        REQUIRE(list7[1] == list5[3]);
     }
-    */
+
+    SECTION("Clear function") {
+        list2.clear();
+        REQUIRE(list2.size() == 0);
+        list5.clear();
+        REQUIRE(list5.size() == 0);
+    }
 }

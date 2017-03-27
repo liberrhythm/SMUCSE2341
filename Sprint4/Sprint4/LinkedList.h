@@ -42,7 +42,7 @@ class LinkedList
         void addToFront(T);
         T get(int);
         int size();
-        T remove(int);
+        void remove(int);
 
         ~LinkedList();
 
@@ -69,20 +69,18 @@ LinkedList<T>::LinkedList(T val) {
     ListNode<T>* element = new ListNode<T>(val);
     head = element;
     element->prev = nullptr; //already initalized to nullptr in listnode class?
-    numElements++;
+    numElements = 1;
 }
 
 //copy constructor
 template<class T>
 LinkedList<T>::LinkedList(const LinkedList<T>& lst) {
-    //iterate through lst and make copies of ListNodes
-    if (lst.numElements != 0) {
-        if (lst.numElements == 1) {
-            head = lst.head;
-        }
-        else {
-            copyAll(lst);
-        }
+    if (lst.numElements == 0) {
+        head = nullptr;
+        numElements = 0;
+    }
+    else {
+        copyAll(lst);
         numElements = lst.numElements;
     }
 }
@@ -131,27 +129,38 @@ int LinkedList<T>::size() {
 }
 
 template<class T>
-T LinkedList<T>::remove(int index) {
+void LinkedList<T>::remove(int index) {
     if (index >= numElements || index < 0) {
         throw std::out_of_range("Index is out of bounds");
     }
-    T element;
-    ListNode<T>* current = head;
-    for (int i = 0; i < index; i++) {
-        current = current->next;
-    }
-    element = current->data;
 
-    if (head == current && current->next == nullptr) {
-        delete current;
+    if(numElements == 0) {
+        return;
+    }
+    else if (numElements == 1) {
+        delete head;
+        head = nullptr;
+        numElements = 0;
+    }
+    else if (index == numElements-1) {
+        ListNode<T>* current = head;
+        for (int i = 0; i < numElements-1; i++) {
+            current = current->next;
+        }
+        delete current->next;
+        current->next = nullptr;
+        numElements--;
     }
     else {
+        ListNode<T>* current = head;
+        for (int i = 0; i < index; i++) {
+            current = current->next;
+        }
         current->next->prev = current->prev;
         current->prev->next = current->next;
         delete current;
+        numElements--;
     }
-    numElements--;
-    return element;
 }
 
 template<class T>
@@ -175,20 +184,30 @@ T& LinkedList<T>::operator[](int index) {
 template<class T>
 LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& lst) {
     clear();
-    copyAll(lst);
-    numElements = lst.numElements;
+
+    if (lst.numElements == 0) {
+        head = nullptr;
+        numElements = 0;
+    }
+    else {
+        copyAll(lst);
+        numElements = lst.numElements;
+    }
+
     return *this;
 }
 
 template<class T>
 void LinkedList<T>::copyAll(const LinkedList<T>& lst) {
-    head = lst.head;
-    ListNode<T>* current = lst.head;
-    while (current != nullptr && current->next != nullptr) {
+    head = new ListNode<T>(lst.head->data);
+    ListNode<T>* current = lst.head->next;
+    while (current != nullptr) {
         add(current->data);
         current = current->next;
     }
+    numElements = lst.numElements;
 }
+
 
 template<class T>
 void LinkedList<T>::clear() {
