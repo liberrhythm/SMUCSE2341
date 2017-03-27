@@ -47,8 +47,10 @@ class LinkedList
         ~LinkedList();
 
         T& operator[](int);
-        LinkedList<T>& operator=(LinkedList<T>&);
+        LinkedList<T>& operator=(const LinkedList<T>&);
 
+        void copyAll(const LinkedList<T>&);
+        void clear();
         void print();
 
     private:
@@ -58,14 +60,14 @@ class LinkedList
 
 template<class T>
 LinkedList<T>::LinkedList() {
-    head->next = nullptr;
+    head = nullptr;
     numElements = 0;
 }
 
 template<class T>
 LinkedList<T>::LinkedList(T val) {
     ListNode<T>* element = new ListNode<T>(val);
-    head->next = element;
+    head = element;
     element->prev = nullptr; //already initalized to nullptr in listnode class?
     numElements++;
 }
@@ -74,11 +76,15 @@ LinkedList<T>::LinkedList(T val) {
 template<class T>
 LinkedList<T>::LinkedList(const LinkedList<T>& lst) {
     //iterate through lst and make copies of ListNodes
-    ListNode<T>* current = lst.head;
-    while (current != nullptr && current->next != nullptr) {
-        add(current->data);
+    if (lst.numElements != 0) {
+        if (lst.numElements == 1) {
+            head = lst.head;
+        }
+        else {
+            copyAll(lst);
+        }
+        numElements = lst.numElements;
     }
-    numElements = lst.numElements;
 }
 
 template<class T>
@@ -129,10 +135,13 @@ T LinkedList<T>::remove(int index) {
     if (index >= numElements || index < 0) {
         throw std::out_of_range("Index is out of bounds");
     }
+    T element;
     ListNode<T>* current = head;
     for (int i = 0; i < index; i++) {
         current = current->next;
     }
+    element = current->data;
+
     if (head == current && current->next == nullptr) {
         delete current;
     }
@@ -142,16 +151,12 @@ T LinkedList<T>::remove(int index) {
         delete current;
     }
     numElements--;
+    return element;
 }
 
 template<class T>
 LinkedList<T>::~LinkedList() {
-    ListNode<T>* current = head;
-    for (int i = 0; i < numElements; i++) { //does this actually do anything...
-        delete current;
-        current = current->next;
-    }
-    delete current;
+    clear();
 }
 
 template<class T>
@@ -168,25 +173,39 @@ T& LinkedList<T>::operator[](int index) {
 
 //assignment operator
 template<class T>
-LinkedList<T>& LinkedList<T>::operator=(LinkedList<T>& lst) {
-    ListNode<T>* curr = head;
+LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& lst) {
+    clear();
+    copyAll(lst);
+    numElements = lst.numElements;
+    return *this;
+}
+
+template<class T>
+void LinkedList<T>::copyAll(const LinkedList<T>& lst) {
+    head = lst.head;
     ListNode<T>* current = lst.head;
     while (current != nullptr && current->next != nullptr) {
-        curr->data = current->data;
-        curr = curr->next;
+        add(current->data);
         current = current->next;
     }
-    if (numElements > lst.numElements) {
-        for (int i = lst.numElements; i < numElements; i++) {
-            remove(i);
+}
+
+template<class T>
+void LinkedList<T>::clear() {
+    if (numElements != 0) {
+        if (numElements == 1) {
+            delete head;
+        }
+        else {
+            while (head != nullptr) {
+                ListNode<T>* current = head;
+                head = head->next;
+                current->next = nullptr;
+                delete current;
+            }
         }
     }
-    else if (numElements < lst.numElements) {
-        for (int i = numElements; i < lst.numElements; i++) {
-            add(lst[i]->data);
-        }
-    }
-    numElements = lst.numElements;
+    numElements = 0;
 }
 
 template<class T>
@@ -202,3 +221,47 @@ void LinkedList<T>::print() {
 }
 
 #endif
+
+/*
+ * if (lst.numElements == 0) {
+        for (int i = numElements; i > -1; i--) {
+            T removed = remove(i);
+        }
+        head = nullptr;
+    }
+    else if (lst.numElements == 1) {
+        head = lst.head;
+        if (numElements > lst.numElements) {
+            for (int i = numElements; i > 1; i--) {
+                T removed = remove(i);
+            }
+        }
+    }
+    else if (numElements == 1) {
+        head = lst.head;
+        if (numElements < lst.numElements) {
+            for (int i = lst.numElements; i > 1; i--) {
+                T removed = remove(i);
+            }
+        }
+    }
+    else {
+        ListNode<T>* curr = head;
+        ListNode<T>* current = lst.head;
+        while (current != nullptr && current->next != nullptr) {
+            curr->data = current->data;
+            curr = curr->next;
+            current = current->next;
+        }
+        if (numElements > lst.numElements) {
+            for (int i = lst.numElements; i < numElements; i++) {
+                T removed = remove(i);
+            }
+        }
+        else if (numElements < lst.numElements) {
+            for (int i = numElements; i < lst.numElements; i++) {
+                add(lst[i]);
+            }
+        }
+    }
+    */
