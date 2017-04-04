@@ -44,6 +44,8 @@ class LinkedList
         T get(int);
         int size(); //returns number of elements in linked list
         void remove(int); //removes at index
+        T removeFromFront();
+        T removeFromBack();
 
         ~LinkedList();
 
@@ -56,6 +58,7 @@ class LinkedList
 
     private:
         ListNode<T>* head; //points to first element of linked list
+        ListNode<T>* back; //points to last element of linked list
         int numElements;
 };
 
@@ -63,6 +66,7 @@ class LinkedList
 template<class T>
 LinkedList<T>::LinkedList() {
     head = nullptr;
+    back = nullptr;
     numElements = 0;
 }
 
@@ -70,8 +74,7 @@ LinkedList<T>::LinkedList() {
 template<class T>
 LinkedList<T>::LinkedList(T val) {
     ListNode<T>* element = new ListNode<T>(val);
-    head = element; //head now points to first payload-containing node
-    element->prev = nullptr; //ensures element does not point to anything previous
+    head = back = element; //head and back point to only node
     numElements = 1;
 }
 
@@ -79,29 +82,25 @@ LinkedList<T>::LinkedList(T val) {
 template<class T>
 LinkedList<T>::LinkedList(const LinkedList<T>& lst) {
     if (lst.numElements == 0) { //edge case: if lst is empty, then initialize as if it were default constructor
-        head = nullptr;
+        head = back = nullptr;
         numElements = 0;
     }
     else {
         copyAll(lst); //copies all elements from lst to this linked list
-        numElements = lst.numElements;
     }
 }
 
 //adds value as a payload of a node to the end of this linked list
 template<class T>
 void LinkedList<T>::add(T val) {
-    if (head == nullptr) { //edge case: if the list is empty
-        head = new ListNode<T>(val); //head points to newly created node
+    ListNode<T>* newPtr = new ListNode<T>(val);
+    if (numElements == 0) { //edge case: if the list is empty
+        head = back = newPtr; //head and back point to newly created node
     }
     else {
-        ListNode<T>* current = head;
-        while (current->next != nullptr) { //while the end of the linked list has not been reached
-           current = current->next; //advancing to next listnode
-        }
-        ListNode<T>* temp = new ListNode<T>(val);
-        current->next = temp; //attaches new node to end of linked list
-        temp->prev = current; //connects nodes through backwards pointer
+        back->next = newPtr; //link new node to end of list
+        newPtr->prev = back;
+        back = newPtr; //point end pointer to new last node
     }
     numElements++;
 }
@@ -109,17 +108,16 @@ void LinkedList<T>::add(T val) {
 //adds value as payload of node at beginning of this linked list
 template<class T>
 void LinkedList<T>::addToFront(T val) {
+    ListNode<T>* newPtr = new ListNode<T>(val);
     if (numElements == 0) { //edge case: if list is empty
-        add(val);
+        head = back = newPtr;
     }
     else {
-        ListNode<T>* temp = new ListNode<T>(val);
-        temp->next = head; //sets temp to point at current first element
-        temp->next->prev = temp; //sets current first element to point backwards at temp
-        temp->prev = nullptr;
-        head = temp; //head points to temp as first element
-        numElements++;
+        head->prev = newPtr; //link new node to front of list
+        newPtr->next = head;
+        head = newPtr; //point head pointer to new first node
     }
+    numElements++;
 }
 
 //returns value of element at index parameter
@@ -152,17 +150,16 @@ void LinkedList<T>::remove(int index) {
         return;
     }
     else if (numElements == 1) { //edge case: if list has only one element
+        back = nullptr;
         delete head; //deletes and releases memory allocated to first and only element
         head = nullptr;
         numElements = 0;
     }
     else if (index == numElements-1) { //edge case: if last element is the one to be deleted
-        ListNode<T>* current = head;
-        for (int i = 0; i < numElements-1; i++) { //iterates to second to last element
-            current = current->next;
-        }
-        delete current->next; //deletes next (and therefore last) element
-        current->next = nullptr; //sets forward looking pointer to null
+        ListNode<T>* temp = back;
+        back = temp->prev; //move pointer to last node to second to last element
+        delete temp; //delete last element
+        back->next = nullptr; //set new last element forward looking pointer to null
         numElements--;
     }
     else {
@@ -176,6 +173,44 @@ void LinkedList<T>::remove(int index) {
         delete current;
         numElements--;
     }
+}
+
+template<class T>
+T LinkedList<T>::removeFromFront() {
+    if (numElements != 0) {
+        if (numElements == 1) {
+            T element = head->data;
+            back = nullptr;
+            delete head;
+            numElements = 0;
+            return element;
+        }
+        else {
+            T element = head->data;
+            remove(0);
+            return element;
+        }
+    }
+    return 0;
+}
+
+template<class T>
+T LinkedList<T>::removeFromBack() {
+    if (numElements != 0) {
+        if (numElements == 1) {
+                T element = back->data;
+                back = nullptr;
+                delete head;
+                numElements = 0;
+                return element;
+        }
+        else {
+            T element = back->data;
+            remove(numElements-1);
+            return element;
+        }
+    }
+    return 0;
 }
 
 //destructor to release memory allocated in creating nodes
@@ -204,12 +239,11 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& lst) {
     clear(); //deallocates all memory and destroys nodes/payloads
 
     if (lst.numElements == 0) {
-        head = nullptr; //default constructor-like code
+        head = back = nullptr; //default constructor-like code
         numElements = 0;
     }
     else {
         copyAll(lst); //calls method to copy all elements in parameter lst
-        numElements = lst.numElements;
     }
 
     return *this;
@@ -218,11 +252,19 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& lst) {
 //copies all data from parameter lst into this linked list
 template<class T>
 void LinkedList<T>::copyAll(const LinkedList<T>& lst) {
-    head = new ListNode<T>(lst.head->data); //head points to newly created first node based on first value of lst
-    ListNode<T>* current = lst.head->next; //sets current pointer at second node of lst
-    while (current != nullptr) { //iterates until end of the parameter list
-        add(current->data); //calls add function to properly allocate memory for new node
-        current = current->next; //advances to next node with data to be copied
+    add(lst.head->data); //head points to newly created first node based on first value of lst
+    if (lst.numElements == 1) {
+        back = head;
+    }
+    else {
+        ListNode<T>* current = lst.head->next; //sets current pointer at second node of lst
+        ListNode<T>* prv = lst.head;
+        while (current != nullptr) { //iterates until end of the parameter list
+            add(current->data); //calls add function to properly allocate memory for new node
+            current = current->next; //advances to next node with data to be copied
+            prv = prv->next;
+        }
+        back = prv;
     }
     numElements = lst.numElements;
 }
@@ -232,18 +274,19 @@ template<class T>
 void LinkedList<T>::clear() {
     if (numElements != 0) { //if linked list isn't already empty
         if (numElements == 1) { //edge case: if only contains one element
+            back = nullptr;
             delete head;
         }
         else {
+            back = nullptr;
             while (head != nullptr) {
                 ListNode<T>* current = head; //current points to element pointed to by head before head advances
                 head = head->next; //head points to next element
-                //current->next = nullptr;
                 delete current; //deletes and deallocates pointers of node just vacated by head
             }
         }
+        numElements = 0;
     }
-    numElements = 0;
 }
 
 //prints out all payloads of this linked list
@@ -252,11 +295,30 @@ void LinkedList<T>::print() {
     if (head != nullptr) { //if list is not empty
         ListNode<T>* current = head;
         while (current->next != nullptr) { //while there is a valid next element
-            std::cout << current->data; //print current payload
+            std::cout << current->data << std::endl; //print current payload
             current = current->next; //advance pointer to next element
         }
-        std::cout << current->data; //print last node's payload (which did not print through while loop)
+        std::cout << current->data << std::endl; //print last node's payload (which did not print through while loop)
     }
 }
 
 #endif
+
+/*
+ListNode<T>* current = head;
+while (current->next != nullptr) { //while the end of the linked list has not been reached
+   current = current->next; //advancing to next listnode
+}
+current->next = temp; //attaches new node to end of linked list
+temp->prev = current; //connects nodes through backwards pointer
+back = temp;
+
+
+
+
+temp->next = head; //sets temp to point at current first element
+temp->next->prev = temp; //sets current first element to point backwards at temp
+temp->prev = nullptr;
+head = temp; //head points to temp as first element
+numElements++;
+*/

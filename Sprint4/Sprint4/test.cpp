@@ -15,6 +15,8 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #include "DSVector.h"
 #include "DSString.h"
 #include "LinkedList.h"
+#include "Stack.h"
+#include "Queue.h"
 
 TEST_CASE("LinkedList class", "[linkedlist]"){
 
@@ -153,5 +155,69 @@ TEST_CASE("LinkedList class", "[linkedlist]"){
         REQUIRE(list2.size() == 0);
         list5.clear();
         REQUIRE(list5.size() == 0);
+    }
+}
+
+TEST_CASE("Stack class", "[stack]"){
+
+    Stack<int> s1;
+    Stack<String> s2;
+    Stack<int> s3;
+    Stack<String> s4;
+
+    for (int i = 0; i < 10; i++) {
+        s1.push(i);
+    }
+
+    String s[11];
+    s[0] = String("testString");
+    s[1] = String("a test string");
+    s[2] = String("");
+    s[3] = String("THIS IS AN UPPERCASE STRING");
+    s[4] = String("this is an uppercase string");
+    s[5] = String("\n");
+    s[6] = String("");
+    s[7] = String("  split  split  split  ");
+    s[8] = String("                          ");
+    s[9] = String("testString");
+    s[10] = String("yo gabba gabba");
+    for (int i = 0; i < 11; i++) {
+        s2.push(s[i]);
+    }
+
+    SECTION("Pop function") {
+        REQUIRE(s1.pop() == 9);
+        REQUIRE(s1.size() == 9);
+        REQUIRE(s2.pop() == "yo gabba gabba");
+        REQUIRE(s2.pop() == "testString");
+        REQUIRE(s2.size() == 9);
+    }
+
+    SECTION("Peek function") {
+        REQUIRE(s1.peek() == 9);
+        REQUIRE(s1.size() == 10);
+        REQUIRE(s2.peek() == "yo gabba gabba");
+        REQUIRE(s2.size() == 11);
+    }
+
+    SECTION("Push function") {
+        s3.push(5);
+        REQUIRE(s3.peek() == 5);
+        REQUIRE(s3.isEmpty() == false);
+        REQUIRE(s3.pop() == 5);
+        REQUIRE(s3.isEmpty() == true);
+        s4.push("meringue");
+        s4.push("cream");
+        s4.push("bourbon");
+        REQUIRE(s4.size() == 3);
+        REQUIRE(s4.isEmpty() == false);
+        REQUIRE(s4.peek() == "bourbon");
+    }
+
+    SECTION("IsEmpty function") {
+        REQUIRE(s1.isEmpty() == false);
+        REQUIRE(s2.isEmpty() == false);
+        REQUIRE(s3.isEmpty() == true);
+        REQUIRE(s4.isEmpty() == true);
     }
 }
