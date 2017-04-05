@@ -221,3 +221,84 @@ TEST_CASE("Stack class", "[stack]"){
         REQUIRE(s4.isEmpty() == true);
     }
 }
+
+TEST_CASE("Queue class", "[queue]"){
+
+    Queue<int> q1;
+    Queue<String> q2;
+    Queue<int> q3;
+    Queue<String> q4;
+
+    for (int i = 0; i < 10; i++) {
+        q1.enqueue(i);
+    }
+
+    String s[11];
+    s[0] = String("testString");
+    s[1] = String("a test string");
+    s[2] = String("");
+    s[3] = String("THIS IS AN UPPERCASE STRING");
+    s[4] = String("this is an uppercase string");
+    s[5] = String("\n");
+    s[6] = String("");
+    s[7] = String("  split  split  split  ");
+    s[8] = String("                          ");
+    s[9] = String("testString");
+    s[10] = String("yo gabba gabba");
+    for (int i = 0; i < 11; i++) {
+        q2.enqueue(s[i]);
+    }
+
+    SECTION("Dequeue function") {
+        REQUIRE(q1.dequeue() == 0);
+        REQUIRE(q1.size() == 9);
+        REQUIRE(q2.dequeue() == "testString");
+        REQUIRE(q2.dequeue() == "a test string");
+        REQUIRE(q2.size() == 9);
+    }
+
+    SECTION("Peek function") {
+        REQUIRE(q1.peek() == 0);
+        REQUIRE(q1.size() == 10);
+        int e1 = q1.dequeue();
+        REQUIRE(q1.peek() == 1);
+        REQUIRE(q2.peek() == "testString");
+        REQUIRE(q2.size() == 11);
+        String e2 = q2.dequeue();
+        REQUIRE(q2.peek() == "a test string");
+    }
+
+    SECTION("Enqueue function") {
+        q2.enqueue("");
+        REQUIRE(q2.size() == 12);
+        REQUIRE(q2.peek() == "testString");
+        q3.enqueue(5);
+        REQUIRE(q3.size() == 1);
+        REQUIRE(q3.peek() == 5);
+        REQUIRE(q3.isEmpty() == false);
+        REQUIRE(q3.dequeue() == 5);
+        REQUIRE(q3.isEmpty() == true);
+        q4.enqueue("meringue");
+        q4.enqueue("cream");
+        q4.enqueue("bourbon");
+        REQUIRE(q4.size() == 3);
+        REQUIRE(q4.isEmpty() == false);
+        REQUIRE(q4.peek() == "meringue");
+    }
+
+    SECTION("IsEmpty function") {
+        REQUIRE(q1.isEmpty() == false);
+        String e1;
+        int q2size = q2.size();
+        for (int i = 0; i < q2size; i++) {
+            e1 = q2.dequeue();
+        }
+        REQUIRE(q2.isEmpty() == true);
+        REQUIRE(q3.isEmpty() == true);
+        q3.enqueue(4);
+        REQUIRE(q3.isEmpty() == false);
+        int e2 = q3.dequeue();
+        REQUIRE(q3.isEmpty() == true);
+        REQUIRE(q4.isEmpty() == true);
+    }
+}

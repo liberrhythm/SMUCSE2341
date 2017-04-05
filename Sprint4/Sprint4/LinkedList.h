@@ -155,6 +155,13 @@ void LinkedList<T>::remove(int index) {
         head = nullptr;
         numElements = 0;
     }
+    else if (index == 0) { //edge case: if first element is the one to be removed
+        ListNode<T>* temp = head;
+        head = temp->next; //move pointer to first node to second element
+        delete temp; //delete first element
+        head->prev = nullptr; //set new first element backward looking pointer to null
+        numElements--;
+    }
     else if (index == numElements-1) { //edge case: if last element is the one to be deleted
         ListNode<T>* temp = back;
         back = temp->prev; //move pointer to last node to second to last element

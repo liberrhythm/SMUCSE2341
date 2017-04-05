@@ -5,11 +5,15 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     test.cpp \
-    DSString.cpp
+    DSString.cpp \
+    Flight.cpp \
+    Airport.cpp
 
 HEADERS += \
     catch.hpp \
     Queue.h \
     Stack.h \
     LinkedList.h \
-    DSString.h
+    DSString.h \
+    Flight.h \
+    Airport.h
