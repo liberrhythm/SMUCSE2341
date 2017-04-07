@@ -9,13 +9,20 @@ TA:             Chris Henk, Kevin Queenan
 Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 */
 
-
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 
-#include <LinkedList.h>
+#include "LinkedList.h"
+#include "DSString.h"
+#include "DSVector.h"
+#include "Airport.h"
+#include "FlightPlan.h"
+#include <fstream>
+#include <iostream>
 
 using namespace std;
+
+/*
 
 #define TEST true
 int runCatchTests(int argc, char* const argv[]) {
@@ -28,3 +35,14 @@ int main(int argc, char* const argv[]) {
     }
     return 0;
 }
+
+*/
+
+int main(int argc, char * const argv[]) {
+    FlightPlan fPlan(argv[1]);
+
+    fPlan.printFlightData();
+}
+
+
+

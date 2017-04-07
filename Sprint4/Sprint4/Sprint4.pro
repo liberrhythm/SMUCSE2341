@@ -6,8 +6,8 @@ CONFIG -= qt
 SOURCES += main.cpp \
     test.cpp \
     DSString.cpp \
-    Flight.cpp \
-    Airport.cpp
+    Airport.cpp \
+    FlightPlan.cpp
 
 HEADERS += \
     catch.hpp \
@@ -15,5 +15,8 @@ HEADERS += \
     Stack.h \
     LinkedList.h \
     DSString.h \
-    Flight.h \
-    Airport.h
+    Airport.h \
+    FlightPlan.h
+
+DISTFILES += \
+    FlightData

@@ -310,22 +310,3 @@ void LinkedList<T>::print() {
 }
 
 #endif
-
-/*
-ListNode<T>* current = head;
-while (current->next != nullptr) { //while the end of the linked list has not been reached
-   current = current->next; //advancing to next listnode
-}
-current->next = temp; //attaches new node to end of linked list
-temp->prev = current; //connects nodes through backwards pointer
-back = temp;
-
-
-
-
-temp->next = head; //sets temp to point at current first element
-temp->next->prev = temp; //sets current first element to point backwards at temp
-temp->prev = nullptr;
-head = temp; //head points to temp as first element
-numElements++;
-*/
