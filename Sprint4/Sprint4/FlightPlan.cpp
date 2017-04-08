@@ -1,6 +1,7 @@
 #include "FlightPlan.h"
 
 FlightPlan::FlightPlan(char* flightData) {
+
     ifstream inFile;
     inFile.open(flightData, ios::in);
 
@@ -11,20 +12,20 @@ FlightPlan::FlightPlan(char* flightData) {
 
     int numConnections;
     inFile >> numConnections;
+    inFile.ignore();
     char depart[81];
     char arrive[81];
     int cost;
     int time;
 
-    inFile >> depart;
+    inFile.getline(depart, 81, '|');
 
     while (!inFile.eof()) {
-        cin.ignore();
-        inFile >> arrive;
-        cin.ignore();
+        inFile.getline(arrive, 81, '|');
         inFile >> cost;
-        cin.ignore();
+        inFile.ignore();
         inFile >> time;
+        inFile.ignore();
 
         String departure(depart);
         String arrival(arrive);
@@ -32,7 +33,7 @@ FlightPlan::FlightPlan(char* flightData) {
         addAirport(departure, arrival, cost, time);
         addAirport(arrival, departure, cost, time);
 
-        inFile >> depart;
+        inFile.getline(depart, 81, '|');
     }
     inFile.close();
 }
@@ -42,7 +43,9 @@ void FlightPlan::addAirport(String departure, String arrival, int cost, int time
     if (indexLoc == -1) {
         Airport a(departure);
         LinkedList<Airport> newList(a);
-        adjList.add(newList);
+        Airport dest(arrival, cost, time);
+        newList.add(dest);
+        adjList.push_back(newList);
     }
     else {
         bool locExists = cityExists(arrival, indexLoc);
@@ -105,7 +108,7 @@ void FlightPlan::readRequestedFlights(char* requestedFlights) {
     inFile.close();
 }
 
-LinkedList<LinkedList<Airport>>& FlightPlan::getAdjList() {
+Vector<LinkedList<Airport>>& FlightPlan::getAdjList() {
     return adjList;
 }
 
@@ -114,6 +117,7 @@ void FlightPlan::printFlightData() {
         for (int j = 0; j < adjList[i].size(); j++) {
             adjList[i][j].print();
         }
+        cout << endl;
     }
 }
 

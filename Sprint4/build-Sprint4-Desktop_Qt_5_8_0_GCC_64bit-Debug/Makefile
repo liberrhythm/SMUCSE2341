@@ -206,7 +206,8 @@ DIST          = ../Sprint4/FlightData \
 		LinkedList.h \
 		DSString.h \
 		Airport.h \
-		FlightPlan.h ../Sprint4/main.cpp \
+		FlightPlan.h \
+		DSVector.h ../Sprint4/main.cpp \
 		../Sprint4/test.cpp \
 		../Sprint4/DSString.cpp \
 		../Sprint4/Airport.cpp \
@@ -576,9 +577,9 @@ Airport.o: ../Sprint4/Airport.cpp ../Sprint4/Airport.h \
 
 FlightPlan.o: ../Sprint4/FlightPlan.cpp ../Sprint4/FlightPlan.h \
 		../Sprint4/DSString.h \
+		../Sprint4/DSVector.h \
 		../Sprint4/LinkedList.h \
-		../Sprint4/Airport.h \
-		../Sprint4/DSVector.h
+		../Sprint4/Airport.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o FlightPlan.o ../Sprint4/FlightPlan.cpp
 
 ####### Install

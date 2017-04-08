@@ -39,6 +39,7 @@ int main(int argc, char* const argv[]) {
 */
 
 int main(int argc, char * const argv[]) {
+
     FlightPlan fPlan(argv[1]);
 
     fPlan.printFlightData();

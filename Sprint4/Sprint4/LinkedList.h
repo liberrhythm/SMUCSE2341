@@ -22,7 +22,7 @@ class ListNode
     public:
         //constructors use member initialization syntax
         ListNode(): next(nullptr), prev(nullptr) {} //default constructor
-        ListNode(T val): next(nullptr), prev(nullptr), data(val) {}
+        ListNode(const T& val): next(nullptr), prev(nullptr), data(val) {}
         ListNode(const ListNode<T>& rhs): next(nullptr), prev(nullptr), data(rhs.data) {}
 
     private:
@@ -36,11 +36,11 @@ class LinkedList
 {
     public:
         LinkedList(); //default constructor
-        LinkedList(T); //constructor accepting a value
+        LinkedList(const T&); //constructor accepting a value
         LinkedList(const LinkedList<T>&); //copy constructor
 
-        void add(T); //add to end
-        void addToFront(T);
+        void add(const T&); //add to end
+        void addToFront(const T&);
         T get(int);
         int size(); //returns number of elements in linked list
         void remove(int); //removes at index
@@ -72,7 +72,7 @@ LinkedList<T>::LinkedList() {
 
 //constructor that accepts a value to create a one-element linked list
 template<class T>
-LinkedList<T>::LinkedList(T val) {
+LinkedList<T>::LinkedList(const T& val) {
     ListNode<T>* element = new ListNode<T>(val);
     head = back = element; //head and back point to only node
     numElements = 1;
@@ -92,7 +92,7 @@ LinkedList<T>::LinkedList(const LinkedList<T>& lst) {
 
 //adds value as a payload of a node to the end of this linked list
 template<class T>
-void LinkedList<T>::add(T val) {
+void LinkedList<T>::add(const T& val) {
     ListNode<T>* newPtr = new ListNode<T>(val);
     if (numElements == 0) { //edge case: if the list is empty
         head = back = newPtr; //head and back point to newly created node
@@ -101,13 +101,14 @@ void LinkedList<T>::add(T val) {
         back->next = newPtr; //link new node to end of list
         newPtr->prev = back;
         back = newPtr; //point end pointer to new last node
+        back->next = nullptr;
     }
     numElements++;
 }
 
 //adds value as payload of node at beginning of this linked list
 template<class T>
-void LinkedList<T>::addToFront(T val) {
+void LinkedList<T>::addToFront(const T& val) {
     ListNode<T>* newPtr = new ListNode<T>(val);
     if (numElements == 0) { //edge case: if list is empty
         head = back = newPtr;

@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     test.cpp \
     DSString.cpp \
     Airport.cpp \
-    FlightPlan.cpp
+    FlightPlan.cpp \
+    FlightPaths.cpp
 
 HEADERS += \
     catch.hpp \
@@ -16,7 +17,9 @@ HEADERS += \
     LinkedList.h \
     DSString.h \
     Airport.h \
-    FlightPlan.h
+    FlightPlan.h \
+    DSVector.h \
+    FlightPaths.h
 
 DISTFILES += \
     FlightData

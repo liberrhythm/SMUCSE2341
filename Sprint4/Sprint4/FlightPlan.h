@@ -2,6 +2,7 @@
 #define FLIGHTPLAN_H
 
 #include "DSString.h"
+#include "DSVector.h"
 #include "LinkedList.h"
 #include "Airport.h"
 #include <fstream>
@@ -17,11 +18,11 @@ class FlightPlan {
         bool cityExists(String, int);
         void readRequestedFlights(char*);
 
-        LinkedList<LinkedList<Airport>>& getAdjList();
+        Vector<LinkedList<Airport>>& getAdjList();
         void printFlightData();
 
     private:
-        LinkedList<LinkedList<Airport>> adjList;
+        Vector<LinkedList<Airport>> adjList;
 };
 
 #endif // FLIGHTPLAN_H
