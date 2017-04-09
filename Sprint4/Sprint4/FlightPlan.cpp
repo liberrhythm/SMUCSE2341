@@ -78,6 +78,7 @@ bool FlightPlan::cityExists(String city, int indexLoc) {
 }
 
 void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) {
+    /*
     //construct adjList for fun!!!
     Airport one("Dallas", 0, 0);
     Airport two("Austin", 98, 47);
@@ -136,6 +137,7 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
 
     //adjList[1].add(five);
     //adjList[0].add(three);
+    */
 
     ifstream inFile;
     inFile.open(requestedFlights, ios::in);

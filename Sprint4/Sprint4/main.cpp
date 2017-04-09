@@ -38,9 +38,31 @@ int main(int argc, char* const argv[]) {
 int main(int argc, char * const argv[]) {
 
     FlightPlan fPlan(argv[1]);
-    //fPlan.printFlightData(); //tests accuracy of adjacency list
+    fPlan.printFlightData(); //tests accuracy of adjacency list
     fPlan.readRequestedFlights(argv[2], argv[3]);
 }
 
+/*
+8
+Dallas|Austin|98|47
+Houston|Dallas|101|51
+Austin|Houston|95|39
+Chicago|Austin|144|192
+San Francisco|Austin|63|89
+Houston|Chicago|30|56
+San Francisco|Los Angeles|25|52
+Los Angeles|Chicago|98|90
 
 
+
+
+
+7
+Dallas|Houston|T
+Chicago|Dallas|C
+Houston|Chicago|C
+Austin|Houston|T
+Houston|Austin|C
+San Francisco|Los Angeles|T
+San Francisco|Dallas|C
+*/

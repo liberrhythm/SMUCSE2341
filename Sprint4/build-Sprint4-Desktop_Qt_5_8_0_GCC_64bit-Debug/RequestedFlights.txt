@@ -1,8 +1,3 @@
-7
+2
 Dallas|Houston|T
 Chicago|Dallas|C
-Houston|Chicago|C
-Austin|Houston|T
-Houston|Austin|C
-San Francisco|Los Angeles|T
-San Francisco|Dallas|C

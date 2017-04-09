@@ -107,10 +107,16 @@ void LinkedList<T>::add(const T& val) {
         head = back = iter = newPtr; //head and back point to newly created node
     }
     else {
-        back->next = newPtr; //link new node to end of list
-        newPtr->prev = back;
-        back = newPtr; //point end pointer to new last node
-
+        //back->next = newPtr; //link new node to end of list
+        //newPtr->prev = back;
+        //back = newPtr; //point end pointer to new last node
+        ListNode<T>* current = head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        current->next = newPtr;
+        newPtr->prev = current;
+        back = newPtr;
     }
     numElements++;
 }
@@ -289,13 +295,11 @@ void LinkedList<T>::copyAll(const LinkedList<T>& lst) {
     }
     else {
         ListNode<T>* current = lst.head->next; //sets current pointer at second node of lst
-        ListNode<T>* prv = lst.head;
         while (current != nullptr) { //iterates until end of the parameter list
             add(current->data); //calls add function to properly allocate memory for new node
+            back = current;
             current = current->next; //advances to next node with data to be copied
-            prv = prv->next;
         }
-        back = prv;
     }
     numElements = lst.numElements;
 }
