@@ -1,10 +1,12 @@
 #ifndef FLIGHTPLAN_H
 #define FLIGHTPLAN_H
 
+#include "FlightPlan.h"
+#include "Airport.h"
+#include "LinkedList.h"
+#include "Stack.h"
 #include "DSString.h"
 #include "DSVector.h"
-#include "LinkedList.h"
-#include "Airport.h"
 #include <fstream>
 #include <iostream>
 
@@ -16,13 +18,18 @@ class FlightPlan {
         void addAirport(String, String, int, int);
         int headExists(String);
         bool cityExists(String, int);
-        void readRequestedFlights(char*);
+        void readRequestedFlights(char*, char*);
 
         Vector<LinkedList<Airport>>& getAdjList();
         void printFlightData();
 
+        void findPaths(Airport, String);
+        void outputPaths(char*);
+
     private:
         Vector<LinkedList<Airport>> adjList;
+        Stack<Airport> path;
+        Vector<Stack<Airport>> allPaths;
 };
 
 #endif // FLIGHTPLAN_H

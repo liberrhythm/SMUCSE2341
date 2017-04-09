@@ -42,6 +42,8 @@ class Vector {
         void pop_back(); //removes element from end of vector
         bool empty(); //checks if vector has no items of typename T
 
+        int contains(const T&);
+
         ~Vector();
 };
 
@@ -168,6 +170,17 @@ bool Vector<T>::empty() {
         return true;
     }
     return false;
+}
+
+//Returns index in vector if element is in vector or -1 otherwise
+template<typename T>
+int Vector<T>::contains(const T& element) {
+    for (int i = 0; i < length; i++) {
+        if (arr[i] == element) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 //Destructor for private data member arr and releases dynamically allocated memory

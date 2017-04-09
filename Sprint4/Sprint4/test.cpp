@@ -109,8 +109,9 @@ TEST_CASE("LinkedList class", "[linkedlist]"){
         list5.add(str);
         REQUIRE(list5.size() == 12);
         REQUIRE(list5[11] == list5[3]);
-        list6.add("");
-        list6.add("");
+        list6.add("New York");
+        list6.add("New York");
+        list6.print();
         REQUIRE(list6[1] == list6[2]);
     }
 

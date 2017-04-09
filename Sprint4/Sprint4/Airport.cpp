@@ -18,6 +18,13 @@ Airport::Airport(String name, int cost, int time) {
     setTime(time);
 }
 
+bool Airport::operator==(const Airport& a) {
+    if (name == a.name) {
+        return true;
+    }
+    return false;
+}
+
 String Airport::getName() {
     return name;
 }

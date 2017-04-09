@@ -59,6 +59,10 @@ OBJECTS       = main.o \
 		Airport.o \
 		FlightPlan.o
 DIST          = ../Sprint4/FlightData \
+		../Sprint4/PathsToCalculateFile.txt \
+		../Sprint4/OutputFile.txt \
+		FlightData.txt \
+		RequestedFlights.txt \
 		/opt/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.8/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt/5.8/gcc_64/mkspecs/common/linux.conf \
@@ -556,7 +560,8 @@ main.o: ../Sprint4/main.cpp ../Sprint4/catch.hpp \
 		../Sprint4/DSString.h \
 		../Sprint4/DSVector.h \
 		../Sprint4/Airport.h \
-		../Sprint4/FlightPlan.h
+		../Sprint4/FlightPlan.h \
+		../Sprint4/Stack.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Sprint4/main.cpp
 
 test.o: ../Sprint4/test.cpp ../Sprint4/catch.hpp \
@@ -576,10 +581,11 @@ Airport.o: ../Sprint4/Airport.cpp ../Sprint4/Airport.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Airport.o ../Sprint4/Airport.cpp
 
 FlightPlan.o: ../Sprint4/FlightPlan.cpp ../Sprint4/FlightPlan.h \
+		../Sprint4/Airport.h \
 		../Sprint4/DSString.h \
 		../Sprint4/DSVector.h \
 		../Sprint4/LinkedList.h \
-		../Sprint4/Airport.h
+		../Sprint4/Stack.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o FlightPlan.o ../Sprint4/FlightPlan.cpp
 
 ####### Install

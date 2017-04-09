@@ -13,6 +13,9 @@ class Stack
         bool isEmpty();
         int size();
 
+        bool contains(const T&);
+        T get(int);
+
     private:
         LinkedList<T> data;
 };
@@ -45,4 +48,14 @@ bool Stack<T>::isEmpty() {
 template<class T>
 int Stack<T>::size() {
     return data.size();
+}
+
+template<class T>
+bool Stack<T>::contains(const T& element) {
+    return data.contains(element);
+}
+
+template<class T>
+T Stack<T>::get(int index) {
+    return data.get(index);
 }

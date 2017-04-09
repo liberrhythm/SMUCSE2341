@@ -10,6 +10,7 @@ class Airport {
         Airport();
         Airport(String);
         Airport(String, int, int);
+        bool operator==(const Airport&);
         String getName();
         void setName(String);
         int getCost();

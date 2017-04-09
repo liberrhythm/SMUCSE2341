@@ -7,8 +7,7 @@ SOURCES += main.cpp \
     test.cpp \
     DSString.cpp \
     Airport.cpp \
-    FlightPlan.cpp \
-    FlightPaths.cpp
+    FlightPlan.cpp
 
 HEADERS += \
     catch.hpp \
@@ -18,8 +17,11 @@ HEADERS += \
     DSString.h \
     Airport.h \
     FlightPlan.h \
-    DSVector.h \
-    FlightPaths.h
+    DSVector.h
 
 DISTFILES += \
-    FlightData
+    FlightData \
+    PathsToCalculateFile.txt \
+    OutputFile.txt \
+    ../build-Sprint4-Desktop_Qt_5_8_0_GCC_64bit-Debug/FlightData.txt \
+    ../build-Sprint4-Desktop_Qt_5_8_0_GCC_64bit-Debug/RequestedFlights.txt

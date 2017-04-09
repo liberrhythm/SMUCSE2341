@@ -21,9 +21,7 @@ Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
 #include <iostream>
 
 using namespace std;
-
 /*
-
 #define TEST true
 int runCatchTests(int argc, char* const argv[]) {
     return Catch::Session().run(argc, argv);
@@ -35,14 +33,13 @@ int main(int argc, char* const argv[]) {
     }
     return 0;
 }
-
 */
 
 int main(int argc, char * const argv[]) {
 
     FlightPlan fPlan(argv[1]);
-
-    fPlan.printFlightData();
+    fPlan.printFlightData(); //tests accuracy of adjacency list
+    fPlan.readRequestedFlights(argv[2], argv[3]);
 }
 
 
