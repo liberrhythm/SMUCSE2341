@@ -78,6 +78,27 @@ bool FlightPlan::cityExists(String city, int indexLoc) {
 }
 
 void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) {
+    //construct adjList for fun!!!
+    Airport one("Dallas", 0, 0);
+    Airport two("Austin", 98, 47);
+    Airport three("Austin", 0, 0);
+    Airport four("Houston", 95, 39);
+    Airport six("Dallas", 98, 49);
+    Airport seven("Houston", 0, 0);
+    Airport eight("Austin", 95, 39);
+
+    LinkedList<Airport> dallas(one);
+    dallas.add(two);
+    LinkedList<Airport> austin(three);
+    austin.add(four);
+    austin.add(six);
+    LinkedList<Airport> houston(seven);
+    houston.add(eight);
+
+    adjList.push_back(dallas);
+    adjList.push_back(austin);
+    adjList.push_back(houston);
+
     ifstream inFile;
     inFile.open(requestedFlights, ios::in);
     if (!inFile) {
@@ -94,9 +115,10 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
 
     int numFlights;
     inFile >> numFlights;
+    inFile.ignore();
     char depart[81];
     char arrive[81];
-    int metric;
+    char metric;
 
     int currentFlight = 0;
 
@@ -107,7 +129,7 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
 
         inFile.getline(arrive, 81, '|');
         inFile >> metric;
-        cin.ignore();
+        inFile.ignore();
 
         String departure(depart);
         String arrival(arrive);
@@ -122,7 +144,6 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
         else if (metric == 'C') {
             outFile << "Cost)" << endl;
         }
-        outFile.close();
 
         if (!(departure == arrival)) {
             int aLoc;
@@ -132,16 +153,16 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
                 }
             }
             findPaths(adjList[aLoc].get(0), arrival);
-            outputPaths(outputFile);
+            outputPaths(outFile);
         }
         else {
             outFile << "No paths for same-city flights can be found" << endl;
         }
 
-        inFile >> depart;
+        inFile.getline(depart, 81, '|');
     }
-
     inFile.close();
+    outFile.close();
 }
 
 Vector<LinkedList<Airport>>& FlightPlan::getAdjList() {
@@ -160,6 +181,10 @@ void FlightPlan::printFlightData() {
 
 //use iterative backtracking to find all paths starting with airport a and ending at destination b
 void FlightPlan::findPaths(Airport a, String b) {
+    for (int i = 0; i < adjList.size(); i++) {
+        adjList[i].backtrack();
+    }
+
     path.push(a); //add departure airport to path
     Airport temp = path.peek();
 
@@ -172,8 +197,9 @@ void FlightPlan::findPaths(Airport a, String b) {
         }
 
         if (adjList[indexLoc].hasNext()) {
-            if (!path.contains(adjList[indexLoc].getNext())) { //check to see if airport is already in the path
-                path.push(adjList[indexLoc].getNext()); //add next airport to stack
+            Airport next = adjList[indexLoc].getNext();
+            if (!path.contains(next)) { //check to see if airport is already in the path
+                path.push(next); //add next airport to stack
                 if (path.peek().getName() == b) { //check to see if most recent airport is destination
                     allPaths.push_back(path); //add path to vector of paths
                     path.pop();
@@ -189,14 +215,7 @@ void FlightPlan::findPaths(Airport a, String b) {
 }
 
 //prints to output file possible paths up to 3 or error message if no possible paths
-void FlightPlan::outputPaths(char* outputFile) {
-    ofstream outFile;
-    outFile.open(outputFile, ios::out);
-    if (!outFile) {
-        cerr << "Output file could not be opened" << endl;
-        exit(EXIT_FAILURE);
-    }
-
+void FlightPlan::outputPaths(ofstream& outFile) {
     if (allPaths.empty() == true) {
         outFile << "No paths could be found from requested departure city to requested arrival city." << endl;
     }
@@ -222,7 +241,11 @@ void FlightPlan::outputPaths(char* outputFile) {
                 totalTime += allPaths[i].get(j).getTime();
             }
             outFile << "Time: " << totalTime << " ";
-            outFile << "Cost: " << totalCost << endl;
+            outFile << "Cost: " << totalCost << endl << endl;
         }
+    }
+
+    while (allPaths.empty() == false) {
+        allPaths.pop_back();
     }
 }

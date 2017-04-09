@@ -38,7 +38,7 @@ int main(int argc, char* const argv[]) {
 int main(int argc, char * const argv[]) {
 
     FlightPlan fPlan(argv[1]);
-    fPlan.printFlightData(); //tests accuracy of adjacency list
+    //fPlan.printFlightData(); //tests accuracy of adjacency list
     fPlan.readRequestedFlights(argv[2], argv[3]);
 }
 

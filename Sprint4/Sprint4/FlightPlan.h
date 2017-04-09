@@ -24,7 +24,7 @@ class FlightPlan {
         void printFlightData();
 
         void findPaths(Airport, String);
-        void outputPaths(char*);
+        void outputPaths(ofstream&);
 
     private:
         Vector<LinkedList<Airport>> adjList;

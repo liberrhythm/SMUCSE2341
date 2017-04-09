@@ -346,7 +346,10 @@ T LinkedList<T>::getNext() {
 //checks to see if end of linked list has been reached
 template<class T>
 bool LinkedList<T>::hasNext() {
-    return iter==nullptr;
+    if (iter == nullptr) {
+        return false;
+    }
+    return true;
 }
 
 //puts iterator through linked list back at beginning
