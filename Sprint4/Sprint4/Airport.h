@@ -9,12 +9,12 @@ class Airport {
     public:
         Airport();
         Airport(String);
-        Airport(String, int, int);
+        Airport(String, double, int);
         bool operator==(const Airport&);
         String getName();
         void setName(String);
-        int getCost();
-        void setCost(int);
+        double getCost();
+        void setCost(double);
         int getTime();
         void setTime(int);
 
@@ -22,7 +22,7 @@ class Airport {
 
     private:
         String name;
-        int cost;
+        double cost;
         int time;
 };
 

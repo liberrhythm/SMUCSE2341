@@ -9,13 +9,14 @@
 #include "DSVector.h"
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
 class FlightPlan {
     public:
         FlightPlan(char*);
-        void addAirport(String, String, int, int);
+        void addAirport(String, String, double, int);
         int headExists(String);
         bool cityExists(String, int);
         void readRequestedFlights(char*, char*);

@@ -12,7 +12,7 @@ Airport::Airport(String name) {
     setTime(0);
 }
 
-Airport::Airport(String name, int cost, int time) {
+Airport::Airport(String name, double cost, int time) {
     setName(name);
     setCost(cost);
     setTime(time);
@@ -33,11 +33,11 @@ void Airport::setName(String n) {
     name = n;
 }
 
-int Airport::getCost() {
+double Airport::getCost() {
     return cost;
 }
 
-void Airport::setCost(int c) {
+void Airport::setCost(double c) {
     cost = c;
 }
 
