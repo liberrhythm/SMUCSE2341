@@ -86,11 +86,23 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
     Airport five("Houston", 95, 39);
     Airport six("Dallas", 98, 47);
     Airport seven("Chicago", 144, 192);
+    Airport newThree("San Francisco", 63, 89);
     Airport eight("Houston", 0, 0);
     Airport nine("Austin", 95, 39);
     Airport ten("Dallas", 101, 51);
+    Airport newOne("Chicago", 30, 56);
     Airport eleven("Chicago", 0, 0);
     Airport twelve("Austin", 144, 192);
+    Airport newTwo("Houston", 30, 56);
+    Airport newFive("Los Angeles", 98, 90);
+    Airport thirteen("San Francisco", 0, 0);
+    Airport fourteen("Los Angeles", 25, 52);
+    Airport newFour("Austin", 63, 89);
+    Airport fifteen("Los Angeles", 0, 0);
+    Airport sixteen("San Francisco", 25, 52);
+    Airport newSix("Chicago", 98, 90);
+
+
 
     LinkedList<Airport> dallas(one);
     dallas.add(two);
@@ -99,16 +111,31 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
     austin.add(five);
     austin.add(six);
     austin.add(seven);
+    austin.add(newThree);
     LinkedList<Airport> houston(eight);
     houston.add(nine);
     houston.add(ten);
+    houston.add(newOne);
     LinkedList<Airport> chicago(eleven);
     chicago.add(twelve);
+    chicago.add(newTwo);
+    chicago.add(newFive);
+    LinkedList<Airport> sanfran(thirteen);
+    sanfran.add(fourteen);
+    sanfran.add(newFour);
+    LinkedList<Airport> losangeles(fifteen);
+    losangeles.add(sixteen);
+    losangeles.add(newSix);
 
     adjList.push_back(dallas);
     adjList.push_back(austin);
     adjList.push_back(houston);
     adjList.push_back(chicago);
+    adjList.push_back(sanfran);
+    adjList.push_back(losangeles);
+
+    //adjList[1].add(five);
+    //adjList[0].add(three);
 
     ifstream inFile;
     inFile.open(requestedFlights, ios::in);
@@ -164,7 +191,7 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
                 }
             }
             findPaths(adjList[aLoc].get(0), arrival);
-            outputPaths(outFile);
+            outputPaths(outFile, metric);
         }
         else {
             outFile << "No paths for same-city flights can be found" << endl;
@@ -227,6 +254,103 @@ void FlightPlan::findPaths(Airport a, String b) {
 }
 
 //prints to output file possible paths up to 3 or error message if no possible paths
+void FlightPlan::outputPaths(ofstream& outFile, char metric) {
+    if (allPaths.empty() == true) {
+        outFile << "No paths could be found from requested departure city to requested arrival city." << endl << endl;
+    }
+    else {
+        if (metric == 'C') {
+            int pathNum = 0;
+            double lastLowest = 0;
+            for (int i = 0; i < 3; i++) {
+                if (i > allPaths.size()-1) {
+                    break;
+                }
+                pathNum++;
+                int index = -1;
+                double lowest = 100000;
+                for (int i = 0; i < allPaths.size(); i++) {
+                    double currentCost = 0;
+                    for (int j = 0; j < allPaths[i].size(); j++) {
+                        currentCost += allPaths[i].get(j).getCost();
+                    }
+
+                    if (currentCost < lowest && currentCost > lastLowest) {
+                        lowest = currentCost;
+                        index = i;
+                    }
+                }
+
+                lastLowest = lowest;
+
+                double totalCost = lowest;
+                int totalTime = 0;
+
+                outFile << "Path " << pathNum << ": ";
+                for (int i = 0; i < allPaths[index].size(); i++) {
+                    if (i == allPaths[index].size()-1) {
+                        outFile << allPaths[index].get(i).getName().c_str() << ". ";
+                    }
+                    else {
+                        outFile << allPaths[index].get(i).getName().c_str() << " -> ";
+                    }
+                    totalTime += allPaths[index].get(i).getTime();
+                }
+                outFile << "Time: " << totalTime << " ";
+                outFile << "Cost: " << fixed << setprecision(2) << totalCost << endl;
+            }
+        }
+        else if (metric == 'T') {
+            int pathNum = 0;
+            int lastLowest = 0;
+            for (int i = 0; i < 3; i++) {
+                if (i > allPaths.size()-1) {
+                    break;
+                }
+                pathNum++;
+                int index = -1;
+                int lowest = 100000;
+                for (int i = 0; i < allPaths.size(); i++) {
+                    int currentTime = 0;
+                    for (int j = 0; j < allPaths[i].size(); j++) {
+                        currentTime += allPaths[i].get(j).getTime();
+                    }
+
+                    if (currentTime < lowest && currentTime > lastLowest) {
+                        lowest = currentTime;
+                        index = i;
+                    }
+                }
+
+                lastLowest = lowest;
+
+                int totalTime = lowest;
+                double totalCost = 0;
+
+                outFile << "Path " << pathNum << ": ";
+                for (int i = 0; i < allPaths[index].size(); i++) {
+                    if (i == allPaths[index].size()-1) {
+                        outFile << allPaths[index].get(i).getName().c_str() << ". ";
+                    }
+                    else {
+                        outFile << allPaths[index].get(i).getName().c_str() << " -> ";
+                    }
+                    totalCost += allPaths[index].get(i).getCost();
+                }
+                outFile << "Time: " << totalTime << " ";
+                outFile << "Cost: " << fixed << setprecision(2) << totalCost << endl;
+            }
+        }
+        outFile << endl;
+    }
+    while (allPaths.empty() == false) {
+        allPaths.pop_back();
+    }
+}
+
+//original code for outputting paths, without sorting
+/*
+//prints to output file possible paths up to 3 or error message if no possible paths
 void FlightPlan::outputPaths(ofstream& outFile) {
     if (allPaths.empty() == true) {
         outFile << "No paths could be found from requested departure city to requested arrival city." << endl;
@@ -262,3 +386,4 @@ void FlightPlan::outputPaths(ofstream& outFile) {
         allPaths.pop_back();
     }
 }
+*/

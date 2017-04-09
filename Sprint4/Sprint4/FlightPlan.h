@@ -3,8 +3,9 @@
 
 #include "FlightPlan.h"
 #include "Airport.h"
-#include "LinkedList.h"
 #include "Stack.h"
+//#include "FlightPath.h"
+#include "LinkedList.h"
 #include "DSString.h"
 #include "DSVector.h"
 #include <fstream>
@@ -25,11 +26,12 @@ class FlightPlan {
         void printFlightData();
 
         void findPaths(Airport, String);
-        void outputPaths(ofstream&);
+        void outputPaths(ofstream&, char);
 
     private:
         Vector<LinkedList<Airport>> adjList;
         Stack<Airport> path;
+        //Vector<FlightPath> allPaths;
         Vector<Stack<Airport>> allPaths;
 };
 

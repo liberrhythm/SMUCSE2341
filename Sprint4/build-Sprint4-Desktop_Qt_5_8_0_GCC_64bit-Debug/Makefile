@@ -584,8 +584,8 @@ FlightPlan.o: ../Sprint4/FlightPlan.cpp ../Sprint4/FlightPlan.h \
 		../Sprint4/Airport.h \
 		../Sprint4/DSString.h \
 		../Sprint4/DSVector.h \
-		../Sprint4/LinkedList.h \
-		../Sprint4/Stack.h
+		../Sprint4/Stack.h \
+		../Sprint4/LinkedList.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o FlightPlan.o ../Sprint4/FlightPlan.cpp
 
 ####### Install
