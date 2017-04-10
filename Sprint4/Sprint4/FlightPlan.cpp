@@ -145,21 +145,45 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
             outFile << "Cost)" << endl;
         }
 
-        if (!(departure == arrival)) {
-            int aLoc;
-            //find departure linkedlist to start from
-            for (int i = 0; i < adjList.size(); i++) {
+        //checks to see if departure and arrival cities exist in adjList
+        bool departExists = false;
+        bool arriveExists = false;
+        for (int i = 0; i < adjList.size(); i++) {
+            for (int j = 0; j < adjList[i].size(); j++) {
                 if (adjList[i].get(0).getName() == departure) {
-                    aLoc = i;
+                    departExists = true;
+                }
+                if (adjList[i].get(0).getName() == arrival) {
+                    arriveExists = true;
                 }
             }
-            findPaths(adjList[aLoc].get(0), arrival); //calls functions to find paths
-            outputPaths(outFile, metric); //calls function to output paths
-        }
-        else { //if requested flight is to the same city as the departure city
-            outFile << "No paths for same-city flights can be found" << endl;
         }
 
+        if (departExists == false && arriveExists == false) {
+            outFile << "Departure and arrival locations not found in list of registered cities" << endl << endl;
+        }
+        else if (departExists == false){
+            outFile << "Departure location not found in list of registered cities" << endl << endl;
+        }
+        else if (arriveExists == false){
+            outFile << "Arrival location not found in list of registered cities" << endl << endl;
+        }
+        else { //if both cities are found
+            if (!(departure == arrival)) {
+                int aLoc;
+                //find departure linkedlist to start from
+                for (int i = 0; i < adjList.size(); i++) {
+                    if (adjList[i].get(0).getName() == departure) {
+                        aLoc = i;
+                    }
+                }
+                findPaths(adjList[aLoc].get(0), arrival); //calls functions to find paths
+                outputPaths(outFile, metric); //calls function to output paths
+            }
+            else { //if requested flight is to the same city as the departure city
+                outFile << "No paths for same-city flights can be found" << endl;
+            }
+        }
         inFile.getline(depart, 81, '|'); //read in next requested flight
     }
     inFile.close();
