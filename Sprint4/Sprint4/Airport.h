@@ -1,3 +1,14 @@
+/*
+Course Number:  CSE 2341
+Programmer:     Sabrina Peng
+Date:           4/8/17
+Program Number: Sprint4
+Purpose:        Represents a flight leg with a specified time and cost for addition into adjacency list
+Instructor: 	Mark Fontenot
+TA:             Chris Henk, Kevin Queenan
+Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
+*/
+
 #ifndef AIRPORT_H
 #define AIRPORT_H
 
@@ -10,7 +21,7 @@ class Airport {
         Airport();
         Airport(String);
         Airport(String, double, int);
-        bool operator==(const Airport&);
+        bool operator==(const Airport&); //overloaded equality operator
         String getName();
         void setName(String);
         double getCost();
@@ -18,7 +29,7 @@ class Airport {
         int getTime();
         void setTime(int);
 
-        void print();
+        void print(); //test function to print data contained in Airport object
 
     private:
         String name;

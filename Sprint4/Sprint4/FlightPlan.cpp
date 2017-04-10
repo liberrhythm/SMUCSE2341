@@ -1,5 +1,17 @@
+/*
+Course Number:  CSE 2341
+Programmer:     Sabrina Peng
+Date:           4/8/17
+Program Number: Sprint4
+Purpose:        Defines and provides implementation for data members/functions in FlightPlan header file
+Instructor: 	Mark Fontenot
+TA:             Chris Henk, Kevin Queenan
+Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
+*/
+
 #include "FlightPlan.h"
 
+//constructor that reads in flight data and initializes adjacency list
 FlightPlan::FlightPlan(char* flightData) {
 
     ifstream inFile;
@@ -11,56 +23,61 @@ FlightPlan::FlightPlan(char* flightData) {
     }
 
     int numConnections;
-    inFile >> numConnections;
+    inFile >> numConnections; //read in number of connections between different cities
     inFile.ignore();
     char depart[81];
     char arrive[81];
     double cost;
     int time;
 
-    inFile.getline(depart, 81, '|');
+    inFile.getline(depart, 81, '|'); //get departure city
 
     while (!inFile.eof()) {
-        inFile.getline(arrive, 81, '|');
-        inFile >> cost;
+        inFile.getline(arrive, 81, '|'); //get arrival city
+        inFile >> cost; //get cost associated
         inFile.ignore();
-        inFile >> time;
+        inFile >> time; //get time associated
         inFile.ignore();
 
+        //create String objects from char arrays
         String departure(depart);
         String arrival(arrive);
 
+        //add Airport data both directions
         addAirport(departure, arrival, cost, time);
         addAirport(arrival, departure, cost, time);
 
-        printFlightData();
+        //printFlightData();
 
-        inFile.getline(depart, 81, '|');
+        inFile.getline(depart, 81, '|'); //get next connection
     }
     inFile.close();
 }
 
+//adds a connection to the adjacency list, either as a departure node or arrival node
 void FlightPlan::addAirport(String departure, String arrival, double cost, int time) {
-    int indexLoc = headExists(departure);
-    if (indexLoc == -1) {
-        Airport orig(departure);
-        LinkedList<Airport> newList(orig);
-        Airport dest(arrival, cost, time);
-        newList.add(dest);
-        adjList.push_back(newList);
+    int indexLoc = headExists(departure); //checks to see if departure node already exists
+    if (indexLoc == -1) { //if departure node does not exist
+        Airport orig(departure); //create a departure node with cost and time as zero
+        LinkedList<Airport> newList(orig); //create linkedlist with departure node as head
+        Airport dest(arrival, cost, time); //create arrival node with associated cost and time
+        newList.add(dest); //add to linkedlist with connected departure node
+        adjList.push_back(newList); //add to adjacency list
     }
-    else {
-        bool locExists = cityExists(arrival, indexLoc);
+    else { //departure node already exists
+        bool locExists = cityExists(arrival, indexLoc); //checks to see if arrival node exists in departure linkedlist
         if (locExists == false) {
-            Airport dest(arrival, cost, time);
-            adjList[indexLoc].add(dest);
+            Airport dest(arrival, cost, time); //create new arrival node with associated cost and time
+            adjList[indexLoc].add(dest); //add to existing departure linkedlist in adjacency list
         }
     }
 }
 
+//checks to see if departure node already exists in adjacency list
 int FlightPlan::headExists(String city) {
     int indexLoc = -1;
     for (int i = 0; i < adjList.size(); i++) {
+        //if there is a departure node as head of linkedlist with the same name as parameter
         if (adjList[i].get(0).getName() == city) {
             return i;
         }
@@ -68,8 +85,10 @@ int FlightPlan::headExists(String city) {
     return indexLoc;
 }
 
+//checks to see if arrival node already exists in departure linkedlist
 bool FlightPlan::cityExists(String city, int indexLoc) {
     for (int i = 0; i < adjList[indexLoc].size(); i++) {
+        //if there is an arrival node in departure linkedlist with the same name as parameter
         if (adjList[indexLoc][i].getName() == city) {
             return true;
         }
@@ -77,68 +96,8 @@ bool FlightPlan::cityExists(String city, int indexLoc) {
     return false;
 }
 
+//reads in requested flight data and calls functions to find possible paths and output them
 void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) {
-    /*
-    //construct adjList for fun!!!
-    Airport one("Dallas", 0, 0);
-    Airport two("Austin", 98, 47);
-    Airport three("Houston", 101, 51);
-    Airport four("Austin", 0, 0);
-    Airport five("Houston", 95, 39);
-    Airport six("Dallas", 98, 47);
-    Airport seven("Chicago", 144, 192);
-    Airport newThree("San Francisco", 63, 89);
-    Airport eight("Houston", 0, 0);
-    Airport nine("Austin", 95, 39);
-    Airport ten("Dallas", 101, 51);
-    Airport newOne("Chicago", 30, 56);
-    Airport eleven("Chicago", 0, 0);
-    Airport twelve("Austin", 144, 192);
-    Airport newTwo("Houston", 30, 56);
-    Airport newFive("Los Angeles", 98, 90);
-    Airport thirteen("San Francisco", 0, 0);
-    Airport fourteen("Los Angeles", 25, 52);
-    Airport newFour("Austin", 63, 89);
-    Airport fifteen("Los Angeles", 0, 0);
-    Airport sixteen("San Francisco", 25, 52);
-    Airport newSix("Chicago", 98, 90);
-
-
-
-    LinkedList<Airport> dallas(one);
-    dallas.add(two);
-    dallas.add(three);
-    LinkedList<Airport> austin(four);
-    austin.add(five);
-    austin.add(six);
-    austin.add(seven);
-    austin.add(newThree);
-    LinkedList<Airport> houston(eight);
-    houston.add(nine);
-    houston.add(ten);
-    houston.add(newOne);
-    LinkedList<Airport> chicago(eleven);
-    chicago.add(twelve);
-    chicago.add(newTwo);
-    chicago.add(newFive);
-    LinkedList<Airport> sanfran(thirteen);
-    sanfran.add(fourteen);
-    sanfran.add(newFour);
-    LinkedList<Airport> losangeles(fifteen);
-    losangeles.add(sixteen);
-    losangeles.add(newSix);
-
-    adjList.push_back(dallas);
-    adjList.push_back(austin);
-    adjList.push_back(houston);
-    adjList.push_back(chicago);
-    adjList.push_back(sanfran);
-    adjList.push_back(losangeles);
-
-    //adjList[1].add(five);
-    //adjList[0].add(three);
-    */
-
     ifstream inFile;
     inFile.open(requestedFlights, ios::in);
     if (!inFile) {
@@ -154,7 +113,7 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
     }
 
     int numFlights;
-    inFile >> numFlights;
+    inFile >> numFlights; //reads in number of flights requested
     inFile.ignore();
     char depart[81];
     char arrive[81];
@@ -162,18 +121,19 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
 
     int currentFlight = 0;
 
-    inFile.getline(depart, 81, '|');
+    inFile.getline(depart, 81, '|'); //read in requested departure location name
 
     while (!inFile.eof()) {
         currentFlight++;
 
-        inFile.getline(arrive, 81, '|');
-        inFile >> metric;
+        inFile.getline(arrive, 81, '|'); //read in requested arrival location name
+        inFile >> metric; //read in cost or time as parameter for ordering output
         inFile.ignore();
 
         String departure(depart);
         String arrival(arrive);
 
+        //print flight header
         outFile << "Flight " << currentFlight << ": ";
         outFile << departure.c_str() << ", " << arrival.c_str() << " ";
         outFile << "(";
@@ -187,33 +147,35 @@ void FlightPlan::readRequestedFlights(char* requestedFlights, char* outputFile) 
 
         if (!(departure == arrival)) {
             int aLoc;
+            //find departure linkedlist to start from
             for (int i = 0; i < adjList.size(); i++) {
                 if (adjList[i].get(0).getName() == departure) {
                     aLoc = i;
                 }
             }
-            findPaths(adjList[aLoc].get(0), arrival);
-            outputPaths(outFile, metric);
+            findPaths(adjList[aLoc].get(0), arrival); //calls functions to find paths
+            outputPaths(outFile, metric); //calls function to output paths
         }
-        else {
+        else { //if requested flight is to the same city as the departure city
             outFile << "No paths for same-city flights can be found" << endl;
         }
 
-        inFile.getline(depart, 81, '|');
+        inFile.getline(depart, 81, '|'); //read in next requested flight
     }
     inFile.close();
     outFile.close();
 }
 
+//getter for adjacency list
 Vector<LinkedList<Airport>>& FlightPlan::getAdjList() {
     return adjList;
 }
 
 //function used to test reading in of all data to adjacency list
 void FlightPlan::printFlightData() {
-    for (int i = 0; i < adjList.size(); i++) {
-        for (int j = 0; j < adjList[i].size(); j++) {
-            adjList[i][j].print();
+    for (int i = 0; i < adjList.size(); i++) { //for every linkedlist in adjList
+        for (int j = 0; j < adjList[i].size(); j++) { //for every Airport node in associated linkedlist
+            adjList[i][j].print(); //prints out Airport data
         }
         cout << endl;
     }
@@ -222,74 +184,75 @@ void FlightPlan::printFlightData() {
 //use iterative backtracking to find all paths starting with airport a and ending at destination b
 void FlightPlan::findPaths(Airport a, String b) {
     for (int i = 0; i < adjList.size(); i++) {
-        adjList[i].backtrack();
+        adjList[i].backtrack(); //resets all iterators to first arrival node in every linkedlist
     }
 
     path.push(a); //add departure airport to path
 
-
     while (!path.isEmpty()) { //while searching for all possible paths has not been finished
-        Airport temp = path.peek();
+        Airport temp = path.peek(); //find most recently visited Airport
         int indexLoc;
-        for (int i = 0; i < adjList.size(); i++) { //get index in vector of linkedlist with most recent airport as head
+        for (int i = 0; i < adjList.size(); i++) { //get index of linkedlist with most recent airport as head
             if (adjList[i].get(0).getName() == temp.getName()) {
                 indexLoc = i;
             }
         }
 
-        if (adjList[indexLoc].hasNext()) {
+        if (adjList[indexLoc].hasNext()) { //checks to see if iterator has reached end of linkedlist (no more arrival nodes to check)
             Airport next = adjList[indexLoc].getNext();
             if (!path.contains(next)) { //check to see if airport is already in the path
                 path.push(next); //add next airport to stack
                 if (path.peek().getName() == b) { //check to see if most recent airport is destination
                     allPaths.push_back(path); //add path to vector of paths
-                    path.pop();
+                    path.pop(); //go back to last visited airport
                 }
             }
         }
         else { //if iterator has reached end of linkedlist
-            adjList[indexLoc].reset(); //put iterator back at head
-            adjList[indexLoc].backtrack();
-            path.pop();
+            adjList[indexLoc].reset(); //put iterator back at head of departure linkedlist
+            adjList[indexLoc].backtrack(); //move iterator to first arrival node
+            path.pop(); //go back to last visited airport
         }
     }
 }
 
 //prints to output file possible paths up to 3 or error message if no possible paths
 void FlightPlan::outputPaths(ofstream& outFile, char metric) {
-    if (allPaths.empty() == true) {
+    if (allPaths.empty() == true) { //if no paths were found
         outFile << "No paths could be found from requested departure city to requested arrival city." << endl << endl;
     }
     else {
-        if (metric == 'C') {
+        if (metric == 'C') { //if ordering by cost
             int pathNum = 0;
-            double lastLowest = 0;
+            double lastLowest = 0; //variable to track the most recently outputted cost
             for (int i = 0; i < 3; i++) {
-                if (i > allPaths.size()-1) {
+                if (i > allPaths.size()-1) { //stops for loop iteration if less than three paths exist
                     break;
                 }
                 pathNum++;
-                int index = -1;
-                double lowest = 100000;
+                int index = -1; //variable to track index of path with lowest cost
+                double lowest = 100000; //start with large number as lowest
                 for (int i = 0; i < allPaths.size(); i++) {
                     double currentCost = 0;
                     for (int j = 0; j < allPaths[i].size(); j++) {
-                        currentCost += allPaths[i].get(j).getCost();
+                        currentCost += allPaths[i].get(j).getCost(); //calculates cost of current path
                     }
 
+                    //sets current cost as lowest if it is the next lowest after previous lowest
                     if (currentCost < lowest && currentCost > lastLowest) {
-                        lowest = currentCost;
-                        index = i;
+                        lowest = currentCost; //set lowest for this iteration
+                        index = i; //save index of lowest
                     }
                 }
 
-                lastLowest = lowest;
+                lastLowest = lowest; //sets next lowest found as next benchmark for checking lowest cost for next iteration of for loop
 
                 double totalCost = lowest;
                 int totalTime = 0;
 
+                //outputs formatted path
                 outFile << "Path " << pathNum << ": ";
-                for (int i = 0; i < allPaths[index].size(); i++) {
+                for (int i = 0; i < allPaths[index].size(); i++) { //outputs each airport in path
                     if (i == allPaths[index].size()-1) {
                         outFile << allPaths[index].get(i).getName().c_str() << ". ";
                     }
@@ -298,37 +261,39 @@ void FlightPlan::outputPaths(ofstream& outFile, char metric) {
                     }
                     totalTime += allPaths[index].get(i).getTime();
                 }
-                outFile << "Time: " << totalTime << " ";
-                outFile << "Cost: " << fixed << setprecision(2) << totalCost << endl;
+                outFile << "Time: " << totalTime << " "; //outputs total time
+                outFile << "Cost: " << fixed << setprecision(2) << totalCost << endl; //outputs total cost
             }
         }
-        else if (metric == 'T') {
+        else if (metric == 'T') { //if ordering by time
             int pathNum = 0;
-            int lastLowest = 0;
+            int lastLowest = 0; //variable to track the most recently outputted time
             for (int i = 0; i < 3; i++) {
-                if (i > allPaths.size()-1) {
+                if (i > allPaths.size()-1) { //stops for loop iteration if less than three paths exist
                     break;
                 }
                 pathNum++;
-                int index = -1;
-                int lowest = 100000;
+                int index = -1; //variable to track index of path with lowest time
+                int lowest = 100000; //starts with large number as lowest time
                 for (int i = 0; i < allPaths.size(); i++) {
                     int currentTime = 0;
                     for (int j = 0; j < allPaths[i].size(); j++) {
-                        currentTime += allPaths[i].get(j).getTime();
+                        currentTime += allPaths[i].get(j).getTime(); //calculates total time of current path
                     }
 
+                    //sets current time as lowest if it is the next lowest after previous lowest
                     if (currentTime < lowest && currentTime > lastLowest) {
-                        lowest = currentTime;
-                        index = i;
+                        lowest = currentTime; //sets new lowest for this iteration as it is found
+                        index = i; //save index of new lowest
                     }
                 }
 
-                lastLowest = lowest;
+                lastLowest = lowest; //sets next lowest found as next benchmark for checking lowest time for next iteration of for loop
 
                 int totalTime = lowest;
                 double totalCost = 0;
 
+                //outputs formatted path
                 outFile << "Path " << pathNum << ": ";
                 for (int i = 0; i < allPaths[index].size(); i++) {
                     if (i == allPaths[index].size()-1) {
@@ -339,16 +304,19 @@ void FlightPlan::outputPaths(ofstream& outFile, char metric) {
                     }
                     totalCost += allPaths[index].get(i).getCost();
                 }
-                outFile << "Time: " << totalTime << " ";
-                outFile << "Cost: " << fixed << setprecision(2) << totalCost << endl;
+                outFile << "Time: " << totalTime << " "; //outputs total time
+                outFile << "Cost: " << fixed << setprecision(2) << totalCost << endl; //outputs total cost
             }
         }
         outFile << endl;
     }
+
+    //remove all paths to move on to the next requested flight
     while (allPaths.empty() == false) {
         allPaths.pop_back();
     }
 }
+
 
 //original code for outputting paths, without sorting
 /*

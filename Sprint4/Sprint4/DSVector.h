@@ -40,6 +40,7 @@ class Vector {
         void resize();
         void push_back(const T&); //adds element to end of vector
         void pop_back(); //removes element from end of vector
+        void remove(int); //removes element at a specified index
         bool empty(); //checks if vector has no items of typename T
 
         int contains(const T&);
@@ -160,6 +161,55 @@ void Vector<T>::pop_back() {
             arr[i] = temp[i];
         }
         delete[] temp; //release memory in temporary array
+    }
+}
+
+//Allows elimination of item of typename T at a specified index
+template<typename T>
+void Vector<T>::remove(int index) {
+    if (index == length-1) { //if deleting the last item in the vector
+        pop_back();
+    }
+    else if (index == 0) { //if deleting the first item in the vector
+        T* temp = new T[capacity];
+        for (int i = 1; i < length; i++) { //copy elements of arr after index 0 to a temporary array
+            temp[i-1] = arr[i];
+        }
+
+        delete[] arr; //delete elements of and release memory in private data member array
+        length--; //reduce size of vector by one
+
+        for (int i = 0; i < length; i++) { //copy elements back into arr from temp
+            arr[i] = temp[i];
+        }
+
+        delete[] temp; //delete memory allocated to temp
+    }
+    else {
+        T* frontTemp = new T[capacity]; //copy elements of arr before index to a temporary array
+        for (int i = 0; i < index; i++) {
+            frontTemp[i] = arr[i]; //only copy elements up to element before index
+        }
+
+        T* backTemp = new T[capacity]; //copy elements of arr after index to a temporary array
+        for (int i = index+1; i < length; i++) {
+            backTemp[i+index+1] = arr[i]; //only copy elements after index
+        }
+
+        delete[] arr; //delete elements of and release memory in private data member array
+
+        length--; //reduces size of vector by one
+        arr = new T[capacity];
+        for (int i = 0; i < index; i++) {
+            arr[i] = frontTemp[i];
+        }
+
+        for (int i = index; i < length; i++) {
+            arr[i] = frontTemp[i-index];
+        }
+
+        delete[] frontTemp; //release memory in temporary arrays
+        delete[] backTemp;
     }
 }
 

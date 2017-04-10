@@ -110,13 +110,17 @@ void LinkedList<T>::add(const T& val) {
         //back->next = newPtr; //link new node to end of list
         //newPtr->prev = back;
         //back = newPtr; //point end pointer to new last node
+
+        //ensures newPtr is added to end of the linkedlist
         ListNode<T>* current = head;
         while (current->next != nullptr) {
             current = current->next;
         }
+
+        //connects new node to last node in linkedlist
         current->next = newPtr;
         newPtr->prev = current;
-        back = newPtr;
+        back = newPtr; //manually sets back to newly added element
     }
     numElements++;
 }
@@ -157,7 +161,7 @@ bool LinkedList<T>::contains(const T& element) {
         if (current->data == element) {
             return true;
         }
-        current = current->next;
+        current = current->next; //moves to next node
     }
     return false;
 }

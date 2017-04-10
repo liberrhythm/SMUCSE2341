@@ -1,9 +1,9 @@
 /*
 Course Number:  CSE 2341
 Programmer:     Sabrina Peng
-Date:           3/25/17
-Program Number: Sprint2
-Purpose:        Uses CATCH framework to test custom linked list class
+Date:           4/8/17
+Program Number: Sprint4
+Purpose:        Uses CATCH framework to test custom linked list class, stack class, and queue class
 Instructor: 	Mark Fontenot
 TA:             Chris Henk, Kevin Queenan
 Sources Consulted: Stack Overflow, C++ How to Program by Deitel, Deitel
