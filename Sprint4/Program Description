@@ -1,0 +1,6 @@
+Sprint 4 Description:
+
+Flight planner that generates possible paths using iterative backtracking on an adjacency list created from a provided undirected graph
+Custom stack, queue, and LinkedList classes
+Use of QT Creator IDE and C++ programming language
+Project description link: https://docs.google.com/document/d/1xuqasoTyr8ineYJ6lpW5f4rxl4zLeh1bFb_7HpgvKPg/edit
