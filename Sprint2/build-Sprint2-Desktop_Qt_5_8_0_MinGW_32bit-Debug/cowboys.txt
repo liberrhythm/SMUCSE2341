@@ -1,0 +1,8 @@
+The Cowboys
+6
+1 Bob
+2 Sally
+3 Sam
+7 A
+8 B
+9 C

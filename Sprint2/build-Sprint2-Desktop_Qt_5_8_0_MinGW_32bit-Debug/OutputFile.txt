@@ -1,0 +1,52 @@
+The Cowboys
+	Sally tagged Jack 1 times
+	Sally tagged Jill 1 times
+	Sally tagged Kenny 0 times
+	Sally had a total of 2 tags
+	Sam tagged Jack 0 times
+	Sam tagged Jill 2 times
+	Sam tagged Kenny 0 times
+	Sam had a total of 2 tags
+	B tagged Jack 0 times
+	B tagged Jill 1 times
+	B tagged Kenny 1 times
+	B had a total of 2 tags
+	C tagged Jack 1 times
+	C tagged Jill 0 times
+	C tagged Kenny 0 times
+	C had a total of 1 tags
+	Bob tagged Jack 0 times
+	Bob tagged Jill 0 times
+	Bob tagged Kenny 0 times
+	Bob had a total of 0 tags
+	A tagged Jack 0 times
+	A tagged Jill 0 times
+	A tagged Kenny 0 times
+	A had a total of 0 tags
+	The Cowboys: 71 points
+
+The Sharks
+	Jack tagged Bob 1 times
+	Jack tagged Sally 1 times
+	Jack tagged Sam 0 times
+	Jack tagged A 0 times
+	Jack tagged B 0 times
+	Jack tagged C 0 times
+	Jack had a total of 2 tags
+	Kenny tagged Bob 1 times
+	Kenny tagged Sally 0 times
+	Kenny tagged Sam 0 times
+	Kenny tagged A 0 times
+	Kenny tagged B 0 times
+	Kenny tagged C 1 times
+	Kenny had a total of 2 tags
+	Jill tagged Bob 0 times
+	Jill tagged Sally 0 times
+	Jill tagged Sam 0 times
+	Jill tagged A 0 times
+	Jill tagged B 0 times
+	Jill tagged C 0 times
+	Jill had a total of 0 tags
+	The Sharks: 33 points
+
+Winners: The Cowboys
